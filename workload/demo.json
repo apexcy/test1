@@ -1,5 +1,6 @@
 [
     {
+        "id": "demo-1",
         "query": "What is the address of the US Physical Therapy Inc.?",
         "answer": "1300 WEST SAM HOUSTON PARKWAY SUITE 300, TX",
         "tags": [
@@ -7,10 +8,11 @@
         ],
         "data_sources": [ "SEC/144" ],
         "data_modalities": [ "text" ],
-        "subqueries": [
+        "subtasks": [
         ]
     },
     {
+        "id": "demo-2",
         "query": "How many SEC employees are female in 2016?",
         "answer": "2,109 (46.03%)",
         "tags": [
@@ -18,10 +20,11 @@
         ],
         "data_sources": [ "EEO" ],
         "data_modalities": [ "PDF" ],
-        "subqueries": [
+        "subtasks": [
         ]
     },
     {
+        "id": "demo-3",
         "query": "Plot how the number of transfer agent registrants change by year since 2014.",
         "answer": null,
         "tags": [
@@ -30,8 +33,9 @@
         ],
         "data_sources": [ "DERA/TA" ],
         "data_modalities": [ "table" ],
-        "subqueries": [
+        "subtasks": [
             {
+                "id": "demo-3-1",
                 "query": "List the number of transfer agent registrants change by quarter.",
                 "answer": null,
                 "tags": [
@@ -39,6 +43,7 @@
                 ]
             },
             {
+                "id": "demo-3-2",
                 "query": "List the number of transfer agent registrants change by quarter since 2014.",
                 "answer": null,
                 "tags": [
@@ -48,6 +53,7 @@
         ]
     },
     {
+        "id": "demo-4",
         "query": "According to the filing on April 2024, how many companies registered in the CHRO region have filed their latest ADV filing after March 2024?",
         "answer": null,
         "tags": [
@@ -57,8 +63,9 @@
         ],
         "data_sources": [ "DATA/ADV" ],
         "data_modalities": [ "table" ],
-        "subqueries": [
+        "subtasks": [
             {
+                "id": "demo-4-1",
                 "query": "How many registered companies is contained in the filing on April 2024?",
                 "answer": null,
                 "tags": [
@@ -68,6 +75,7 @@
                 ]
             },
             {
+                "id": "demo-4-2",
                 "query": "How many registered companies contained in the filing on April 2024 is in the CHRO region?",
                 "answer": null,
                 "tags": [
@@ -77,6 +85,7 @@
                 ]
             },
             {
+                "id": "demo-4-3",
                 "query": "List the latest ADV filing dates of all companies in the filing on April 2024",
                 "answer": null,
                 "tags": [
