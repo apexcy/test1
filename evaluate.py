@@ -10,10 +10,8 @@ import json
 import os
 import argparse
 import traceback
-import re
 
 import pandas as pd
-from typing import List
 
 from benchmark.metrics import Precision, Recall, F1, BleuScore, RougeScore, Success
 
@@ -51,7 +49,7 @@ def main():
         for metric in METRICS:
             try:
                 value = metric(predicted, target)
-            except Exception as e:
+            except Exception:
                 print("Exception:", traceback.format_exc())
                 if not verbose:
                     print("On query:", idx)
