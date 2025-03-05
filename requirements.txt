@@ -1,3 +1,4 @@
 edgartools >= 3.2.9
+rouge-score
 selenium >= 4.27.1
 pyheaven >= 0.1.6.1

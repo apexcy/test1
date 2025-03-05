@@ -6,16 +6,18 @@ The systems can be called using the run_pipeline function in system.api with the
 """
 
 from __future__ import print_function
+
+import argparse
 import json
 import os
-import argparse
 import traceback
 
 import pandas as pd
 
-from benchmark.metrics import Precision, Recall, F1, BleuScore, RougeScore, Success
+from benchmark.metrics import metric_factory
+from fixtures import sut_factory
 from systems import ExampleBaselineSystem
-from fixtures import SUTFactory, MetricFactory
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -33,6 +35,7 @@ def main():
     parser.add_argument(
         "--verbose",
         default=False,
+        action="store_true",
         help="Whether to print filenames as they are processed",
     )
 
@@ -59,7 +62,7 @@ def main():
         data_path = "data/TODO"
         if not os.path.exists(data_path):
             os.makedirs(data_path)
-        sut = SUTFactory(sut)
+        sut = sut_factory(sut)
         sut.process_dataset(data_path)
         for idx, query in enumerate(queries):
             if verbose:
@@ -74,12 +77,11 @@ def main():
         target = query
         predicted = sut_answers[idx]
 
-        applicable_metrics = query.get("metrics", None)
-        breakpoint()
-        for metric in applicable_metrics:
-            metric_fn = MetricFactory(metric)
+        applicable_metrics = query["task_type"]["metrics"]
+        for metric_str in applicable_metrics:
+            metric = metric_factory(metric_str)
             try:
-                value = metric_fn(predicted, target)
+                value = metric(predicted, target)
             except Exception:
                 print("Exception:", traceback.format_exc())
                 if not verbose:
@@ -88,6 +90,7 @@ def main():
 
             dict_measures = {
                 "workload": workload_name,
+                "sut": sut,
                 "query_idx": idx,
                 "metric": metric.name,
                 "value": value,
