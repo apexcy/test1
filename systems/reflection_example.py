@@ -1,5 +1,5 @@
 from typing import Any
-from systems.generator_util import generator_factory, pdf_to_text
+from systems.generator_util import Generator, pdf_to_text
 from benchmark.benchmark_api import System
 import os
 import pandas as pd
@@ -66,15 +66,14 @@ class ExampleReflectionSystem(System):
         self.name = "reflection"
         self.dataset_directory = None # TODO(user): Update me
         self.models = models
-        self.verbose = args.get("verbose", False)
         super().__init__(self.name, *args, **kwargs)
         assert "executor" in models
         assert "reflector" in models
         assert isinstance(models["executor"], str)
         assert isinstance(models["reflector"], str)
 
-        self.executor = generator_factory(models["executor"], verbose=self.verbose)
-        self.reflector = generator_factory(models["reflector"], verbose=self.verbose)
+        self.executor = Generator(models["executor"])
+        self.reflector = Generator(models["reflector"])
 
 
     def process_dataset(self, dataset_directory: str | os.PathLike) -> None:
@@ -94,12 +93,11 @@ class ExampleReflectionSystem(System):
         not_good_enough = True
         num_rounds = 0
         previous_results_and_feedbacks = []
-        status = ""
         while not_good_enough and num_rounds < MAX_NUM_REFLECTIONS:
             executor_prompt = generate_executor_prompt(query, previous_results_and_feedbacks)
-            result, status = self.executor(executor_prompt)
+            result = self.executor.generate(executor_prompt)
             reflector_prompt = generate_reflector_prompt(query, result)
-            feedback, _ = self.reflector(reflector_prompt)
+            feedback = self.reflector.generate(reflector_prompt)
 
             if feedback == "<feedback>good</feedback>":
                 not_good_enough = False
@@ -107,4 +105,4 @@ class ExampleReflectionSystem(System):
             # update the previous results and feedbacks
             previous_results_and_feedbacks.append((result, feedback))
         
-        return result, status
+        return result

@@ -1,7 +1,7 @@
 from typing import Any
 import os
 import pandas as pd
-from systems.generator_util import generator_factory, pdf_to_text
+from systems.generator_util import Generator, pdf_to_text
 from benchmark.benchmark_api import System
 
 
@@ -38,12 +38,11 @@ def format_prompt_for_merger(original_request: str, results_of_other_models: lis
 
 # TODO: We need to set higher temperature for the suggesters models,
 # and lower temperature for the merger model.
-class ExampleCrossValidationSystem(System):
+class ExampleMixtrueAgentSystem(System):
     def __init__(self, models: dict[str, Any], *args, **kwargs):
-        self.name = "cross_validation"
+        self.name = "mixtrue_agent"
         self.dataset_directory = None # TODO(user): Update me
         self.models = models
-        self.verbose = args.get("verbose", False)
         super().__init__(self.name, *args, **kwargs)
         assert "suggesters" in models
         assert "merger" in models
@@ -53,8 +52,8 @@ class ExampleCrossValidationSystem(System):
         self.suggesters = []
         self.merger = None
         for model in models["suggesters"]:
-            self.suggesters.append(generator_factory(model, verbose=self.verbose))
-        self.merger = generator_factory(models["merger"], verbose=self.verbose)
+            self.suggesters.append(Generator(model))
+        self.merger = Generator(models["merger"])
 
     def process_dataset(self, dataset_directory: str | os.PathLike) -> None:
         # read files based on the dataset_directory, could be pdf, csv, etc.
@@ -72,7 +71,7 @@ class ExampleCrossValidationSystem(System):
     def serve_query(self, query: str) -> dict | str:
         suggester_results = []
         for model in self.suggesters:
-            suggester_results.append(model(query))
-        merger_prompt, stats = format_prompt_for_merger(query, suggester_results)
-        merger, stats = self.merger(merger_prompt)
-        return merger, stats
+            suggester_results.append(model.generate(query))
+        merger_prompt = format_prompt_for_merger(query, suggester_results)
+        merger = self.merger.generate(merger_prompt)
+        return merger

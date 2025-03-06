@@ -15,13 +15,12 @@ import traceback
 import pandas as pd
 
 from benchmark.metrics import metric_factory
-from fixtures import sut_factory
-from systems import ExampleBaselineSystem
+from fixtures import system_selector
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sut", default="baseline-gpt-4o", help="The system to benchmark")
+    parser.add_argument("--sut", default="baseline-gpt-4o-mini", help="The system to benchmark")
     parser.add_argument(
         "--workload",
         default="workload/jun-easy.json",
@@ -51,7 +50,8 @@ def main():
     with open(workload) as f:
         queries = json.load(f)
 
-    result_path = f"{RESULT_DIR}/{sut}/{workload_name}"
+    result_path = f"{RESULT_DIR}/{sut}/{workload_name}_results.json"
+    sut_answers = {}
     try:
         with open(result_path) as f:
             sut_answers = json.load(f)
@@ -62,22 +62,23 @@ def main():
         data_path = "data/TODO"
         if not os.path.exists(data_path):
             os.makedirs(data_path)
-        sut = sut_factory(sut)
-        sut.process_dataset(data_path)
-        for idx, query in enumerate(queries):
+        system = system_selector(sut)
+        system.process_dataset(data_path)
+        for idx, details in enumerate(queries):
             if verbose:
                 print(f"Processing query {idx}")
-            result = sut.serve_query(query)
-            sut_answers.append(result)
+            result = system.serve_query(details["query"])
+            sut_answers[idx] = result
+        os.makedirs(os.path.dirname(result_path), exist_ok=True)
         with open(result_path, "w") as f:
             json.dump(sut_answers, f)
 
     workload_measures = []
-    for idx, query in enumerate(queries):
-        target = query
+    for idx, details in enumerate(queries):
+        target = details["answer"]
         predicted = sut_answers[idx]
 
-        applicable_metrics = query["task_type"]["metrics"]
+        applicable_metrics = details["task_type"]["metrics"]
         for metric_str in applicable_metrics:
             metric = metric_factory(metric_str)
             try:
@@ -102,9 +103,8 @@ def main():
     if verbose:
         print(results_df)
 
-    # Logic to aggregate the results
-    # workload_results = []
-
+    #Logic to aggregate the results
+    workload_results = []
 
 if __name__ == "__main__":
     main()

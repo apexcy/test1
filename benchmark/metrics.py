@@ -7,14 +7,14 @@ class Metric:
     def __init__(self, *args, **kwargs):
         pass
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         raise NotImplementedError("Metric must implement __call__ method!")
 
 
 class Accuracy(Metric):
     name = "Accuracy"
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         return 0.0
         # return accuracy_score(predicted["answer"], target["answer"])
 
@@ -22,7 +22,7 @@ class Accuracy(Metric):
 class Precision(Metric):
     name = "Precision"
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         # Figure out how to compute precision of individual queries
         return 0
         # return precision_score(predicted["answer"], target["answer"])
@@ -31,7 +31,7 @@ class Precision(Metric):
 class Recall(Metric):
     name = "Recall"
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         return 0.0
         # return recall_score(predicted["answer"], target["answer"])
 
@@ -39,7 +39,7 @@ class Recall(Metric):
 class F1(Metric):
     name = "F1"
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         return 0.0
         # return f1_score(predicted["answer"], target["answer"])
 
@@ -47,20 +47,18 @@ class F1(Metric):
 class BleuScore(Metric):
     name = "BLEU"
 
-    def __call__(self, predicted: dict, target: dict):
-        prediction = predicted["answer"]
-        target = target["answer"]
-        BLEUscore = nltk.translate.bleu_score.sentence_bleu([target], prediction)
+    def __call__(self, predicted: str, target: str):
+        BLEUscore = nltk.translate.bleu_score.sentence_bleu([target], predicted)
         return BLEUscore
 
 
 class RougeScore(Metric):
     name = "ROUGE"
 
-    def __call__(self, predicted: dict, target: dict):
+    def __call__(self, predicted: str, target: str):
         # Using Rouge-1, the overlap of words
         rouge = rouge_scorer.RougeScorer(['rouge1'])
-        results = rouge.score(target=target["answer"], prediction=predicted["answer"])
+        results = rouge.score(target=target, prediction=predicted)
         precision = results['rouge1'].precision
         recall = results['rouge1'].recall
         f1 = results['rouge1'].fmeasure
@@ -70,8 +68,8 @@ class RougeScore(Metric):
 class Success(Metric):
     name = "Success"
 
-    def __call__(self, predicted: dict, target: dict):
-        return int(predicted["answer"] == target["answer"])
+    def __call__(self, predicted: str, target: str):
+        return int(predicted == target)
 
 def metric_factory(metric: str = None):
     if metric == "Precision":
