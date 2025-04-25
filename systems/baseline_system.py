@@ -244,19 +244,21 @@ class BaselineLLMSystem(System):
         :param json_fp: Path to the JSON file
         :param output_fp: Path to the output file
         """
+        overall_answer = {"system_subtasks_responses": []}
+
         # Load the JSON response
         try: 
             with open(json_fp, 'r') as f:
                 answer = json.load(f)
         except json.JSONDecodeError as e:
             print(f"ERROR: {self.name}: ** ERRORS ** decoding answer JSON: {e}")
-            return {}
+            return overall_answer
 
         # Check if the error file is empty
         if error_fp is not None:
             if os.path.getsize(error_fp) > 0:
                 print(f"ERROR: {self.name}: ** ERRORS ** found in {error_fp}. Skipping JSON update.")
-                return answer
+                return overall_answer
 
         # Load the output file
         try: 
@@ -264,7 +266,7 @@ class BaselineLLMSystem(System):
                 output = json.load(f)
         except json.JSONDecodeError as e:
             print(f"ERROR: {self.name}: ** ERRORS ** decoding output JSON: {e}")
-            return answer
+            return overall_answer
 
         # Fill in the JSON answer with the execution result
         for step in answer:
@@ -280,7 +282,6 @@ class BaselineLLMSystem(System):
                     subtask['answer'] = output[subtask_id]
                 else: subtask['answer'] = "Warning: No answer found in the Python pipeline."
         
-        overall_answer = {"system_subtasks_responses": []}
         for step in answer:
             if step["id"] == "main-task":
                 overall_answer |= step
@@ -345,7 +346,8 @@ class BaselineLLMSystem(System):
             {"role": "system", "content": "You are an experienced data scientist."},
         ]
 
-        for try_number in range(5):
+        answer = {}
+        for try_number in range(10):
             messages.append({"role": "user", "content": prompt})
             # Get the model's response
             response = call_gpt(messages)
@@ -368,7 +370,8 @@ class BaselineLLMSystem(System):
                 # Fill in JSON response with the execution result
                 answer = self.process_response(json_fp, output_fp, error_fp=None)
                 break
-
+        # If answer = {} after 10 tries, it's because the code was not executed successfully
+        # Otherwise, the answer is already filled in, or answer = {"system_subtasks_responses": []}
         return answer
     
     def process_dataset(self, dataset_directory: str | os.PathLike) -> None:
@@ -381,7 +384,9 @@ class BaselineLLMSystem(System):
         # read the files
         for file in os.listdir(dataset_directory):
             if file.endswith(".csv"):
-                self.dataset[file] = pd.read_csv(os.path.join(dataset_directory, file), engine='python', on_bad_lines='warn')
+                print(f"Reading {file}...")
+                if file == "noaa_wildfires.csv": self.dataset[file] = pd.read_csv(os.path.join(dataset_directory, file), skiprows=3)
+                else: self.dataset[file] = pd.read_csv(os.path.join(dataset_directory, file), engine='python', on_bad_lines='warn')
     
     @typechecked
     def serve_query(self, query: str, query_id:str="default_name-0") -> Dict:
@@ -428,4 +433,5 @@ def main():
         response = baseline_llm.serve_query(question["query"], question["id"])
 
 if __name__ == "__main__":
-    main()
+    pass
+    #main()
