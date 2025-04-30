@@ -92,16 +92,44 @@
             "water-body-testing-2022.csv",
             "water-body-testing-2023.csv"
         ],
-        "subtasks": []
+        "subtasks": [
+            {
+                "id": "environment-easy-4-1",
+                "query": "What are the unique 'Beach Name' that represent Quincy's Wollaston Beach?",
+                "answer": ["Wollaston @ Channing Street (DCR)", "Wollaston @ Milton Street (DCR)",
+                "Wollaston @ Rice Road (DCR)", "Wollaston @ Sachem Street (DCR)"],
+                "answer_type": "exact",
+                "data_sources": [
+                    "water-body-testing-2019.csv",
+                    "water-body-testing-2020.csv",
+                    "water-body-testing-2021.csv",
+                    "water-body-testing-2022.csv",
+                    "water-body-testing-2023.csv"
+                ]
+            },
+            {
+                "id": "environment-easy-4-2",
+                "query": "What is the exceedance rate (to 2 decimal places) of Quincy's Wollaston Beach in 2019 to 2023 (inclusive)? List for each year.",
+                "answer": [12.93, 15.29, 18.13, 12.23, 12.93],
+                "answer_type": "exact",
+                "data_sources": [
+                    "water-body-testing-2019.csv",
+                    "water-body-testing-2020.csv",
+                    "water-body-testing-2021.csv",
+                    "water-body-testing-2022.csv",
+                    "water-body-testing-2023.csv"
+                ]
+            }
+        ]
     },
     {
         "id": "environment-easy-5",
-        "query": "Which region out of Boston, Chatam, Amherst, Ashburnham, had the most rainfall in June, July, August, in 2020?",
+        "query": "Which region out of Boston, Chatham, Amherst, Ashburnham, had the most rainfall in June, July, August, in 2020?",
         "answer": "Ashburnham",
         "answer_type": "exact",
         "data_sources": [
             "monthly_precipitations_boston.csv",
-            "monthly_precipitations_chatam.csv",
+            "monthly_precipitations_chatham.csv",
             "monthly_precipitations_amherst.csv",
             "monthly_precipitations_ashburnham.csv"
         ],
