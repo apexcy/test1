@@ -109,7 +109,7 @@
             },
             {
                 "id": "environment-easy-4-2",
-                "query": "What is the exceedance rate (to 2 decimal places) of Quincy's Wollaston Beach in 2019 to 2023 (inclusive)? List for each year.",
+                "query": "What is the exceedance rate (in percentage, to 2 decimal places) of Quincy's Wollaston Beach in 2019 to 2023 (inclusive)? List for each year.",
                 "answer": [12.93, 15.29, 18.13, 12.23, 12.93],
                 "answer_type": "exact",
                 "data_sources": [
@@ -133,7 +133,17 @@
             "monthly_precipitations_amherst.csv",
             "monthly_precipitations_ashburnham.csv"
         ],
-        "subtasks": []
+        "subtasks": [
+            {
+                "id": "environment-easy-5-1",
+                "query": "What are the useful columns in the rainfall data?",
+                "answer": ["Year", "Jun", "Jul", "Aug"],
+                "answer_type": "exact",
+                "data_sources": [
+                    "monthly_precipitations_ashburnham.csv"
+                ]
+            }
+        ]
     },
     {
         "id": "environment-easy-6",
@@ -163,7 +173,66 @@
             "water-body-testing-2003.csv",
             "water-body-testing-2002.csv"
         ],
-        "subtasks": []
+        "subtasks": [
+            {
+                "id": "environment-easy-6-1",
+                "query": "What is the 'Beach Type Description' of the marine beaches?",
+                "answer": "Marine",
+                "answer_type": "exact",
+                "data_sources": [
+                    "water-body-testing-2022.csv",
+                    "water-body-testing-2021.csv",
+                    "water-body-testing-2020.csv",
+                    "water-body-testing-2019.csv",
+                    "water-body-testing-2018.csv",
+                    "water-body-testing-2017.csv",
+                    "water-body-testing-2016.csv",
+                    "water-body-testing-2015.csv",
+                    "water-body-testing-2014.csv",
+                    "water-body-testing-2013.csv",
+                    "water-body-testing-2012.csv",
+                    "water-body-testing-2011.csv",
+                    "water-body-testing-2010.csv",
+                    "water-body-testing-2009.csv",
+                    "water-body-testing-2008.csv",
+                    "water-body-testing-2007.csv",
+                    "water-body-testing-2006.csv",
+                    "water-body-testing-2005.csv",
+                    "water-body-testing-2004.csv",
+                    "water-body-testing-2003.csv",
+                    "water-body-testing-2002.csv"
+                ]
+            },
+            {
+                "id": "environment-easy-6-2",
+                "query": "What is the exceedance rate (in percentage, to 2 decimal places) from 2002 to 2023 (inclusive) for marine beaches? List for each year, from 2002 to 2023.",
+                "answer": [5.88, 3.99, 4.11, 4.24, 4.37, 3.10, 5.39, 6.75, 5.65, 5.63, 4.10, 5.71, 4.18, 4.85, 3.47, 4.09, 4.99, 6.07, 5.13, 7.90, 5.38, 8.01],
+                "answer_type": "exact",
+                "data_sources": [
+                    "water-body-testing-2022.csv",
+                    "water-body-testing-2021.csv",
+                    "water-body-testing-2020.csv",
+                    "water-body-testing-2019.csv",
+                    "water-body-testing-2018.csv",
+                    "water-body-testing-2017.csv",
+                    "water-body-testing-2016.csv",
+                    "water-body-testing-2015.csv",
+                    "water-body-testing-2014.csv",
+                    "water-body-testing-2013.csv",
+                    "water-body-testing-2012.csv",
+                    "water-body-testing-2011.csv",
+                    "water-body-testing-2010.csv",
+                    "water-body-testing-2009.csv",
+                    "water-body-testing-2008.csv",
+                    "water-body-testing-2007.csv",
+                    "water-body-testing-2006.csv",
+                    "water-body-testing-2005.csv",
+                    "water-body-testing-2004.csv",
+                    "water-body-testing-2003.csv",
+                    "water-body-testing-2002.csv"
+                ]
+            }
+        ]
     },
     {
         "id": "environment-hard-7",
@@ -272,7 +341,7 @@
             "water-body-testing-2008.csv",
             "water-body-testing-2007.csv",
             "monthly_precipitations_boston.csv",
-            "monthly_precipitations_chatam.csv",
+            "monthly_precipitations_chatham.csv",
             "monthly_precipitations_amherst.csv",
             "monthly_precipitations_ashburnham.csv"
         ],
@@ -328,7 +397,7 @@
         "answer": 47.36,
         "answer_type": "exact",
         "data_sources": [
-            "monthly_precipitations_chatam.csv",
+            "monthly_precipitations_chatham.csv",
             "water-body-testing-2016.csv"
         ],
         "subtasks": []
@@ -340,7 +409,7 @@
         "answer_type": "exact",
         "data_sources": [
             "monthly_precipitations_boston.csv",
-            "monthly_precipitations_chatam.csv",
+            "monthly_precipitations_chatham.csv",
             "monthly_precipitations_amherst.csv",
             "monthly_precipitations_ashburnham.csv",
             "water-body-testing-2020.csv",
@@ -379,7 +448,7 @@
             "water-body-testing-2022.csv",
             "water-body-testing-2023.csv",
             "monthly_precipitations_boston.csv",
-            "monthly_precipitations_chatam.csv"
+            "monthly_precipitations_chatham.csv"
         ],
         "subtasks": []
     },
@@ -390,7 +459,7 @@
         "answer_type": "exact",
         "data_sources": [
             "monthly_precipitations_boston.csv",
-            "monthly_precipitations_chatam.csv",
+            "monthly_precipitations_chatham.csv",
             "monthly_precipitations_amherst.csv",
             "monthly_precipitations_ashburnham.csv",
             "water-body-testing-2015.csv"
