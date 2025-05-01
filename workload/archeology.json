@@ -1,19 +1,97 @@
 [
     {
-        "id": "archeology-easy-1",
-        "query": "What is the average Potassium in ppm from the first and last time the study recorded people in the Maltese area? Assume that Potassium is linearly interpolated between samples.",
-        "answer": "8782.65",
+        "id": "archeology-hard-1",
+        "query": "What is the average Potassium in ppm from the first and last time the study recorded people in the Maltese area? Assume that Potassium is linearly interpolated between samples. Round your answer to 4 decimal places.",
+        "answer": "8782.656",
         "answer_type": "number",
         "data_sources": [ "archeology/input/climateMeasurements.xlsx", "archeology/input/radiocarbon_database_regional.xlsx" ],
-        "subtasks": [2
+        "subtasks": [
+            {
+                "id": "archeology-hard-1-1",
+                "query": "What is the average year of the climate samples in normal years? Round your answer to 4 decimal places.",
+                "answer": "-1415959.0182",
+                "answer_type": "number"
+            }
         ]
     },
     {
-        "id": "archeology-easy-2",
-        "query": "Based on the approximate dating of the samples found in the Maltese area, what was the percent of time the wet-dry index was increasing? ",
-        "answer": "0.165",
+        "id": "archeology-hard-2",
+        "query": "Based on the approximate dating of the samples found in the Maltese area, what was the percent of time the wet-dry index was increasing?",
+        "answer": "0.1651",
         "answer_type": "number",
         "data_sources": [ "archeology/input/climateMeasurements.xlsx", "archeology/input/radiocarbon_database_regional.xlsx" ],
+        "subtasks": [
+        ]
+    },
+    {
+        "id": "archeology-easy-3",
+        "query": "What is the average rank of cities in Greece? Assume that if there is an “or”, the average of the two numbers. Round your answer to 4 decimal places.",
+        "answer": "3.1333",
+        "answer_type": "number",
+        "data_sources": [ "archeology/input/roman_cities.csv"],
+        "subtasks": [
+        ]
+    },
+    {
+        "id": "archeology-easy-4",
+        "query": "What is the amount of calcium in ppm when the dust proxy was the smallest, breaking ties by the minimum wet-dry index?",
+        "answer": "207878.877358207",
+        "answer_type": "number",
+        "data_sources": [ "archeology/input/climateMeasurements.xlsx"],
+        "subtasks": [
+        ]
+    },
+    {
+        "id": "archeology-hard-5",
+        "query": "In the Maltese dataset, find the year of the most northern Neolithic sample, breaking ties by considering the later year. What is the maximum aluminum value recorded in the climate dataset in the closest year to that year? If there are multiple closest years, take the max aluminum value measured across all of them.",
+        "answer": "66158.3691",
+        "answer_type": "number",
+        "data_sources": ["archeology/input/climateMeasurements.xlsx", "archeology/input/radiocarbon_database_regional.xlsx"],
+        "subtasks": [
+           {
+                "id": "archeology-hard-5-1",
+                "query": "How many samples are human samples?",
+                "answer": "97",
+                "answer_type": "number"
+           },
+           {
+                "id": "archeology-hard-5-2",
+                "query": "How many human samples are Neolithic samples?",
+                "answer": "70",
+                "answer_type": "number"
+           },
+           {
+                "id": "archeology-hard-5-3",
+                "query": "What is the latitude of the most northern Neolithic sample?",
+                "answer": "17.94668",
+                "answer_type": "number"
+           },
+           {
+                "id": "archeology-hard-5-4",
+                "query": "What is the year of the most northern Neolithic sample?",
+                "answer": "-4460",
+                "answer_type": "number"
+           },
+           {
+                "id": "archeology-hard-5-5",
+                "query": "How many samples are there in the climate dataset in the closest year to the most northern Neolithic sample?",
+                "answer": "13",
+                "answer_type": "number"
+           },
+           {
+                "id": "archeology-hard-5-6",
+                "query": "What is the maximum aluminum value recorded in the climate dataset in the closest year to the most northern Neolithic sample?",
+                "answer": "66158.3691",
+                "answer_type": "number"
+           }
+        ]
+    },
+    {
+        "id": "archeology-easy-6",
+        "query": "What city contained in both the southern and western hemispheres has the highest population?",
+        "answer": "São Paulo",
+        "answer_type": "exact",
+        "data_sources": ["archeology/input/worldcities.csv"],
         "subtasks": [
         ]
     },
@@ -27,7 +105,7 @@
             {
                 "id": "archeology-hard-7-1",
                 "query": "How many modern cities have a population of over 100k",
-                "answer": 5873,
+                "answer": "5873",
                 "answer_type": "number"
             },
             {
