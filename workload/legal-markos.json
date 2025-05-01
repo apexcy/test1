@@ -1,6 +1,6 @@
 [
     {
-        "id": "legal-easy-markos-1",
+        "id": "legal-easy-9",
         "query": "Between 2002 and 2024 inclusive, which year saw the greatest relative increase in total reports (Fraud, Identity Theft and Other) compared to the previous year?",
         "answer": 2002,
         "answer_type": "exact",
@@ -34,7 +34,7 @@
         ]
     },
     {
-        "id": "legal-easy-markos-2",
+        "id": "legal-easy-10",
         "query": "In which years were Fraud reports at least 50% of the total reports?",
         "answer": [
             2010,
@@ -83,7 +83,7 @@
         ]
     },
     {
-        "id": "legal-easy-markos-3",
+        "id": "legal-easy-11",
         "query": "Was there ever a year between 2001-2024 inclusive where 'Other' reports were more than half of the total reports?",
         "answer": "False",
         "answer_type": "exact",
@@ -118,7 +118,7 @@
         ]
     },
     {
-        "id": "legal-easy-markos-4",
+        "id": "legal-easy-12",
         "query": "What is the minimum number of report categories that collectively account for at least 50% of reports in 2024?",
         "answer": 3,
         "answer_type": "exact",
@@ -152,7 +152,7 @@
         ]
     },
     {
-        "id": "legal-easy-markos-5",
+        "id": "legal-easy-13",
         "query": "In 2024, what was the ratio of reports between the most frequent and the least frequent category (rounded to two decimal places)?",
         "answer": 1097.47,
         "answer_type": "numeric_approximate",
@@ -185,7 +185,7 @@
         ]
     },
     {
-        "id": "legal-hard-markos-1",
+        "id": "legal-hard-14",
         "query": "Which are the top 5 distinct Metropolitan areas in New England in terms of Identity Theft reports?",
         "answer": [
             "Boston-Cambridge-Newton, MA-NH Metropolitan Statistical Area",
@@ -251,7 +251,7 @@
         ]
     },
     {
-        "id": "legal-hard-markos-2",
+        "id": "legal-hard-15",
         "query": "How many total identity theft reports were there in 2024 from cross-state Metropolitan Statistical Areas?",
         "answer": 593524,
         "answer_type": "numeric_approximate",
@@ -288,7 +288,7 @@
         ]
     },
     {
-        "id": "legal-hard-markos-3",
+        "id": "legal-hard-16",
         "query": "Among states with at least two metropolitan areas, find the metropolitan area that has the highest fraction of its state's identity theft reports in metropolitan areas. What state does it belong to?",
         "answer": "Delaware",
         "answer_type": "exact",
@@ -327,7 +327,7 @@
         ]
     },
     {
-        "id": "legal-hard-markos-4",
+        "id": "legal-hard-17",
         "query": "If the 2007 reports were distributed exactly like the 2024 ones, how many reports in 2007 would be Auto Related (rounded to the nearest integer)?",
         "answer": 32542,
         "answer_type": "numeric_approximate",
@@ -367,7 +367,7 @@
         ]
     },
     {
-        "id": "legal-hard-markos-5",
+        "id": "legal-hard-18",
         "query": "If the 2007 reports were distributed exactly like the 2024 ones, how many identity theft reports in 2007 would concern people ages 40 or older (rounded to the nearest thousand)?",
         "answer": 91000,
         "answer_type": "numeric_approximate",
