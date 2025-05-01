@@ -108,7 +108,6 @@ class MeanSquaredError(Metric):
         except Exception as e:
             logging.error(f"MeanSquared Error Metric: {e}")
             return None
-
     
 class MeanAbsoluteError(Metric):
     # This method computes the squared error. The evaluation script is responsible for aggregating.
