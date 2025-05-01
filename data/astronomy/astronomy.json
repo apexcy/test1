@@ -238,7 +238,7 @@
             },
             {
                 "id": "astronomy-easy-5-2",
-                "query": "Calculate satellite height for each epoch available in TLE, using skifield's itrf_xyz method. As a verification, what is the maximum estimated height?",
+                "query": "Calculate satellite height for each epoch available in TLE, using skifield's itrf_xyz method. As a verification, what is the maximum estimated change of altitude?",
                 "answer": 1.6029310234735021,
                 "answer_type": "number",
                 "data_sources": [
@@ -441,7 +441,7 @@
             {
                 "id": "astronomy-hard-2-4",
                 "query": "Train/test split (70/30) and train two models for KP and Pdyn. What are the trained models slope? Report in a pair of slopes for Kp and Pdyn.",
-                "answer": [2.012292107881937e-06, -1.0814364203706835e-06],
+                "answer": [-2.012292107881937e-06, -1.0814364203706835e-06],
                 "answer_type": "list",
                 "data_sources": [
                     "../data_local/omni2/omni2_Kp_Index.lst",
@@ -572,7 +572,7 @@
                 "data_sources": [
                     "../data_local/STORM-AI/warmup/v2/OMNI2/omni2-wu590-20181001_to_20181130.csv",
                     "../data_local/STORM-AI/warmup/v2/Sat_Density/swarma-wu???-201810??_to_201810??.csv",
-                    "data_local/swarm/POD/SW_OPER_SP3ACOM_2__201810??T235942_201810??T235942_0201/*.sp3"
+                    "data_local/swarm/POD/SW_OPER_SP3ACOM_2__201810??T??????_201810??T??????_0201/*.sp3"
                 ]
             },
             {
@@ -583,7 +583,7 @@
                 "data_sources": [
                     "../data_local/STORM-AI/warmup/v2/OMNI2/omni2-wu590-20181001_to_20181130.csv",
                     "../data_local/STORM-AI/warmup/v2/Sat_Density/swarma-wu???-201810??_to_201810??.csv",
-                    "data_local/swarm/POD/SW_OPER_SP3ACOM_2__201810??T235942_201810??T235942_0201/*.sp3"
+                    "data_local/swarm/POD/SW_OPER_SP3ACOM_2__201810??T??????_201810??T??????_0201/*.sp3"
                 ]
             }
         ]
@@ -622,6 +622,17 @@
             },
             {
                 "id": "astronomy-hard-5-3",
+                "query": "For each timestamp with location in Swarm-B data, extract model input values using a helper that builds F10.7, F10.7A, Ap, and 3-hour Ap vector from OMNI2. Report the average F10.7 81 day average value for the entire 2024 for verification.",
+                "answer": 186.38990972749514,
+                "answer_type": "number",
+                "data_sources": [
+                    "../data_local/omni2_low_res/omni2_2024.dat",
+                    "../data_local/omni2_low_res/omni2_2023.dat",
+                    "../data_local/omni2_low_res/omni2.txt"
+                ]
+            },
+            {
+                "id": "astronomy-hard-5-3",
                 "query": "Compare predicted and ground-truth Swarm-B density, and compute RMSE.",
                 "answer": 4.638e-13,
                 "answer_type": "number",
@@ -640,7 +651,7 @@
         "answer": 66822738.84,
         "answer_type": "number",
         "data_sources": [
-            "../data_local/swarm/POD/SW_OPER_SP3ACOM_2__201909??T235942_201909??T235942_0201/*.sp3",
+            "../data_local/swarm/POD/SW_OPER_SP3ACOM_2__201909??T????_201909??T????_0201/*.sp3",
             "../data_local/mock_tiegcm_grid_sept2019.npz"
         ],
         "subtasks": [
@@ -650,7 +661,7 @@
                 "answer": [233280, 3],
                 "answer_type": "list",
                 "data_sources": [
-                    "../data_local/swarm/POD/SW_OPER_SP3ACOM_2__201909??T235942_201909??T235942_0201/*.sp3"
+                    "../data_local/swarm/POD/SW_OPER_SP3ACOM_2__201909??T????_201909??T????_0201/*.sp3"
                 ]
             },
             {
