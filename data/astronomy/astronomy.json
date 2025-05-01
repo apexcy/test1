@@ -14,13 +14,13 @@
             {
                 "id": "astronomy-easy-1-1",
                 "query": "Extract forecasted Ap",
-                "answer": "[25, 20, 12]",
+                "answer": [25, 20, 12],
                 "answer_type": "list"
             },
             {
                 "id": "astronomy-easy-1-2",
                 "query": "Extract observed Ap",
-                "answer": "[10, 10, 32]",
+                "answer": [10, 10, 32],
                 "answer_type": "list"
             },
             {
@@ -99,7 +99,7 @@
     },
     {
         "id": "astronomy-easy-4",
-        "query": "Determine the approximate period of solar activity cycles and identify the top five years of minimum and maximum activity between 1960 and 2020 using historical yearly mean sunspot numbers.",
+        "query": "Determine the approximate period of solar activity cycles and identify the top five years of minimum and maximum activity between 1960 and 2020 using historical yearly mean sunspot numbers. To be considered as a maximum, a peak needs to have a prominence of 20 and distance of 5. Similar rules apply for the minimum.",
         "answer": {
             "average_period_years": 11,
             "maxima_years": [
@@ -180,7 +180,7 @@
     },
     {
         "id": "astronomy-easy-5",
-        "query": "Estimate the total count of satellite maneuvers (delta_a > 100m within 12h) for satellite 48445 during 2024 using TLE history.",
+        "query": "Estimate the total count of satellite maneuvers (change of altitude > 100m within 12h) for satellite 48445 during 2024 using TLE history.",
         "answer": 20,
         "answer_type": "number",
         "data_sources": [
