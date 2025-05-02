@@ -7,7 +7,7 @@ logging.basicConfig(level=logging.ERROR)
 import nltk
 from rouge_score import rouge_scorer
 
-from llm_tools import GPTInterface, LLMInterface, OllamaInterface
+from benchmark.llm_tools import GPTInterface, LLMInterface, OllamaInterface
 
 def str_to_float(num_string: str) -> float:
     if num_string.endswith("%"):
@@ -163,10 +163,11 @@ class RougeScore(Metric):
 class LLMParaphrase(Metric):
     name = "llm_paraphrase"
 
-    def __call__(self, predicted: str, target: str, llm_interface: LLMInterface):
+    def __call__(self, predicted: str, target: str):
         """
         REQUIRES: llm_interface is already initialized.
         """
+        llm_interface = GPTInterface()
         is_paraphrase = llm_interface.evaluate_paraphrase(predicted, target)
         if is_paraphrase is not None:
             return int(is_paraphrase)
