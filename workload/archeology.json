@@ -178,8 +178,8 @@
     },
     {
         "id": "archeology-easy-11",
-        "query": "What is the average latitude of capital cities?",
-        "answer": 25.93369,
+        "query": "What is the average latitude of capital cities? Round your answer to 4 decimal places.",
+        "answer": 17.4274,
         "answer_type": "exact",
         "runtime": 0.1,
         "data_sources": [ "archeology/input/worldcities.csv"],
@@ -187,13 +187,13 @@
             {
                 "id": "archeology-easy-11-1",
                 "query": "Extract all of the capital cities. How many exist?",
-                "answer": 250,
+                "answer": 237,
                 "answer_type": "exact"
             },
             {
                 "id": "archeology-easy-11-1",
-                "query": "Compute the average latitude of all of the capitals.",
-                "answer": 25.93369,
+                "query": "Compute the average latitude of all of the capitals. Round your answer to 4 decimal places.",
+                "answer": 17.4274,
                 "answer_type": "exact"
             }
         ]
