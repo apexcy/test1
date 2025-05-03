@@ -5,7 +5,7 @@ Which fraud category was growing the fastest between 2020 and 2024 in relative t
 """
 from data_utils import read_clean_numeric_csv
 
-df = read_clean_numeric_csv("../input/raw/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv")
+df = read_clean_numeric_csv("../../input/csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv")
 
 # Normalize category strings
 df["Year"] = df["Year"].str.strip().str.lower()

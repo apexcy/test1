@@ -7,7 +7,7 @@ How many frauds were reported by FTC over the web between 2022 and 2024 in total
 from data_utils import read_clean_numeric_csv
 
 
-df = read_clean_numeric_csv("../input/raw/CSVs/2024_CSN_Data_Contributors.csv")
+df = read_clean_numeric_csv("../../input/csn-data-book-2024-csv/CSVs/2024_CSN_Data_Contributors.csv")
 
 mask = (
     df["Year"].between(2022, 2024) &

@@ -6,7 +6,7 @@ import os
 
 
 # ===============================================================
-# Read messay csv files
+# Read messy csv files
 # ===============================================================
 def convert_value(val):
     if pd.isna(val):
@@ -75,7 +75,7 @@ def read_clean_numeric_csv(path, encoding="utf-8"):
 # ===============================================================
 def parse_out_table_from_html():
     table_title = "The 387 metropolitan statistical areas of the United States"
-    html_path = "../input/raw/metropolitan_statistics.html"
+    html_path = "../../input/metropolitan_statistics.html"
 
     with open(html_path, 'r', encoding='utf-8') as f:
         soup = BeautifulSoup(f, 'lxml')
@@ -108,7 +108,7 @@ def get_absolute_population_df():
 # ===============================================================
 def get_fraud_number_across_states():
     state_dfs = []
-    state_dir = "../input/raw/CSVs/State MSA Identity Theft data/"
+    state_dir = "../../input/csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/"
     for f in os.listdir(state_dir):
         f = os.path.join(state_dir, f)
         state_dfs.append(read_clean_numeric_csv(f).head())

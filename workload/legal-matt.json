@@ -1,6 +1,6 @@
 [
     {
-        "id": "legal-easy-26",
+        "id": "legal-easy-25",
         "query": "Which branch of the U.S. Military had the largest \"Median Fraud Loss\" reported by its service members in 2024?",
         "answer": "U.S. Space Force",
         "answer_type": "string_approximate",
@@ -9,7 +9,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-easy-26-1",
+                "id": "legal-easy-25-1",
                 "query": "What are the military branches in the reports?",
                 "answer": ["U.S. Air Force", "U.S. Army", "U.S. Coast Guard", "U.S. Marines", "U.S. Navy", "U.S. Space Force"],
                 "answer_type": "list",
@@ -18,7 +18,7 @@
                 ]
             },
             {
-                "id": "legal-easy-26-2",
+                "id": "legal-easy-25-2",
                 "query": "What are the mediam fraud losses of each military branch? Report a list of numbers in dollars without the dollar sign.",
                 "answer": [584, 731, 500, 727, 569, 1300],
                 "answer_type": "list",
@@ -29,7 +29,7 @@
         ]
     },
     {
-        "id": "legal-easy-27",
+        "id": "legal-easy-26",
         "query": "Which states had \"Identity Theft\" as their top report category?",
         "answer": [
             "Arizona",
@@ -45,7 +45,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-easy-27-1",
+                "id": "legal-easy-26-1",
                 "query": "Which file is needed to answer \"Which states had \"Identity Theft\" as their top report category?\"? Answer in a list of filenames.",
                 "answer": ["2024_CSN_State_Top_Ten_Report_Categories.csv"],
                 "answer_type": "list",
@@ -56,7 +56,7 @@
         ]
     },
     {
-        "id": "legal-easy-28",
+        "id": "legal-easy-27",
         "query": "How many states had \"Prizes, Sweepstakes and Lotteries\" in their top-10 report categories in 2024?",
         "answer": 27,
         "answer_type": "exact",
@@ -65,7 +65,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-easy-28-1",
+                "id": "legal-easy-27-1",
                 "query": "Which file is needed to answer \"How many states had \"Prizes, Sweepstakes and Lotteries\" in their top-10 report categories in 2024\"? Answer in a list of filenames.",
                 "answer": ["2024_CSN_State_Top_Ten_Report_Categories.csv"],
                 "answer_type": "list",
@@ -74,7 +74,7 @@
                 ]
             },
             {
-                "id": "legal-easy-28-2",
+                "id": "legal-easy-27-2",
                 "query": "Which states have \"Prizes, Sweepstakes and Lotteries\" in its top-ten categories in 2024?",
                 "answer": [
                     "Alabama",
@@ -113,7 +113,7 @@
         ]
     },
     {
-        "id": "legal-hard-29",
+        "id": "legal-hard-28",
         "query": "In 2024, as a percentage of all reports for the same demographic, did military consumers report a higher percentage of Imposter Scams than the general population? Answer Yes or No.",
         "answer": "Yes",
         "answer_type": "string_approximate",
@@ -123,7 +123,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-hard-29-1",
+                "id": "legal-hard-28-1",
                 "query": "What is the total number of reports by military consumers?",
                 "answer": 213831,
                 "answer_type": "exact",
@@ -132,7 +132,7 @@
                 ]
             },
             {
-                "id": "legal-hard-29-2",
+                "id": "legal-hard-28-2",
                 "query": "What is the number of Imposter Scams reported by military consumers?",
                 "answer": 44587,
                 "answer_type": "exact",
@@ -141,7 +141,7 @@
                 ]
             },
             {
-                "id": "legal-hard-29-3",
+                "id": "legal-hard-28-3",
                 "query": "What is the percentage of reports by military consumers which are Imposter Scams?",
                 "answer": 0.2085,
                 "answer_type": "numeric_approximate",
@@ -150,7 +150,7 @@
                 ]
             },
             {
-                "id": "legal-hard-29-4",
+                "id": "legal-hard-28-4",
                 "query": "What is the percentage of reports by the general population which are Imposter Scams?",
                 "answer": 0.1307,
                 "answer_type": "numeric_approximate",
@@ -159,7 +159,7 @@
                 ]
             },
             {
-                "id": "legal-hard-29-5",
+                "id": "legal-hard-28-5",
                 "query": "Do military consumers report a higher percentage of Imposter Scams than the general population? Answer Yes or No.",
                 "answer": "Yes",
                 "answer_type": "string_approximate",
@@ -171,7 +171,7 @@
         ]
     },
     {
-        "id": "legal-hard-30",
+        "id": "legal-hard-29",
         "query": "Among states with 5 or more metro areas, which metropolitan area had the largest percentage of fraud reports in its own state?",
         "answer": "Washington-Arlington-Alexandria, DC-VA-MD-WV Metropolitan Statistical Area",
         "answer_type": "exact",
@@ -180,7 +180,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-hard-30-1",
+                "id": "legal-hard-29-1",
                 "query": "List the states with five or more metro areas.",
                 "answer": [
                     "Alabama",
@@ -227,7 +227,7 @@
         ]
     },
     {
-        "id": "legal-hard-31",
+        "id": "legal-hard-30",
         "query": "Does there exist a metropolitan area in which the number of reports of identity theft exceeded the number of reports of fraud in 2024?",
         "answer": "No",
         "answer_type": "string_approximate",
@@ -237,7 +237,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-hard-31-1",
+                "id": "legal-hard-30-1",
                 "query": "List the number of fraud reports for each area. Answer in a list of numbers",
                 "answer": [
                     "# for a single state CSV",
@@ -255,7 +255,7 @@
                 ]
             },
             {
-                "id": "legal-hard-31-2",
+                "id": "legal-hard-30-2",
                 "query": "For each metro area, compute its number of identity theft reports",
                 "answer": [
                     "# for a single state CSV",
@@ -273,7 +273,7 @@
                 ]
             },
             {
-                "id": "legal-hard-matt-3-subtask-3",
+                "id": "legal-hard-30-3",
                 "query": "Identify whether any metro area had more reports of identity theft than reports of fraud",
                 "answer": false,
                 "answer_type": "boolean",

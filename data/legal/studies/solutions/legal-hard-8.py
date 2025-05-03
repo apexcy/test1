@@ -11,8 +11,8 @@ import re
 from data_utils import read_clean_numeric_csv
 
 
-df1 = read_clean_numeric_csv("../input/raw/CSVs/State MSA Fraud and Other data/Florida.csv", encoding="ISO-8859-1")
-df2 = read_clean_numeric_csv("../input/raw/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv", encoding="ISO-8859-1")
+df1 = read_clean_numeric_csv("../../input/csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv", encoding="ISO-8859-1")
+df2 = read_clean_numeric_csv("../../input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv", encoding="ISO-8859-1")
 
 # Normalize function to match similar area names
 def normalize_area(name):
