@@ -47,8 +47,8 @@
     },
     {
         "id": "wildfire-easy-3",
-        "query": "Which US states fall into the most number of NIFC Geographic Areas?",
-        "answer": ["CA", "NV"],
+        "query": "Which US states (using full names) fall into the most number of NIFC Geographic Areas?",
+        "answer": ["California", "Nevada"],
         "answer_type": "list",
         "data_sources": [ "usa.gpkg", "nifc_geographic_areas.gpkg" ],
         "subtasks": [
@@ -180,8 +180,8 @@
 },
 {
     "id": "wildfire-easy-9",
-    "query": "How many more or less fatalities occurred due to wildfires on days with humidity less than 30% compared to the average? Positive numbers indicate more, and negative numbers will indicate less. Round to two significant figures.",
-    "answer": -0.0053,
+    "query": "How many more or less fatalities occurred due to wildfires on days with humidity less than 30% compared to the average? Positive numbers indicate more, and negative numbers will indicate less. Round to four decimal places.",
+    "answer": -0.0059,
     "answer_type": "numeric_approximate",
     "data_sources": [ "Fire_Weather_Data_2002-2014_2016.csv" ],
     "runtime": 0.1,
@@ -204,7 +204,7 @@
 },
 {
     "id": "wildfire-hard-10",
-    "query": "Are there more fires in Democratic states or Republican states? Answer **only** with 'Democratic' or 'Republican'.",
+    "query": "By count, are there more fires in Democratic states or Republican states? Answer **only** with 'Democratic' or 'Republican'.",
     "answer": "Republican",
     "answer_type": "exact",
     "data_sources": [ "Wildfire_Acres_by_State.csv", "democratic_vs_republican_votes_by_usa_state_2020.csv" ],
@@ -247,7 +247,7 @@
             "answer": [ "Total Acres Burned", "Population Estimate 2024" ],
             "answer_type": "list",
             "data_sources": [ "wildfire_total_fires_p45_54.csv", "NST-EST2024-POP.xlsx" ]
-        },
+        }
     ]
 },
 {
@@ -262,14 +262,14 @@
             "id": "wildfire-hard-12-1",
             "query": "What is the average start date of fires in 2004?",
             "answer": "2002-07-02",
-            "answer_type": "date_approximate",
+            "answer_type": "string_approximate",
             "data_sources": [ "Fire_Weather_Data_2002-2014_2016.csv" ]
         },
         {
             "id": "wildfire-hard-12-2",
             "query": "What is the average start date of fires in 2016?",
             "answer": "2016-07-01",
-            "answer_type": "date_approximate",
+            "answer_type": "string_approximate",
             "data_sources": [ "Fire_Weather_Data_2002-2014_2016.csv" ]
         }
     ]
