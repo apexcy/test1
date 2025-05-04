@@ -13,7 +13,7 @@ import untruncate_json
 from .llm_interface import LLMInterface
 from .prompts import PARAPHRASE_INSTRUCTION_PROMPT, CODE_UNDERSTANDING_PROMPT
 
-logging.basicConfig(level=logging.ERROR)
+logging.basicConfig(level=logging.DEBUG)
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
 class GPTInterface(LLMInterface):
@@ -66,9 +66,10 @@ class GPTInterface(LLMInterface):
             "role": "user",
             "content": [{
                 "type": "text",
-                "text": f"Problem statement: {task["query"]} \n Code Snippet: {code_string} \n Data sources: {json.dumps(task['data_sources'])} \n\n"
+                "text": f"Problem statement: {task['query']} \n Code Snippet: {code_string} \n Data sources: {json.dumps(task['data_sources'])} \n\n"
             }]
         })
+        return formatted_instruction_prompts
 
     
     def evaluate_paraphrase(self, system_answer: str, reference: str) -> Optional[bool]:
@@ -124,4 +125,6 @@ class GPTInterface(LLMInterface):
         except Exception as e:
             logging.error(f"GPTInterface.get_code_key_functionalities: ERROR {e}")
             return None
+        if isinstance(json_answer, dict):
+            json_answer = json_answer['key_steps']
         return json_answer

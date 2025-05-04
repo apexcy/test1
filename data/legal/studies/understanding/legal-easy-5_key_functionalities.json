@@ -1,0 +1,9 @@
+[
+    "Read the raw file 2024_CSN_Fraud_Reports_by_Payment_Method.csv line-by-line, discarding blank lines.",
+    "Detect the header row as the first line that contains at least two non-empty comma-separated fields.",
+    "Collect subsequent lines as data until a line is reached that has fewer than two non-empty cells (marks end of table).",
+    "Strip spaces, commas, dollar signs, interpret K/M suffixes, and convert strings to numeric values (ints/floats), leaving other entries unchanged or as NaN.",
+    "After data cleaning, take the ' Total $ Loss' column and compute its sum.",
+    "Divide this sum by 1,000,000 to express the result in millions of dollars and cast it to int.",
+    "Print the resulting integer representing the total money defrauded over all payment methods."
+]

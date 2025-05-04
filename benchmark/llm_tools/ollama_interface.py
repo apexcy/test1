@@ -61,8 +61,9 @@ class OllamaInterface(LLMInterface):
         formatted_instruction_prompts = CODE_UNDERSTANDING_PROMPT
         formatted_instruction_prompts.append({
             "role": "user",
-            "content": f"Problem statement: {task["query"]} \n Code Snippet: {code_string} \n Data sources: {json.dumps(task['data_sources'])} \n\n"
+            "content": f"Problem statement: {task['query']} \n Code Snippet: {code_string} \n Data sources: {json.dumps(task['data_sources'])} \n\n"
         })
+        return formatted_instruction_prompts
 
     def evaluate_paraphrase(self, system_answer: str, reference: str) -> Optional[bool]:
         messages = self._format_paraphrase_evaluation_messages(system_answer, reference)

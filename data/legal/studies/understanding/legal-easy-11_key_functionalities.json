@@ -1,0 +1,8 @@
+[
+    "Read the file 2024_CSN_Number_of_Reports_by_Type.csv while skipping the first two metadata rows.",
+    "Drop any rows that contain NaN values.",
+    "For every report-type column strip out the thousands separator ',' and cast the strings to integers.",
+    "Do a row-wise sum of every report-type count, giving the yearly total number of reports.",
+    "Compute the share of 'Other' reports for each year by dividing the 'Other' count by the yearly total.",
+    "Check whether the maximum value of the percentage is greater than 0.5; if so print 'Yes', otherwise print No."
+]

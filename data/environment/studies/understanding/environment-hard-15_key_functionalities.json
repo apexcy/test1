@@ -1,0 +1,11 @@
+[
+    "Loop through yearly CSV files water-body-testing-2020\u20132023 and read each into a dataframe.",
+    "Keep only rows where Beach Type Description == 'Fresh' to restrict analysis to fresh-water beaches.",
+    "Standardize the Beach Name by splitting on '@' and retaining the first part so the same beach is counted once across years.",
+    "For every year, compute per-beach sample count and per-beach violation count (rows whose Violation column equals 'yes' case-insensitively).",
+    "Calculate the yearly exceedance rate for each beach as violations / total samples and store it in a column Exceedance Rate <year>.",
+    "Keep only the Beach Name and its yearly exceedance-rate column; collect these per-year dataframes in a list.",
+    "Inner-merge the yearly dataframes on Beach Name so that only beaches appearing in every year 2020\u20132023 are retained, satisfying the \u2018measured in all years\u2019 requirement.",
+    "Across the retained yearly rate columns, compute the row-wise mean to obtain each beach\u2019s average exceedance rate since 2020.",
+    "Sort beaches by this average exceedance rate in descending order and output the Beach Name with the highest value as the most polluted fresh-water beach."
+]

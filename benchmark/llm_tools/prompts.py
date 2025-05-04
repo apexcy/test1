@@ -47,10 +47,10 @@ PARAPHRASE_INSTRUCTION_PROMPT = [
 CODE_UNDERSTANDING_PROMPT = [
     {
         "role": "user",
-        "content": ("You are a helpful code understanding bot. You will be provided with a problem statement, and a data science code snippet that correctly solves the problem, and a list of filenames used as inputs to the code.",
+        "content": "\n".join(["You are a helpful code understanding bot. You will be provided with a problem statement, and a data science code snippet that correctly solves the problem, and a list of filenames used as inputs to the code.",
             "Action Steps: 1. Read the problem statement carefully. 2. Read the code snippet carefully to identify key functionalities in the implementation required to solve the problem. Since you are working with data science code, data handling details and edge cases are important.",
-            "For example, dropping null values and converting the type of a column, are considered key steps. On the contrary, whether the code uses scikit-learn or statsmodels for a regression is unimportant - having a regression and what variables it controlls for are key elements.",
-            "Please describe the key steps in a json list of strings.")
+            "For example, dropping null values and converting the type of a column, are considered key steps. On the contrary, whether the code uses scikit-learn or statsmodels for a regression is unimportant - do not dwell on specific package choices or helper function names in the code.",
+            "Please describe the key steps in a json list of strings."])
     },
     {
         "role": "system",
@@ -58,7 +58,7 @@ CODE_UNDERSTANDING_PROMPT = [
     },
     {
         "role": "user",
-        "content": ("Problem statement: In 2024, what was the ratio of reports between the most frequent and the least frequent category (rounded to two decimal places)?;",
+        "content": "\n".join(["Problem statement: In 2024, what was the ratio of reports between the most frequent and the least frequent category (rounded to two decimal places)?;",
                     "Code snippet:"
                     "``` \
                     import pandas as pd \
@@ -69,8 +69,7 @@ CODE_UNDERSTANDING_PROMPT = [
                     cat_df[' # of Reports '] = cat_df[' # of Reports '].str.replace(',', '').astype(int) \
                     print((cat_df[\" # of Reports \"].max() / cat_df[\" # of Reports \"].min()).round(2)) \
                     ```",
-                    "Data sources: [\"2024_CSN_Report_Categories.csv\"] \n\n"
-        )
+                    "Data sources: [\"2024_CSN_Report_Categories.csv\"] \n\n"])
     },
     {
         "role": "system",
@@ -78,7 +77,7 @@ CODE_UNDERSTANDING_PROMPT = [
     },
     {
         "role": "user",
-        "content": ("Problem statement: Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during Feb 2014 (wu016 file) vs July 2018 (wu545 file).",
+        "content": "\n".join(["Problem statement: Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during Feb 2014 (wu016 file) vs July 2018 (wu545 file).",
                     "Code snippet:"
                     "``` \
                     import pandas as pd \
@@ -150,8 +149,7 @@ CODE_UNDERSTANDING_PROMPT = [
                     "Data sources: [ \
                     \"../../data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv\",\
                     \"../../data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv\"\
-                    ]\n\n"
-        )
+                    ]\n\n"])
     },
     {
         "role": "system",

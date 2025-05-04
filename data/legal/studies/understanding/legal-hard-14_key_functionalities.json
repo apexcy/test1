@@ -1,0 +1,8 @@
+[
+    "Load new_england_states.csv to obtain the list of New-England state names.",
+    "Iterate over each state name, strip spaces, and read its corresponding State MSA Identity Theft data/<State>.csv file, skipping the first two header rows and dropping rows that are entirely NaN.",
+    "Clean the # of Reports column by removing thousands separators (commas) and casting the values to integers.",
+    "Sort the combined dataframe in descending order of # of Reports.",
+    "Remove duplicate Metropolitan Area entries, keeping the first (highest-report) occurrence for each metro area.",
+    "Select the first five rows after de-duplication and output their Metropolitan Area values as the top-5 list."
+]

@@ -1,0 +1,7 @@
+[
+    "Read every CSV inside 'State MSA Identity Theft data', skipping the two-row header, drop NAs, and add a column of state name extracted from the filename so each metro entry is tagged with its state.",
+    "Clean the '# of Reports' column by stripping comma thousands separators and converting the values to integers.",
+    "Filter the combined data to keep only those states that have more than one metropolitan-area record.",
+    "Within each remaining state, compute the share of identity-theft reports contributed by each metro: fraction_of_state = # of Reports / (state-level total # of Reports).",
+    "Sort the rows by this share in descending order and pick the top row; output the associated state_name."
+]

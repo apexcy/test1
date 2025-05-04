@@ -1,0 +1,8 @@
+[
+    "Load the custom-formatted CSV file \"2024_CSN_Fraud_Reports_by_Amount_Lost.csv\"",
+    "Strip commas in quoted strings, remove quotes and blank lines,  handle table titles, deal with different csv blocks",
+    "From the parsed attributes, read the scalar value in \"Reports with $ Loss\" and cast it to numeric.",
+    "Locate the embedded sub-table \"Reported Fraud Losses in $1 - $1000 Range\" and iterate over its rows.",
+    "Within that sub-table sum the counts whose loss-range label is one of: $1-$100, $101-$200, $201-$300, $301-$400, $401-$500 to get the total below $500.",
+    "Compute the proportion of fraud reporters who lost between $1\u2013$500 by dividing total_below_500 by total_reports and print the resulting float."
+]
