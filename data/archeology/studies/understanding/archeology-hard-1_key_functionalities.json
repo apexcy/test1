@@ -1,5 +1,5 @@
 [
-    "Load the two Excel workbooks (radio-carbon data and climate measurements) and read the first worksheet of each.",
+    "Load the radiocarbon_database_regional.xlsx and climateMeasurements.xlsx and read the first worksheet of each.",
     "Remove rows or columns that are entirely NaN from both dataframes to ensure clean numeric processing.",
     "Convert both chronologies to calendar years: for the radio-carbon table get the year as 1950 minus the \u2018date\u2019",
     "Convert both chronologies to calendar years: for the climate table get the year as 1950 minus the rounded \u2018Age_ky.1\u2019 (in thousands of years) multiplied by 1000.",
