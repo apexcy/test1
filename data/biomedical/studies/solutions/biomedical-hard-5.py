@@ -17,6 +17,7 @@ case_df[case_df['idx']==min_idx]['Age']
 
 import numpy as np
 serous_df = case_df[case_df['Histologic_type'] == 'Serous']
+serous_cases = serous_df['idx'].tolist()
 tmb_df = tmb_df[tmb_df['idx'].isin(serous_cases)]
 vpm = tmb_df['Log2_variant_per_Mbp'].values
 vpm = 2**vpm
