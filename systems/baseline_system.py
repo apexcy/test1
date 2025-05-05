@@ -104,7 +104,7 @@ class BaselineLLMSystem(System):
             data_string += "\n"+ "="*20 + "\n"
         return data_string
     
-    def generate_error_handling_prompt(self, code_fp:str, error_fp:str) -> str:
+    def generate_error_handling_prompt(self, code_fp: str, error_fp: str, output_fp: str) -> str:
         """
         Generate a prompt for the LLM to handle errors in the code.
         :param code_fp: Path to the code file
@@ -115,6 +115,8 @@ class BaselineLLMSystem(System):
             code = f.read()
         with open(error_fp, 'r') as f:
             errors = f.read()
+        with open(output_fp, 'r') as f:
+            outputs = f.read()
 
         prompt = f"""
         Your task is to fix the following Python code based on the provided error messages.
@@ -123,6 +125,9 @@ class BaselineLLMSystem(System):
 
         Errors:
         {errors}
+
+        Output:
+        {outputs}
 
         Please provide the fixed code. 
         Mark the code with ````python` and ````python` to indicate the start and end of the code block.
@@ -399,7 +404,7 @@ class BaselineLLMSystem(System):
             # print("Execution Result:", result)
 
             if os.path.getsize(error_fp) > 0:
-                prompt = self.generate_error_handling_prompt(code_fp, error_fp)
+                prompt = self.generate_error_handling_prompt(code_fp, output_fp, error_fp)
             else:
                 # Fill in JSON response with the execution result
                 answer = self.process_response(json_fp, output_fp, error_fp=None)

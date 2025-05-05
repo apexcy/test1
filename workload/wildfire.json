@@ -339,7 +339,7 @@
                 "id": "wildfire-easy-15-1",
                 "query": "Calculate the correlation coefficient between the size of a fire and the median wind speed in the area in Julies based on NOAA data.",
                 "answer": -0.01,
-                "answer_type": "number_approximate",
+                "answer_type": "numeric_approximate",
                 "data_sources": [ "noaa_wildfires.csv", "noaa_wildfires_variabledescrip.csv" ]
             }
         ],
