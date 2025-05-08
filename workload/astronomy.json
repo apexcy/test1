@@ -108,7 +108,7 @@
     },
     {
         "id": "astronomy-easy-2",
-        "query": "Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 (wu016 file) vs July 2018 (wu545 file).",
+        "query": "Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 vs July 2018.",
         "answer": 7.52,
         "answer_type": "numeric_exact",
         "runtime": 0.1,
@@ -456,7 +456,7 @@
     },
     {
         "id": "astronomy-easy-5",
-        "query": "Estimate the total count of satellite major altitude changes (change of altitude > 1000m within 12h) for satellite 48445 during 2024 using TLE history. Use skifield's itrf_xyz to estimate altitude from TLE.The TLE file in located in the input/TLE folder, with format <NORAD_ID>.tle.",
+        "query": "Estimate the total count of satellite major altitude changes (change of altitude > 1000m within 12h) for satellite 48445 during 2024 using TLE history. Use skifield's itrf_xyz to estimate altitude from TLE.",
         "answer": 2,
         "answer_type": "numeric_exact",
         "runtime": 1,
