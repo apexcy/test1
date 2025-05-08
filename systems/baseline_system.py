@@ -2,7 +2,7 @@ import sys
 sys.path.append('./')
 from typeguard import typechecked
 
-from systems.generator_util import Generator
+from systems.generator_util import Generator, OllamaGenerator
 from benchmark.benchmark_api import System
 from utils.baseline_utils import * 
 
@@ -342,7 +342,7 @@ class BaselineLLMSystem(System):
             {"role": "system", "content": "You are an experienced data scientist."},
             {"role": "user", "content": prompt}
         ]
-        response = call_gpt(messages)
+        response = self.llm(messages)
         if self.debug:
             print(f"{self.name}: Response:", response)
 
@@ -389,7 +389,7 @@ class BaselineLLMSystem(System):
         for try_number in range(5):
             messages.append({"role": "user", "content": prompt})
             # Get the model's response
-            response = call_gpt(messages)
+            response = self.llm(messages)
             if self.debug:
                 print(f"{self.name}: Response:", response)
             messages.append({"role": "assistant", "content": response})
@@ -449,6 +449,17 @@ class BaselineLLMSystem(System):
         elif self.variance == "few_shot":
             output_dict = self.run_few_shot(query, query_id)
         return output_dict
+
+
+class BaselineLLMSystemOllama(BaselineLLMSystem):
+    """
+    A baseline system that uses a large language model (LLM) to process datasets and serve queries.
+    """
+
+    def __init__(self, model: str, name="baseline", *args, **kwargs):
+        super().__init__(name, *args, **kwargs)
+        self.llm = OllamaGenerator(model=model)
+
 
 def main():
     # Example usage

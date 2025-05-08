@@ -4,6 +4,8 @@ This file contains the Generator classes and generator factory.
 from __future__ import annotations
 
 import os
+import time
+import ollama
 
 from openai import OpenAI
 
@@ -57,6 +59,52 @@ class Generator():
             raise Exception(f"Unsupported model: {self.model}")
         
 
+    # GV: This function is the call_gpt function from the baseline_utils.py file. But for Ollama we substitute it
+    def __call__(messages, model="gpt-4o"):
+    
+        max_retries = 5
+        retry_count = 0
+        fatal = False
+        fatal_reason = None
+        while retry_count < max_retries:
+            try:
+                ################### use to be openai.Completion.create(), now ChatCompletion ###################
+                ################### also parameters are different, now messages=, used to be prompt= ###################
+                # note deployment_id=... not model=...
+                result = self.client.chat.completions.create(
+                    model=model,
+                    messages=messages,
+                    temperature=0.2,
+                )
+                
+                break # break out of while loop if no error
+            
+            except Exception as e:
+                print(f"An error occurred: {e}.")
+                if "context_length_exceeded" in f"{e}":
+                    fatal = True
+                    fatal_reason = f"{e}"
+                    break
+                else:
+                    print("Retrying...")
+                    retry_count += 1
+                    time.sleep(10 * retry_count)  # Wait 
+        
+        if fatal:
+            print(f"Fatal error occured. ERROR: {fatal_reason}")
+            res = f"Fatal error occured. ERROR: {fatal_reason}"
+        elif retry_count == max_retries:
+            print("Max retries reached. Skipping...")
+            res = "Max retries reached. Skipping..."
+        else:
+            try:
+                res = result.choices[0].message.content
+            except Exception as e:
+                print("Error:", e)
+                res = ""
+            #print(res)
+        return res
+
 def pdf_to_text(pdf_path: str) -> str:
     with open(pdf_path, "rb") as file:
         reader = PyPDF2.PdfReader(file)
@@ -65,3 +113,60 @@ def pdf_to_text(pdf_path: str) -> str:
             text += page.extract_text()
         return text
 
+class OllamaGenerator(Generator):
+    def __init__(self, model: str, 
+                verbose=False,
+                server_url="http://localhost:11434",
+                *args, 
+                **kwargs
+                ):
+        super().__init__(model, verbose)
+        self.model = model
+        self.client = ollama.Client(host=server_url)
+
+
+    def __call__(self, messages):
+
+        max_retries = 5
+        retry_count = 0
+        fatal = False
+        fatal_reason = None
+        while retry_count < max_retries:
+
+            try:
+                response = self.client.chat(
+                    model=self.model,
+                    messages=messages,
+                    stream=False,
+                )
+                if not response["done"]:
+                    logging.warning("WARNING - Conversation kept going! Maybe output is truncated.")
+                else:
+                    logging.error("ERROR - Model is done but response not stopped")
+                break
+
+            except Exception as e:
+                print(f"An error occurred: {e}.")
+                if "context_length_exceeded" in f"{e}":
+                    fatal = True
+                    fatal_reason = f"{e}"
+                    break
+                else:
+                    print("Retrying...")
+                    retry_count += 1
+                    time.sleep(10 * retry_count)  # Wait 
+        
+        if fatal:
+            print(f"Fatal error occured. ERROR: {fatal_reason}")
+            res = f"Fatal error occured. ERROR: {fatal_reason}"
+        elif retry_count == max_retries:
+            print("Max retries reached. Skipping...")
+            res = "Max retries reached. Skipping..."
+        else:
+            try:
+                res = response["message"]["content"]
+            except Exception as e:
+                print("Error:", e)
+                res = ""
+            #print(res)
+        return res
