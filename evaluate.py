@@ -79,16 +79,17 @@ def aggregate_results(system_name, results_df):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sut", type=str, default="BaselineLLMSystemGPT4oFewShot", help="The system under test.")
-    parser.add_argument("--dataset_name", type=str, default="biomedical", help="Name of dataset.")
-    parser.add_argument("--workload_filename", type=str, default="biomedical.json", help="Name of workload JSON file.")
+    parser.add_argument("--sut", type=str, default="BaselineLLMSystemGPT4oNaive", help="The system under test.")
+    parser.add_argument("--dataset_name", type=str, default="legal", help="Name of dataset.")
+    parser.add_argument("--workload_filename", type=str, default="legal-tiny.json", help="Name of workload JSON file.")
     parser.add_argument("--result_directory", type=str, default="results", help="Directory to store benchmark results.")
     parser.add_argument("--task_fixtures", type=str, default="benchmark/fixtures", help="Directory containing task fixture files.")
     parser.add_argument("--project_root", type=str, default=os.getcwd(), help="Project root.")
-    parser.add_argument("--use_system_cache", action="store_true", default=True, help="Use cached system outputs if available.")
+    parser.add_argument("--use_system_cache", action="store_true", default=False, help="Use cached system outputs if available.")
     parser.add_argument("--use_evaluation_cache", action="store_true", default=False, help="Use cached per-task evaluations if available.")
     parser.add_argument("--cache_system_output", action="store_true", default=True, help="Cache system output.")
     parser.add_argument("--verbose", action="store_true", default=False, help="Verbose logging.")
+    parser.add_argument("--skip_subtasks", action="store_true", default=False, help="Skips subtasks.")
     args = parser.parse_args()
 
     system_name = args.sut
