@@ -460,7 +460,6 @@ class BaselineLLMSystemOllama(BaselineLLMSystem):
         super().__init__(name, *args, **kwargs)
         self.llm = OllamaGenerator(model=model)
 
-
 def main():
     # Example usage
     current_dir = os.path.dirname(os.path.abspath(__file__))

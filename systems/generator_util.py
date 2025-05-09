@@ -2,6 +2,7 @@
 This file contains the Generator classes and generator factory.
 """
 from __future__ import annotations
+import logging
 
 import os
 import time
@@ -14,7 +15,7 @@ from together import Together
 import PyPDF2
 
 OpenAIModelList = ["gpt-4o", "gpt-4o-mini", "gpt-4o-v", "gpt-4o-mini-v"]
-TogetherModelList = ["google/gemma-2b-it", "meta-llama/Llama-2-13b-chat-hf", "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"]
+TogetherModelList = ["google/gemma-2b-it", "meta-llama/Llama-2-13b-chat-hf", "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B","google/gemma-3-27b-it", "deepseek-ai/DeepSeek-R1", "Qwen/Qwen2.5-Coder-32B-Instruct", "meta-llama/Llama-3.3-70B-Instruct-Turbo"]
 
 def get_api_key(key: str) -> str:
     # get API key from environment or throw an exception if it's not set
@@ -60,7 +61,7 @@ class Generator():
         
 
     # GV: This function is the call_gpt function from the baseline_utils.py file. But for Ollama we substitute it
-    def __call__(messages, model="gpt-4o"):
+    def __call__(self, messages):
     
         max_retries = 5
         retry_count = 0
@@ -72,7 +73,7 @@ class Generator():
                 ################### also parameters are different, now messages=, used to be prompt= ###################
                 # note deployment_id=... not model=...
                 result = self.client.chat.completions.create(
-                    model=model,
+                    model=self.model,
                     messages=messages,
                     temperature=0.2,
                 )
@@ -137,12 +138,12 @@ class OllamaGenerator(Generator):
                 response = self.client.chat(
                     model=self.model,
                     messages=messages,
+                    format="json",
                     stream=False,
                 )
+                breakpoint()
                 if not response["done"]:
                     logging.warning("WARNING - Conversation kept going! Maybe output is truncated.")
-                else:
-                    logging.error("ERROR - Model is done but response not stopped")
                 break
 
             except Exception as e:
