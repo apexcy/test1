@@ -7,7 +7,19 @@
         "data_sources": [
             "noaa_wildfires_monthly_stats.csv"
         ],
-        "runtime": 30
+        "runtime": 30,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_geographic_areas.gpkg",
+            "usa.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_1.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv"
+        ]
     },
     "wildfire-easy-2": {
         "id": "wildfire-easy-2",
@@ -18,7 +30,19 @@
             "usa.gpkg",
             "nifc_geographic_areas.gpkg"
         ],
-        "runtime": 7
+        "runtime": 7,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_wildfires.csv",
+            "ZHVI.parquet",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_geographic_areas.gpkg",
+            "nifc_wildfires.csv",
+            "usa.gpkg",
+            "annual_aqi_by_county_2024.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "noaa_wildfires.csv"
+        ]
     },
     "wildfire-easy-3": {
         "id": "wildfire-easy-3",
@@ -32,7 +56,19 @@
             "usa.gpkg",
             "nifc_geographic_areas.gpkg"
         ],
-        "runtime": 10
+        "runtime": 10,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_wildfires.csv",
+            "nifc_lightning_caused_acres.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_geographic_areas.gpkg",
+            "nifc_wildfires.csv",
+            "usa.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "ZHVI.csv",
+            "noaa_wildfires.csv",
+            "Wildfire_Acres_by_State.csv"
+        ]
     },
     "wildfire-hard-4": {
         "id": "wildfire-hard-4",
@@ -43,7 +79,19 @@
             "nifc_suppression_costs.csv",
             "nifc_human_caused_acres.csv"
         ],
-        "runtime": 19
+        "runtime": 19,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "ZHVI.parquet",
+            "nifc_suppression_costs.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-5": {
         "id": "wildfire-hard-5",
@@ -54,7 +102,18 @@
             "noaa_wildfires_monthly_stats.csv",
             "nifc_wildfires.csv"
         ],
-        "runtime": 6
+        "runtime": 6,
+        "input_files_to_dr": [
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_wildfires.csv",
+            "usa.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "NST-EST2024-POP.xlsx",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_1.csv"
+        ]
     },
     "wildfire-hard-6": {
         "id": "wildfire-hard-6",
@@ -65,7 +124,19 @@
             "noaa_wildfires_monthly_stats.csv",
             "nifc_wildfires.csv"
         ],
-        "runtime": 8
+        "runtime": 8,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "nifc_lightning_caused_acres.csv",
+            "nifc_suppression_costs.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_geographic_areas.gpkg",
+            "nifc_wildfires.csv",
+            "usa.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "noaa_wildfires.csv"
+        ]
     },
     "wildfire-hard-7": {
         "id": "wildfire-hard-7",
@@ -76,7 +147,19 @@
             "nifc_human_caused_acres.csv",
             "nifc_lightning_caused_acres.csv"
         ],
-        "runtime": 1
+        "runtime": 1,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "nifc_lightning_caused_acres.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_geographic_areas.gpkg",
+            "NST-EST2024-POP.xlsx",
+            "cleaned_helicopter_requests_by_region.csv",
+            "ZHVI.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "Wildfire_Acres_by_State.csv"
+        ]
     },
     "wildfire-easy-8": {
         "id": "wildfire-easy-8",
@@ -86,17 +169,40 @@
         "data_sources": [
             "Fire_Weather_Data_2002-2014_2016.csv"
         ],
-        "runtime": 1
+        "runtime": 1,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_acres.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_wildfires.csv",
+            "usa.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "NST-EST2024-POP.xlsx",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "Wildfire_Fires_by_State.csv"
+        ]
     },
     "wildfire-easy-9": {
         "id": "wildfire-easy-9",
         "query": "How many more or less fatalities occurred due to wildfires on days with humidity less than 30% compared to the average? Positive numbers indicate more, and negative numbers will indicate less. Round to four decimal places.",
-        "answer": -0.0240,
+        "answer": -0.024,
         "answer_type": "numeric_approximate",
         "data_sources": [
             "Fire_Weather_Data_2002-2014_2016.csv"
         ],
-        "runtime": 8
+        "runtime": 8,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_acres.csv",
+            "ZHVI.parquet",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "Wildfire_Fires_by_State.csv",
+            "Wildfire_Acres_by_State.csv"
+        ]
     },
     "wildfire-hard-10": {
         "id": "wildfire-hard-10",
@@ -108,7 +214,19 @@
             "democratic_vs_republican_votes_by_usa_state_2020.csv",
             "wildfire_total_fires_p45_54.csv"
         ],
-        "runtime": 2
+        "runtime": 2,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "nifc_human_caused_wildfires.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "noaa_wildfires.csv",
+            "Wildfire_Fires_by_State.csv",
+            "Wildfire_Acres_by_State.csv"
+        ]
     },
     "wildfire-hard-11": {
         "id": "wildfire-hard-11",
@@ -118,7 +236,19 @@
         "data_sources": [
             "Wildfire_Acres_by_State.csv"
         ],
-        "runtime": 11
+        "runtime": 11,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "ZHVI.parquet",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_wildfires.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_1.csv",
+            "Wildfire_Acres_by_State.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-12": {
         "id": "wildfire-hard-12",
@@ -128,7 +258,19 @@
         "data_sources": [
             "Fire_Weather_Data_2002-2014_2016.csv"
         ],
-        "runtime": 10
+        "runtime": 10,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "ZHVI.parquet",
+            "nifc_suppression_costs.csv",
+            "nifc_human_caused_wildfires.csv",
+            "annual_aqi_by_county_2024.csv",
+            "NST-EST2024-POP.xlsx",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-easy-13": {
         "id": "wildfire-easy-13",
@@ -138,7 +280,19 @@
         "data_sources": [
             "cleaned_helicopter_requests_by_region.csv"
         ],
-        "runtime": 7
+        "runtime": 7,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_wildfires.csv",
+            "ZHVI.parquet",
+            "noaa_wildfires_monthly_stats.csv",
+            "usa.gpkg",
+            "NST-EST2024-POP.xlsx",
+            "noaa_wildfires_variabledescrip.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-14": {
         "id": "wildfire-hard-14",
@@ -149,7 +303,18 @@
             "Wildfire_Acres_by_State.csv",
             "annual_aqi_by_county_2024.csv"
         ],
-        "runtime": 7
+        "runtime": 7,
+        "input_files_to_dr": [
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_wildfires.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "noaa_wildfires.csv",
+            "Wildfire_Fires_by_State.csv",
+            "Wildfire_Acres_by_State.csv"
+        ]
     },
     "wildfire-easy-15": {
         "id": "wildfire-easy-15",
@@ -160,7 +325,18 @@
             "noaa_wildfires.csv",
             "noaa_wildfires_variabledescrip.csv"
         ],
-        "runtime": 5
+        "runtime": 5,
+        "input_files_to_dr": [
+            "nifc_human_caused_acres.csv",
+            "nifc_suppression_costs.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_geographic_areas.gpkg",
+            "usa.gpkg",
+            "noaa_wildfires_variabledescrip.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-16": {
         "id": "wildfire-hard-16",
@@ -174,19 +350,42 @@
             "noaa_wildfires.csv",
             "noaa_wildfires_variabledescrip.csv"
         ],
-        "runtime": 9
+        "runtime": 9,
+        "input_files_to_dr": [
+            "nifc_lightning_caused_wildfires.csv",
+            "nifc_human_caused_acres.csv",
+            "nifc_lightning_caused_acres.csv",
+            "nifc_suppression_costs.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_human_caused_wildfires.csv",
+            "nifc_geographic_areas.gpkg",
+            "nifc_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "noaa_wildfires.csv"
+        ]
     },
     "wildfire-hard-17": {
         "id": "wildfire-hard-17",
         "query": "What is the average elevation (in feet) of the weather stations used for fire site monitoring in the NOAA dataset?",
-        "answer": 4830.9,
+        "answer": 3500,
         "answer_type": "numeric_approximate",
         "data_sources": [
             "noaa_wildfires.csv",
             "noaa_wildfires_variabledescrip.csv",
             "PublicView_RAWS_-3515561676727363726.csv"
         ],
-        "runtime": 0.1
+        "runtime": 48,
+        "input_files_to_dr": [
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "nifc_wildfires.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-18": {
         "id": "wildfire-hard-18",
@@ -197,7 +396,18 @@
             "noaa_wildfires.csv",
             "noaa_wildfires_variabledescrip.csv"
         ],
-        "runtime": 11
+        "runtime": 11,
+        "input_files_to_dr": [
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "nifc_suppression_costs.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "NST-EST2024-POP.xlsx",
+            "noaa_wildfires_variabledescrip.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-19": {
         "id": "wildfire-hard-19",
@@ -209,7 +419,18 @@
             "noaa_wildfires_variabledescrip.csv",
             "WeatherEvents_Jan2016-Dec2022.csv"
         ],
-        "runtime": 57
+        "runtime": 57,
+        "input_files_to_dr": [
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "noaa_wildfires_monthly_stats.csv",
+            "wildfire_total_fires_p45_54.csv",
+            "NST-EST2024-POP.xlsx",
+            "noaa_wildfires_variabledescrip.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_1.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_3.csv",
+            "noaa_wildfires.csv"
+        ]
     },
     "wildfire-hard-20": {
         "id": "wildfire-hard-20",
@@ -220,7 +441,19 @@
             "noaa_wildfires.csv",
             "noaa_wildfires_variabledescrip.csv"
         ],
-        "runtime": 12
+        "runtime": 12,
+        "input_files_to_dr": [
+            "nifc_suppression_costs.csv",
+            "nifc_geographic_areas.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "annual_aqi_by_county_2024.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "WeatherEvents_Jan2016-Dec2022_part_2.csv",
+            "noaa_wildfires.csv",
+            "Wildfire_Fires_by_State.csv",
+            "state_abbreviation_to_state.json"
+        ]
     },
     "wildfire-hard-21": {
         "id": "wildfire-hard-21",
@@ -228,7 +461,7 @@
         "answer": [
             "Nevada",
             "California",
-            "Massachusetts"
+            "Arizona"
         ],
         "answer_type": "list_exact",
         "data_sources": [
@@ -236,6 +469,17 @@
             "noaa_wildfires_variabledescrip.csv",
             "ZHVI.csv"
         ],
-        "runtime": 0.5
+        "runtime": 3,
+        "input_files_to_dr": [
+            "ZHVI.parquet",
+            "nifc_suppression_costs.csv",
+            "nifc_geographic_areas.gpkg",
+            "wildfire_total_fires_p45_54.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "cleaned_helicopter_requests_by_region.csv",
+            "ZHVI.csv",
+            "noaa_wildfires.csv",
+            "Wildfire_Fires_by_State.csv"
+        ]
     }
 }
