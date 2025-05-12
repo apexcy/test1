@@ -1191,7 +1191,7 @@
                     215,
                     58
                 ],
-                "answer_type": "list",
+                "answer_type": "list_exact",
                 "data_sources": [
                     "STORM-AI/warmup/v2/OMNI2/omni2-wu590-20181001_to_20181130.csv",
                     "STORM-AI/warmup/v2/Sat_Density/swarma-wu???-201810??_to_201810??.csv",
@@ -1205,7 +1205,7 @@
                     "Proton_flux_>30_Mev",
                     -0.193
                 ],
-                "answer_type": "list",
+                "answer_type": "list_exact",
                 "data_sources": [
                     "STORM-AI/warmup/v2/OMNI2/omni2-wu590-20181001_to_20181130.csv",
                     "STORM-AI/warmup/v2/Sat_Density/swarma-wu???-201810??_to_201810??.csv",
@@ -1292,7 +1292,7 @@
                     17544,
                     55
                 ],
-                "answer_type": "list",
+                "answer_type": "list_exact",
                 "data_sources": [
                     "omni2_low_res/omni2_2024.dat",
                     "omni2_low_res/omni2_2023.dat",
@@ -1306,7 +1306,7 @@
                     8780,
                     7
                 ],
-                "answer_type": "list",
+                "answer_type": "list_exact",
                 "data_sources": [
                     "swarmb/SB_DNS_POD_2024_*.txt"
                 ]
@@ -1436,7 +1436,7 @@
                     233280,
                     3
                 ],
-                "answer_type": "list",
+                "answer_type": "list_exact",
                 "data_sources": [
                     "swarm/POD/SW_OPER_SP3ACOM_2__201909??T????_201909??T????_0201/*.sp3"
                 ]
