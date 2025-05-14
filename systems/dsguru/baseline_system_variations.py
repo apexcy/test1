@@ -33,6 +33,39 @@ class BaselineLLMSystemGPT4oNaive(BaselineLLMSystem):
             *args, **kwargs
         )
 
+class BaselineLLMSystemGPTo3FewShot(BaselineLLMSystem):
+    def __init__(self, verbose=False, *args, **kwargs):
+        super().__init__(
+            model="gpt-o3",
+            name="BaselineLLMSystemGPTo3FewShot",
+            variance="few_shot",
+            verbose=verbose,
+            supply_data_snippet=True,
+            *args, **kwargs
+        )
+
+class BaselineLLMSystemGPTo3OneShot(BaselineLLMSystem):
+    def __init__(self, verbose=False, *args, **kwargs):
+        super().__init__(
+            model="gpt-o3",
+            name="BaselineLLMSystemGPTo3OneShot",
+            variance="one_shot",
+            verbose=verbose,
+            supply_data_snippet=True,
+            *args, **kwargs
+        )
+
+class BaselineLLMSystemGPTo3Naive(BaselineLLMSystem):
+    def __init__(self, verbose=False, *args, **kwargs):
+        super().__init__(
+            model="gpt-o3",
+            name="BaselineLLMSystemGPTo3Naive",
+            variance="one_shot",
+            verbose=verbose,
+            supply_data_snippet=False,
+            *args, **kwargs
+        )
+
 class BaselineLLMSystemDeepseekR1FewShot(BaselineLLMSystem):
     def __init__(self, verbose=False, *args, **kwargs):
         super().__init__(model="deepseek-ai/DeepSeek-R1",
