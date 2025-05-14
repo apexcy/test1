@@ -111,7 +111,7 @@
         ],
         "subtasks": [
             {
-                "id": "legal-easy-2-1",
+                "id": "legal-hard-2-1",
                 "query": "What files do you need to read to answer the above question? If it's an entire directory `my_dir`, give the answer as `my_dir/*`.",
                 "answer": [
                     "metropolitan_statistics.html",
