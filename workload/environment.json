@@ -1448,26 +1448,26 @@
       {
         "id": "environment-hard-14-6",
         "step": "For Fresh rainfall: repeat the same procedure for Boston, Chatham, Amherst and Ashburnham, then average the four cities year-wise.",
-        "query": "```\nWhat are the average summer rainfall totals for the fresh water locations?\n```",
-        "answer": "",
-        "answer_type": "",
-        "data_sources": ""
+        "query": "What are the average summer rainfall totals for the fresh water locations?",
+        "answer": [ 8.2925, 13.6125, 16.18  ],
+        "answer_type": "list_exact",
+        "data_sources": ["monthly_precipitations_*.csv"]
       },
       {
         "id": "environment-hard-14-7",
         "step": "Calculate the Pearson correlation between the 3-year exceedance-rate vector and the 3-year rainfall vector for Marine beaches and Fresh beaches respectively.",
-        "query": "**Question:** What are the Pearson correlation coefficients between the yearly exceedance rates and the yearly rainfall for marine and fresh beaches, respectively?\n**Expected answer:** `[marine_rain_corr, fresh_rain_corr]`",
-        "answer": "",
-        "answer_type": "",
-        "data_sources": ""
+        "query": "What are the Pearson correlation coefficients between the yearly exceedance rates and the yearly rainfall for marine and fresh beaches, respectively? Expected answer: [marine_rain_corr, fresh_rain_corr]",
+        "answer": [0.992617994979783,  0.13833234337177622],
+        "answer_type": "list_exact",
+        "data_sources": ["monthly_precipitations_*.csv"]
       },
       {
         "id": "environment-hard-14-8",
         "step": "Compare the correlation coefficients to determine which beach type shows the higher summer rainfall-exceedance correlation.",
-        "query": "What are the correlation coefficients between exceedance rate and rainfall for marine and fresh beaches?\nExpected answer: [0.234, 0.890]",
-        "answer": "",
-        "answer_type": "",
-        "data_sources": ""
+        "query": "Which beach type has the higher summer rainfall-exceendance correlation?",
+        "answer": "Marine",
+        "answer_type": "string_exact",
+        "data_sources": ["monthly_precipitations_*.csv"]
       }
     ]
   },
