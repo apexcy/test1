@@ -92,7 +92,7 @@
         "query": "What are the unique states in the US geo data that intersect with each NIFC geographic area? Provide the answer for each NIFC area in the following format [[area,list of states], [area, list of states], ...].",
         "answer": [["Eastern Area Coordination Center", ["Virginia", "Rhode Island", "Oklahoma", "Massachusetts", "New York", "Arkansas", "South Dakota", "Maine", "Iowa", "District of Columbia", "New Jersey", "Vermont", "West Virginia", "Ohio", "Michigan", "Wisconsin", "Illinois", "Kentucky", "Maryland", "North Dakota", "Pennsylvania", "Kansas", "Delaware", "Missouri", "Tennessee", "New Hampshire", "Connecticut", "Minnesota", "Nebraska", "Indiana"]], ["Southern Area Coordination Center", ["Virginia", "Oklahoma", "Colorado", "Arkansas", "Louisiana", "New Mexico", "District of Columbia", "Alabama", "Georgia", "Texas", "West Virginia", "Ohio", "North Carolina", "Illinois", "South Carolina", "Kentucky", "Florida", "Maryland", "Kansas", "Missouri", "Tennessee", "Mississippi", "Indiana"]], ["Rocky Mountain Area Coordination Center", ["Kansas", "Missouri", "Idaho", "New Mexico", "Oklahoma", "Iowa", "Colorado", "Wyoming", "Utah", "Minnesota", "Nebraska", "North Dakota", "South Dakota", "Montana"]], ["Great Basin Coordination Center", ["Idaho", "Oregon", "Arizona", "Colorado", "Wyoming", "Utah", "California", "Nevada", "Montana"]], ["Southwest Area Coordination Center", ["New Mexico", "Oklahoma", "Arizona", "Colorado", "Utah", "California", "Texas", "Nevada"]], ["Northern Rockies Coordination Center", ["Idaho", "Oregon", "Washington", "Wyoming", "Minnesota", "North Dakota", "South Dakota", "Montana"]], ["Northwest Interagency Coordination Center", ["Idaho", "Oregon", "Washington", "California", "Nevada"]], ["Northern California Geographic Area Coordination Center", ["Alaska", "Oregon", "California", "Hawaii", "Nevada"]], ["Southern California Coordination Center", ["Nevada", "California"]], ["Alaska Interagency Coordination Center", ["Alaska"]]],
         "answer_type": "list_exact",
-        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"],
+        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"]
       },
       {
         "id": "wildfire-easy-2-5",
@@ -100,7 +100,7 @@
         "query": "What is the highest number of states intersecting with a single NIFC geographic area?",
         "answer": 30,
         "answer_type": "numeric_exact",
-        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"],
+        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"]
       },
       {
         "id": "wildfire-easy-2-6",
@@ -108,7 +108,7 @@
         "query": "What is the area abbrevation for the NIFC geographic area(s) intersecting with the most states?",
         "answer": "EACC",
         "answer_type": "string_exact",
-        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"],
+        "data_sources": ["usa.gpkg", "nifc_geographic_areas.gpkg"]
       }
     ]
   },
@@ -522,7 +522,7 @@
         "id": "wildfire-hard-10-2",
         "step": "Read 2020 election results (democratic_vs_republican_votes_by_usa_state_2020.csv)",
         "query": "What file contains 2020 election results?",
-        "answer": "democratic_vs_republican_votes_by_usa_state_2020.csv",,
+        "answer": "democratic_vs_republican_votes_by_usa_state_2020.csv",
         "answer_type": "string_exact",
         "data_sources": ["./"]
       },
