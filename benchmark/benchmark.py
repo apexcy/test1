@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import time
 from rouge_score import rouge_scorer
 from typeguard import typechecked
 from typing import Any, Dict, List, Optional
@@ -59,7 +60,9 @@ class Executor:
             query = f"Your end goal is to answer this overall question: {parent_task_query}, please answer the following question:\n {task['query']} \n\n"
         else:
             query = task["query"]
+        start_time = time.time()
         system_overall_response = self.system.serve_query(query=query, query_id=task["id"])
+        end_time = time.time()
         model_output = system_overall_response["explanation"]
         code_string = system_overall_response["pipeline_code"]
         response = {}
@@ -71,6 +74,7 @@ class Executor:
             for subtask in task["subtasks"]:
                 subresponse = self.run_task(task=subtask, parent_task_query=task["query"])
                 response["subresponses"].append(subresponse)
+        response["runtime"] = end_time - start_time
         return response
     
     def run_next_task(self):
@@ -293,7 +297,10 @@ class Benchmark:
             verbose: bool = False
         ):
         # Returns raw results from the system and evaluation results
+        processing_time = time.time()
         self.system.process_dataset(dataset_directory)
+        processing_time = time.time() - processing_time
+        print(f"Processing time: {processing_time:.2f} seconds")
         executor = Executor(
             system_name=self.system_name,
             system=self.system,
@@ -303,6 +310,11 @@ class Benchmark:
             skip_subtasks=self.skip_subtasks
         )
         results = executor.run_workload(use_system_cache=self.use_system_cache, cache_system_output=self.cache_system_output)
+        # Add processing time to each result
+        for task_result in results:
+            task_result["processing_time"] = processing_time/len(results)
+            task_result["combined_runtime"] = task_result["runtime"] + task_result["processing_time"]
+
         print("Evaluating results...")
         evaluator = Evaluator(
             workload_path=workload_path,

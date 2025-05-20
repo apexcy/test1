@@ -1,5 +1,4 @@
 import argparse
-import csv
 import datetime
 import json
 import numpy as np
@@ -177,7 +176,7 @@ def main():
 
     aggregated_df.to_csv(aggregated_results_path, index=False)
 
-    print(f"Done. Aggregated results:")
+    print("Done. Aggregated results:")
     print(aggregated_df[aggregated_df["workload"] == workload_name])
 
 
