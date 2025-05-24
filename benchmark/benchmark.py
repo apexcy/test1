@@ -158,7 +158,6 @@ class Evaluator:
     def __init__(
             self,
             workload_path: str | os.PathLike,
-            code_understanding_directory: str | os.PathLike,
             task_fixture_directory: str | os.PathLike,
             results_directory: str | os.PathLike,
             skip_subtasks: bool = True,
@@ -168,7 +167,6 @@ class Evaluator:
         evaluation methods of each type of task and response.
         """
         self.workload_path = workload_path
-        self.code_understanding_directory = code_understanding_directory
         self.task_fixture_directory = task_fixture_directory
         self.results_directory = results_directory
         with open(workload_path) as f:
@@ -242,17 +240,14 @@ class Evaluator:
             score = self.evaluate_response_with_metric(task["id"], response["model_output"], task["answer"], metric)
             evaluation_result[metric] = score
 
-        understanding_filepath = os.path.join(self.code_understanding_directory, f"{task['id']}_key_functionalities.json")
         code_eval_list = []
-        if os.path.exists(understanding_filepath): # code understanding asset only exists for main tasks
-            try:
-                code_eval_list = self.pipeline_evaluation_engine.evaluate_data_pipeline(
-                    understanding_filepath=understanding_filepath,
-                    sut_generated_pipeline=response["code"],
-                    task=task
-                )
-            except Exception as e:
-                logging.error(f"Evaluator._evaluate_result_for_task: {e} while calling LLM evaluator on code.")
+        try:
+            code_eval_list = self.pipeline_evaluation_engine.evaluate_data_pipeline(
+                sut_generated_pipeline=response["code"],
+                task=task
+            )
+        except Exception as e:
+            logging.error(f"Evaluator._evaluate_result_for_task: {e} while calling LLM evaluator on code.")
         evaluation_result["llm_code_eval"] = code_eval_list
 
         all_evaluation_results.append(evaluation_result)
@@ -303,7 +298,6 @@ class Benchmark:
             self,
             dataset_directory: str | os.PathLike,
             results_directory: str | os.PathLike,
-            code_understanding_directory: str | os.PathLike,
             workload_path: str | os.PathLike,
             verbose: bool = False
         ):
@@ -330,7 +324,6 @@ class Benchmark:
         print("Evaluating results...")
         evaluator = Evaluator(
             workload_path=workload_path,
-            code_understanding_directory=code_understanding_directory,
             task_fixture_directory=self.task_fixture_directory,
             results_directory=results_directory,
             skip_subtasks=self.skip_subtasks
