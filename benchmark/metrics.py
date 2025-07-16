@@ -203,7 +203,8 @@ class MeanRelativeAbsoluteError(Metric):
                 predicted = str_to_float(predicted)
             if isinstance(target, str):
                 target = str_to_float(target)
-            return abs(predicted - target) / abs(target)
+            rae = abs(predicted - target) / abs(target)
+            return 1/(1+rae)
         except Exception as e:
             logging.error(f"MeanRelativeAbsoluteError Metric: {e}")
             return 9999.0
