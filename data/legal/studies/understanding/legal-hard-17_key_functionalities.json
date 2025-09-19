@@ -1,9 +1,0 @@
-[
-    "Load 2024_CSN_Report_Count.csv (skipping first 2 rows) and drop rows with any NA values.",
-    "Convert the 'Year' column to integer and the '# of Reports' column to integer after removing comma thousand-separators.",
-    "Extract the total number of reports recorded for the year 2007 from the cleaned count table.",
-    "Load 2024_CSN_Report_Categories.csv (skipping first 2 rows) and drop rows with any NA values.",
-    "Locate the 'Auto Related' row in the category table, strip the trailing '%' from its 'Percentage' value, convert it to a decimal proportion.",
-    "Estimate the hypothetical 2007 Auto Related count by multiplying that 2024 proportion by the 2007 total reports and rounding to the nearest integer.",
-    "Print the resulting integer value."
-]

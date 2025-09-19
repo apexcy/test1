@@ -1,9 +1,0 @@
-[
-    "Load the 2024_CSN_Report_Categories.csv file while skipping the first two header rows and using unicode-escape encoding.",
-    "Drop any rows that contain missing values.",
-    "Clean the 'Percentage' column: remove the percent sign, convert the values to float, and divide by 100 so the column represents fractions.",
-    "Convert the 'Rank' column to integer type.",
-    "Sort the dataframe in descending order of the cleaned 'Percentage' so the most frequent categories appear first.",
-    "Compute a running cumulative sum of the sorted 'Percentage' values.",
-    "Locate the first index where this cumulative sum exceeds 0.5 (50% of all reports) and output its 'Rank' value. This rank equals the minimum number of top categories needed to reach at least half of the total reports."
-]

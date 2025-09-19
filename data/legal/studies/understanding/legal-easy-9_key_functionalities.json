@@ -1,8 +1,0 @@
-[
-    "Load 2024_CSN_Report_Count.csv while skipping the first two non-data rows.",
-    "Drop any rows that contain null values to ensure clean calculations.",
-    "Cast the Year column to integer so arithmetic and indexing work correctly.",
-    "Strip commas from the '# of Reports' strings, then convert that column to integers.",
-    "Compute the year-over-year difference for '# of Reports'",
-    "Locate the row with the maximum rel_diff (idxmax) and return its Year value as the answer."
-]

@@ -1,7 +1,0 @@
-[
-    "Iterate over the years 2002-2023 and read each yearly CSV (water-body-testing-<year>.csv).",
-    "Filter for rows where the column 'Beach Type Description' equals 'Marine'.",
-    "FIlter for rows where the column 'Violation' value (lower-case/normalized) is 'yes'.",
-    "Compute the exceedance rate as (number of violation rows) divided by (total marine rows) for each year.",
-    "Take the mean of the yearly rates after filtering to obtain the overall average rate for 2002-2023."
-]

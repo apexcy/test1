@@ -1,9 +1,0 @@
-[
-    "Load `2024_CSN_State_Top_Ten_Report_Categories.csv`.",
-    "Drop the first header line and last four footnote lines so that only data rows remain.",
-    "Use the first remaining row as the real header, strip whitespace from each column name, then remove that row from the data.",
-    "Convert the `# of Reports` numeric column from thousands-separated string to integers.",
-    "For every state group, sort its rows in descending order of `# of Reports` to identify the category with the highest count.",
-    "If the top category for that state is `'Identity Theft'`, record the state name.",
-    "After iterating through all states, print the final list."
-]

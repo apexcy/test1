@@ -1,8 +1,0 @@
-[
-    "Load 2024_CSN_Data_Contributors.csv trimming blank lines, detects the true header row, keeps only the contiguous data block.",
-    "Convert every cell to numeric when possible\u2014removing commas and dollar signs, and expanding K (\u00d71,000) or M (\u00d71,000,000) suffixes\u2014to ensure '# of Reports' and other numeric columns are proper numbers.",
-    "Select rows whose Year is between 2022 and 2024 (inclusive).",
-    "Select rows whose 'Data Contributor' string matches 'FTC - Web Reports (Fraud & Other)'.",
-    "Sum the '# of Reports' column for the rows that meet both conditions to obtain the total number of FTC web-reported fraud cases over 2022-2024.",
-    "Print the computed total."
-]

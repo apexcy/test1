@@ -1,8 +1,0 @@
-[
-    "For each region, read the corresponding monthly_precipitations_<region>.csv file.",
-    "Filter the dataframe for the record whose Year equals 2020.",
-    "Convert the monthly columns from string to float so they can be summed numerically.",
-    "Compute the total rainfall for that region by summing the Jun, Jul, and Aug columns.",
-    "Track the maximum total rainfall encountered and the associated region over all four regions.",
-    "Find the corresponding rainfall amount for the region with the highest summed rainfall for June-August 2020."
-]

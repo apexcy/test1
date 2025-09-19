@@ -1,7 +1,0 @@
-[
-    "Loop over every CSV in 'State MSA Identity Theft data', read each with skiprows=2 and drop rows that are all-NaN.",
-    "From the 'Metropolitan Area' field, extract the state portion (text after the comma) and keep only the first token.",
-    "Mark an MSA as cross-state possibly by checking whether the extracted state code string contains a hyphen ('-').",
-    "Clean the '# of Reports' column: remove thousands commas and convert the values to integer type.",
-    "Filter the cross-state rows and sum their '# of Reports' values to obtain the total cross-state Identity Theft reports for 2024."
-]

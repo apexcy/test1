@@ -1,7 +1,0 @@
-[
-    "Load the report-category counts from 2024_CSN_Report_Categories.csv (skip first 2 header rows, handle Unicode escapes).",
-    "Remove any rows that contain missing values.",
-    "Clean the '# of Reports' field: strip thousand-separator commas and convert the column to integers.",
-    "Determine the maximum and minimum report counts across all categories.",
-    "Compute the ratio max/min and round the result to two decimal places before output."
-]

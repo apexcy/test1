@@ -1,8 +1,0 @@
-[
-    "Load the file 2024_CSN_Number_of_Reports_by_Type.csv while skipping the first two non-data rows.",
-    "Drop any rows containing missing values.",
-    "For every other report-type column: remove thousands separators (commas) then cast the column to integer.",
-    "Create a total column that is the row-wise sum of all report-type counts.",
-    "Compute percentage as the Fraud column divided by the total column.",
-    "Select the rows where the percentage exceeds 0.5 (i.e., Fraud reports are more than 50% of total). Return the corresponding Year values from those rows as integers and print the resulting list."
-]
