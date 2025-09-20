@@ -106,15 +106,6 @@ results/aggregated_results.csv                      # one-row-per-domain summary
 
 ---
 
-## Dataset availability
-The dataset can be also found on HuggingFace at [this link](https://huggingface.co/datasets/eugenie-y/KramaBench)
-To use it in your scripts run 
-```
-from datasets import load_dataset
-
-kramabench = load_dataset("eugenie-y/kramabench")
-```
-
 
 ## Writing your own System Under Test (SUT)
 
@@ -155,9 +146,9 @@ DS-GURU is a minimalist agent that:
 If you use KramaBench in academic work, please cite the preprint:
 
 ```
-@misc{lai2025KramaBench,
+@misc{2025KramaBench,
   title  = {KramaBench: Evaluating End-to-End Data-Science Agents},
-  author = {Eugenie Lai and Gerardo Vitagliano and Ziyu Zhang and *et al.*},
+  author = {Anonymous Authors},
   year   = {2025},
 }
 ```
