@@ -77,6 +77,8 @@ class Executor:
                 if data_subset == "./":
                     data_subset = []
                 else: data_subset = [data_subset]
+            elif len(data_subset) == 1 and data_subset[0] == "./":
+                data_subset = []
         else:
             data_subset = []
 
