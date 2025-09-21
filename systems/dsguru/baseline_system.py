@@ -497,45 +497,57 @@ class BaselineLLMSystem(System):
 
     def process_dataset(self, dataset_directory: str | os.PathLike) -> None:
         """
-        Process the dataset located in the specified directory.
-        The dataset can contain files in various formats (e.g., PDF, CSV).
+        Recursively process all files under dataset_directory.
+        Keys in self.dataset are relative paths (subdir/file).
         """
         self.dataset_directory = dataset_directory
         self.dataset = {}
-        # read the files
-        for file in os.listdir(dataset_directory):
-            file_path = os.path.join(dataset_directory, file)
-            print(f"Loading file: {file_path}")
-            if file.endswith(".csv"):
-                try:
-                    self.dataset[file] = pd.read_csv(
-                        file_path,
-                        engine="python",
-                        on_bad_lines="skip",
-                    )
-                except UnicodeDecodeError:
+
+        for dirpath, _, filenames in os.walk(dataset_directory):
+            for fname in filenames:
+                rel_path = os.path.relpath(os.path.join(dirpath, fname), dataset_directory)
+                file_path = os.path.join(dirpath, fname)
+
+                print(f"Loading file: {file_path}")
+
+                if fname.lower().endswith(".csv"):
                     try:
-                        self.dataset[file] = pd.read_csv(
+                        self.dataset[rel_path] = pd.read_csv(
                             file_path,
                             engine="python",
                             on_bad_lines="skip",
-                            encoding="latin-1",
                         )
-                    except Exception as e:
-                        # fallback: read as plain text string
-                        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                            self.dataset[file] = f.read()
-                except Exception as e:
-                    # fallback: read as plain text string
-                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                        self.dataset[file] = f.read()
-            else:
-                # fallback for any non-CSV file: just read as text
+                        continue
+                    except UnicodeDecodeError:
+                        try:
+                            self.dataset[rel_path] = pd.read_csv(
+                                file_path,
+                                engine="python",
+                                on_bad_lines="skip",
+                                encoding="latin-1",
+                            )
+                            continue
+                        except Exception:
+                            pass
+                    except Exception:
+                        pass
+
+                # Try generic text read
                 try:
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                        self.dataset[file] = f.read()
+                        self.dataset[rel_path] = f.read()
+                    continue
+                except Exception:
+                    pass
+
+                # Try binary read
+                try:
+                    with open(file_path, "rb") as f:
+                        self.dataset[rel_path] = f.read()
+                    continue
                 except Exception as e:
-                    print(f"Error reading file {file_path}: {e}; skipping.")
+                    print(f"Error reading {file_path}: {e}")
+                    #self.dataset[rel_path] = None  # Mark as failed
 
     @typechecked
     def serve_query(self, query: str, query_id: str = "default_name-0", subset_files:List[str]=[]) -> Dict:
