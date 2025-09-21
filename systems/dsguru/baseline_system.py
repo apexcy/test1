@@ -170,7 +170,7 @@ class BaselineLLMSystem(System):
         if len(subset_files):
             file_names = subset_files
             for f in file_names:
-                print(self.dataset.keys())
+                #print(self.dataset.keys())
                 #assert f in self.dataset.keys(), f"File {f} is not in dataset!"
                 # Relaxed the assertion to a warning
                 if f not in self.dataset.keys():
@@ -511,7 +511,7 @@ class BaselineLLMSystem(System):
                 rel_path = os.path.relpath(os.path.join(dirpath, fname), dataset_directory)
                 file_path = os.path.join(dirpath, fname)
 
-                print(f"Loading file: {file_path}")
+                #print(f"Loading file: {file_path}")
 
                 if fname.lower().endswith(".csv"):
                     try:
