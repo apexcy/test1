@@ -80,6 +80,12 @@ def get_table_string(table, row_limit = 100):
         print("Error:", e) 
         return ""
 
+def preview_text(s: str, max_lines: int) -> str:
+        lines = s.splitlines()
+        head = lines[:max_lines]
+        more = f"\n... ({max(0, len(lines) - max_lines)} more lines)" if len(lines) > max_lines else ""
+        return "\n".join(head) + more
+
 def clean_nan(obj):
     """
     Convert NaN values to null in a nested structure for strict JSON compliance.

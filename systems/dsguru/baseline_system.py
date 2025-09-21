@@ -12,7 +12,7 @@ from typing import Dict, List
 
 from benchmark.benchmark_api import System
 from .baseline_prompts import QUESTION_PROMPT, QUESTION_PROMPT_NO_DATA
-from .baseline_utils import get_table_string, clean_nan, extract_code
+from .baseline_utils import get_table_string, clean_nan, extract_code, preview_text
 from .generator_utils import Generator, OllamaGenerator
 
 
@@ -69,16 +69,44 @@ class BaselineLLMSystem(System):
         Naively read the first 10 rows of each data source.
         :return: Data as a string
         """
+        rows = getattr(self, "number_sampled_rows", 10)
         data_string = ""
         for file_name in filenames:
-            data = self.dataset[file_name]
-            if self.verbose:
-                print(f"{self.name}: Reading {file_name}...")
             data_string += f"\nFile name: {file_name}\n"
-            data_string += f"Column data types: {data.dtypes}\n"
-            data_string += "Table:\n"
-            data_string += get_table_string(data, row_limit=self.number_sampled_rows)
+
+            if file_name not in self.dataset:
+                data_string += "Status: not loaded in dataset.\n" + "=" * 20 + "\n"
+                continue
+
+            data = self.dataset[file_name]
+
+            # Case 1: Pandas DataFrame
+            if isinstance(data, pd.DataFrame):
+                data_string += f"Type: table (pandas.DataFrame)\n"
+                data_string += f"Column data types:\n{data.dtypes}\n"
+                data_string += "Table:\n"
+                try:
+                    data_string += get_table_string(data, row_limit=rows)
+                except Exception:
+                    # Very defensive: fallback to DataFrame.head() string if helper fails
+                    data_string += str(data.head(rows))
+                data_string += "\n" + "=" * 20 + "\n"
+                continue
+            
+            # Case 2: Plain text
+            if isinstance(data, str):
+                data_string += "Type: text\n"
+                data_string += "Preview (first lines):\n"
+                data_string += preview_text(data, max_lines=rows)
+                data_string += "\n" + "=" * 20 + "\n"
+                continue
+
+            # Fallback: unknown object type
+            data_string += f"Type: {type(data).__name__}\n"
+            data_string += f"String preview:\n{str(data)[:1000]}"
+            data_string += ("\n... (truncated)" if len(str(data)) > 1000 else "")
             data_string += "\n" + "=" * 20 + "\n"
+        
         return data_string
 
     def parse_token_used(self, generated: str) -> tuple[str, int | None]:
@@ -477,19 +505,38 @@ class BaselineLLMSystem(System):
         # read the files
         for file in os.listdir(dataset_directory):
             if file.endswith(".csv"):
+                file_path = os.path.join(dataset_directory, file)
                 try:
                     self.dataset[file] = pd.read_csv(
-                        os.path.join(dataset_directory, file),
+                        file_path,
                         engine="python",
                         on_bad_lines="skip",
                     )
                 except UnicodeDecodeError:
-                    self.dataset[file] = pd.read_csv(
-                        os.path.join(dataset_directory, file),
-                        engine="python",
-                        on_bad_lines="skip",
-                        encoding="latin-1",
-                    )
+                    try:
+                        self.dataset[file] = pd.read_csv(
+                            file_path,
+                            engine="python",
+                            on_bad_lines="skip",
+                            encoding="latin-1",
+                        )
+                    except Exception as e:
+                        # fallback: read as plain text string
+                        with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                            self.dataset[file] = f.read()
+                except Exception as e:
+                    # fallback: read as plain text string
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        self.dataset[file] = f.read()
+            else:
+                # fallback for any non-CSV file: just read as text
+                try:
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        self.dataset[file] = f.read()
+                except Exception as e:
+                    # If text read fails (e.g., binary PDF), store bytes
+                    with open(file_path, "rb") as f:
+                        self.dataset[file] = f.read()
 
     @typechecked
     def serve_query(self, query: str, query_id: str = "default_name-0", subset_files:List[str]=[]) -> Dict:
