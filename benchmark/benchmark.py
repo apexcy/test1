@@ -297,7 +297,8 @@ class Benchmark:
             cache_system_output: bool = True,
             verbose: bool = False,
             run_subtasks: bool = False,
-            use_deepresearch_subset = False
+            use_deepresearch_subset = False,
+            use_truth_subset = False
     ):
         systems_module = __import__("systems")
         system_class_ = getattr(systems_module, system_name)
@@ -309,6 +310,7 @@ class Benchmark:
         self.verbose = verbose
         self.run_subtasks = run_subtasks
         self.use_deepresearch_subset = use_deepresearch_subset
+        self.use_truth_subset = use_truth_subset
     
     def run_benchmark(
             self,
@@ -329,7 +331,8 @@ class Benchmark:
             results_directory=results_directory,
             verbose=verbose,
             run_subtasks=self.run_subtasks,
-            use_deepresearch_subset=self.use_deepresearch_subset
+            use_deepresearch_subset=self.use_deepresearch_subset,
+            use_truth_subset=self.use_truth_subset
         )
         results = executor.run_workload(use_system_cache=self.use_system_cache, cache_system_output=self.cache_system_output)
         # Add processing time to each result
