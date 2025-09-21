@@ -73,7 +73,10 @@ class Executor:
             data_subset = task['data_sources']
             # if data_subset is not a list and is a single string, convert to list
             if not isinstance(data_subset, list) and isinstance(data_subset, str):
-                data_subset = [data_subset]
+                # if data_subset has "./" and nothing else, data_subset = []
+                if data_subset.strip() == "./":
+                    data_subset = []
+                else: data_subset = [data_subset]
         else:
             data_subset = []
 
