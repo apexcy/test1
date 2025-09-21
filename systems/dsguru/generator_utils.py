@@ -99,6 +99,15 @@ class Generator:
                 ################### also parameters are different, now messages=, used to be prompt= ###################
                 # note deployment_id=... not model=...
                 if self.model in ClaudeModelList:
+                    # Check each item in messages, remove if 'role' is 'system'
+                    claude_messages = []
+                    for msg in messages:
+                        if msg['role'] == 'user':
+                            claude_messages.append({"role": "user", "content": msg['content']})
+                        elif msg['role'] == 'assistant':
+                            claude_messages.append({"role": "assistant", "content": msg['content']})
+                        # skip system messages
+                    messages = claude_messages
                     result = self.client.messages.create(
                         model=self.model,
                         messages=messages,
