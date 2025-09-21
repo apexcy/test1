@@ -504,8 +504,8 @@ class BaselineLLMSystem(System):
         self.dataset = {}
         # read the files
         for file in os.listdir(dataset_directory):
+            file_path = os.path.join(dataset_directory, file)
             if file.endswith(".csv"):
-                file_path = os.path.join(dataset_directory, file)
                 try:
                     self.dataset[file] = pd.read_csv(
                         file_path,
