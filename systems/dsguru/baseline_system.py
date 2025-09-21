@@ -534,9 +534,7 @@ class BaselineLLMSystem(System):
                     with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                         self.dataset[file] = f.read()
                 except Exception as e:
-                    # If text read fails (e.g., binary PDF), store bytes
-                    with open(file_path, "rb") as f:
-                        self.dataset[file] = f.read()
+                    print(f"Error reading file {file_path}: {e}; skipping.")
 
     @typechecked
     def serve_query(self, query: str, query_id: str = "default_name-0", subset_files:List[str]=[]) -> Dict:
