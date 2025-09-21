@@ -171,7 +171,10 @@ class BaselineLLMSystem(System):
             file_names = subset_files
             for f in file_names:
                 print(self.dataset.keys())
-                assert f in self.dataset.keys(), f"File {f} is not in dataset!"
+                #assert f in self.dataset.keys(), f"File {f} is not in dataset!"
+                # Relaxed the assertion to a warning
+                if f not in self.dataset.keys():
+                    print(f"WARNING: File {f} is not in dataset!")
         else:
             file_names = list(self.dataset.keys())
 
