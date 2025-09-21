@@ -547,7 +547,7 @@ class BaselineLLMSystem(System):
                     continue
                 except Exception as e:
                     print(f"Error reading {file_path}: {e}")
-                    #self.dataset[rel_path] = None  # Mark as failed
+                    self.dataset[rel_path] = ""  # Mark as failed
 
     @typechecked
     def serve_query(self, query: str, query_id: str = "default_name-0", subset_files:List[str]=[]) -> Dict:
