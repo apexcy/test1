@@ -250,12 +250,14 @@ class Evaluator:
                                                                     metric)
             evaluation_result[metric] = score
             total_token_usage_answers += token_usage
-
+        evaluation_result["total_token_usage_answers"] = total_token_usage_answers
+        
         total_token_usage_pipeline = 0
         if evaluate_pipeline:
             code_eval_list = []
             code_eval_list, total_token_usage_pipeline = self.pipeline_evaluation_engine.evaluate_data_pipeline(sut_generated_pipeline=response["code"],task=task)
             evaluation_result["llm_code_eval"] = code_eval_list
+            evaluation_result["total_token_usage_pipeline"] = total_token_usage_pipeline
 
         all_evaluation_results.append(evaluation_result)
         total_token_usage_subtasks = 0
@@ -265,6 +267,7 @@ class Evaluator:
                 subtask_result, token_usage, pipeline_usage, total_subtask_usage = self._evaluate_result_for_task(response["subresponses"][i], subtask, evaluate_pipeline=False)
                 all_evaluation_results.extend(subtask_result)
                 total_token_usage_subtasks += token_usage
+                subtask['token_usage_subtasks'] = token_usage
         return (all_evaluation_results, total_token_usage_answers, total_token_usage_pipeline, total_token_usage_subtasks)
 
     def evaluate_results(self, responses: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

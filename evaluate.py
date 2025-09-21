@@ -140,10 +140,15 @@ def main():
             workload_path=workload_path,
             verbose=verbose
         )
+        
+        (all_evaluation_results,
+        token_answers,
+        token_pipeline,
+        token_subtasks) = evaluation_results
 
         # Pretty printing evaluation_results
         flat_measures = []
-        for task_result in evaluation_results:
+        for task_result in all_evaluation_results:
             # TODO: Implement system planned subtask result evaluation
             task_id = task_result["task_id"]
             for metric, value in task_result.items():
