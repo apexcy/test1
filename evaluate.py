@@ -89,6 +89,7 @@ def main():
     parser.add_argument("--use_evaluation_cache", action="store_true", default=False, help="Use cached per-task evaluations if available. Default: False")
     parser.add_argument("--cache_system_output", action="store_true", default=True, help="Cache system output. Default: True")
     parser.add_argument("--use_deepresearch_subset", action="store_true", default=False, help="Whether to use the subset of files from deepresearch experiments. Default: False")
+    parser.add_argument("--use_truth_subset", action="store_true", default=False, help="Whether to use the subset of files from truth data. Default: False")
     parser.add_argument("--verbose", action="store_true", default=False, help="Verbose logging. Default: False")
     parser.add_argument("--run_subtasks", action="store_true", help="Run subtasks if set. Default: False")
     args = parser.parse_args()
@@ -126,7 +127,8 @@ def main():
             cache_system_output=args.cache_system_output,
             verbose=verbose,
             run_subtasks=args.run_subtasks,
-            use_deepresearch_subset = args.use_deepresearch_subset
+            use_deepresearch_subset = args.use_deepresearch_subset, 
+            use_truth_subset = args.use_truth_subset
         )
 
         print(f"Starting benchmark workflow on dataset: {dataset_name}")

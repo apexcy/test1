@@ -25,6 +25,7 @@ class Executor:
             results_directory: str | os.PathLike,
             run_subtasks: bool=False,
             use_deepresearch_subset: bool = False,
+            use_truth_subset: bool = False,
             verbose=False
         ):
         """
@@ -43,6 +44,9 @@ class Executor:
         self.verbose = verbose
         self.run_subtasks = run_subtasks
         self.use_deepresearch_subset = use_deepresearch_subset
+        self.use_truth_subset = use_truth_subset
+        if self.use_deepresearch_subset and self.use_truth_subset:
+            raise ValueError("Cannot use both deepresearch_subset and truth_subset.")
     
     def run_task(self, task: Dict[str, Any], parent_task_query: Optional[str]=None) -> Dict[str, str | Dict | List]:
         """
@@ -64,12 +68,14 @@ class Executor:
             query = task["query"]
 
         if self.use_deepresearch_subset and parent_task_query is not None:
-            deepresearch_subset = task['deepresearch_subset']
+            data_subset = task['deepresearch_subset']
+        elif self.use_truth_subset: # parent_task_query is ignored (?)
+            data_subset = task['data_sources']
         else:
-            deepresearch_subset = []
+            data_subset = []
 
         start_time = time.time()
-        system_overall_response = self.system.serve_query(query=query, query_id=task["id"], subset_files = deepresearch_subset)
+        system_overall_response = self.system.serve_query(query=query, query_id=task["id"], subset_files = data_subset)
         end_time = time.time()
         model_output = system_overall_response["explanation"]
         code_string = system_overall_response["pipeline_code"]
