@@ -171,10 +171,13 @@ class BaselineLLMSystem(System):
             file_names = []
             all_file_names = list(self.dataset.keys())
             for pattern in subset_files:
-                #print(self.dataset.keys())
+                print(self.dataset.keys())
                 #assert f in self.dataset.keys(), f"File {f} is not in dataset!"
                 # Relaxed the assertion to a warning
-                matching = [f for f in all_file_names if fnmatch.fnmatch(os.path.basename(f), pattern)]
+                matching = [
+                    f for f in all_file_names
+                    if fnmatch.fnmatch(f, pattern) or fnmatch.fnmatch(os.path.basename(f), os.path.basename(pattern))
+                ]
                 if len(matching) == 0:
                     print(f"WARNING: File {pattern} is not in dataset!")
                 else: # only extend if there are matches
