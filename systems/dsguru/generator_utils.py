@@ -143,8 +143,8 @@ class Generator:
             try:
                 if self.model in ClaudeModelList:
                     res = result.content[0].text
-                    input_tokens = result.usage.get("input_tokens", 0)
-                    output_tokens = result.usage.get("output_tokens", 0)
+                    input_tokens = result.usage.input_tokens
+                    output_tokens = result.usage.output_tokens
                     total_tokens = input_tokens + output_tokens
                 else: 
                     res = result.choices[0].message.content
