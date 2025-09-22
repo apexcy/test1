@@ -74,6 +74,7 @@ class BaselineLLMSystemClaude35FewShot(BaselineLLMSystem):
             variance="few_shot",
             verbose=verbose,
             supply_data_snippet=True,
+            number_sampled_rows=80,  # Use 80 rows
             *args, **kwargs
         )
 
