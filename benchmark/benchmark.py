@@ -70,7 +70,8 @@ class Executor:
         if self.use_deepresearch_subset and parent_task_query is not None:
             data_subset = task['deepresearch_subset']
         elif self.use_truth_subset: # parent_task_query is ignored (?)
-            data_subset = task['data_sources']
+            try: data_subset = task['data_sources']
+            except: data_subset = []
             # if data_subset is not a list and is a single string, convert to list
             if not isinstance(data_subset, list) and isinstance(data_subset, str):
                 # if data_subset has "./" and nothing else, data_subset = []
