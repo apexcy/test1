@@ -1,7 +1,7 @@
 import os
 import sys
 import re
-
+import fnmatch
 sys.path.append("./")
 
 import json
@@ -168,16 +168,21 @@ class BaselineLLMSystem(System):
         # TODO: use process_dataset() to get the data
         # get the file names from the dataset directory
         if len(subset_files):
-            file_names = subset_files
-            for f in file_names:
+            file_names = []
+            all_file_names = list(self.dataset.keys())
+            for pattern in subset_files:
                 #print(self.dataset.keys())
                 #assert f in self.dataset.keys(), f"File {f} is not in dataset!"
                 # Relaxed the assertion to a warning
-                if f not in self.dataset.keys():
-                    print(f"WARNING: File {f} is not in dataset!")
+                matching = [f for f in all_file_names if fnmatch.fnmatch(os.path.basename(f), pattern)]
+                if len(matching) == 0:
+                    print(f"WARNING: File {pattern} is not in dataset!")
+                else: # only extend if there are matches
+                    file_names.extend(matching)
         else:
             file_names = list(self.dataset.keys())
 
+        print(f"Using {len(file_names)} files for the prompt: {file_names}")
         data = self.get_input_data(file_names)
 
         file_paths = [os.path.join(self.dataset_directory, file) for file in file_names]
