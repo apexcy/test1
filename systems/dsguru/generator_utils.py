@@ -124,7 +124,7 @@ class Generator:
             
             except Exception as e:
                 print(f"An error occurred: {e}.")
-                if "context_length_exceeded" in f"{e}" or "prompt is too long" in f"{e}":
+                if "context_length_exceeded" in f"{e}" or "too long" in f"{e}":
                     fatal = True
                     fatal_reason = f"{e}"
                     break
