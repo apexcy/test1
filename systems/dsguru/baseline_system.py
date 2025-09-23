@@ -185,7 +185,7 @@ class BaselineLLMSystem(System):
         else:
             file_names = list(self.dataset.keys())
 
-        print(f"Using {len(file_names)} files for the prompt: {file_names}")
+        print(f"Using {len(file_names)} files for the prompt")
         data = self.get_input_data(file_names)
 
         file_paths = [os.path.join(self.dataset_directory, file) for file in file_names]
@@ -350,6 +350,29 @@ class BaselineLLMSystem(System):
         try:
             with open(json_fp, "r") as f:
                 answer = json.load(f)
+            # check if items in answer are lists
+            if not isinstance(answer, list):
+                print(f"ERROR: {self.name}: ** ERRORS ** answer is not a list of dictionaries: {answer}")
+                return self._format_answer_on_fail(answer, f"** ERRORS ** answer is not a list: {answer}")
+
+            for step in answer:
+                if "id" not in step or "query" not in step:
+                    print(f"ERROR: {self.name}: ** ERRORS ** answer is missing 'id' or 'query': {step}")
+                    return self._format_answer_on_fail(answer, f"** ERRORS ** answer is missing 'id' or 'query': {step}")
+
+                if isinstance(step, list) or isinstance(step, str):
+                    print(f"ERROR: {self.name}: ** ERRORS ** answer is not a dict: {step}")
+                    return self._format_answer_on_fail(answer, f"** ERRORS ** answer is not a dict: {step}")
+                subtasks = step.get("subtasks", [])
+                for subtask in subtasks:
+
+                    if "id" not in step or "query" not in step:
+                        print(f"ERROR: {self.name}: ** ERRORS ** answer is missing 'id' or 'query': {step}")
+                        return self._format_answer_on_fail(answer, f"** ERRORS ** answer is missing 'id' or 'query': {step}")
+
+                    if isinstance(subtask, list) or isinstance(subtask, str):
+                        print(f"ERROR: {self.name}: ** ERRORS ** answer is not a dict: {subtask}")
+                        return self._format_answer_on_fail(answer, f"** ERRORS ** answer is not a dict: {subtask}")
         except json.JSONDecodeError as e:
             print(f"ERROR: {self.name}: ** ERRORS ** decoding answer JSON: {e}")
             return {"id": "main-task", "answer": "SUT failed to answer this question."}
