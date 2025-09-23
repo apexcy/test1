@@ -350,6 +350,16 @@ class BaselineLLMSystem(System):
         try:
             with open(json_fp, "r") as f:
                 answer = json.load(f)
+            # check if items in answer are lists
+            for step in answer:
+                if isinstance(step, list) or isinstance(step, str):
+                    print(f"ERROR: {self.name}: ** ERRORS ** answer is not a dict: {step}")
+                    return self._format_answer_on_fail(answer, f"** ERRORS ** answer is not a dict: {step}")
+                subtasks = step.get("subtasks", [])
+                for subtask in subtasks:
+                    if isinstance(subtask, list) or isinstance(subtask, str):
+                        print(f"ERROR: {self.name}: ** ERRORS ** answer is not a dict: {subtask}")
+                        return self._format_answer_on_fail(answer, f"** ERRORS ** answer is not a dict: {subtask}")
         except json.JSONDecodeError as e:
             print(f"ERROR: {self.name}: ** ERRORS ** decoding answer JSON: {e}")
             return {"id": "main-task", "answer": "SUT failed to answer this question."}
