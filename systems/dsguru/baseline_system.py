@@ -319,21 +319,29 @@ class BaselineLLMSystem(System):
         error_msg: str = "Warning: No answer found in the Python pipeline.",
     ) -> Dict[str, str | Dict | List]:
         formatted_answer = {}
+        if not isinstance(answer, list):
+            answer = [answer]
         for step in answer:
-            if step["id"] == "main-task":
-                formatted_answer |= step
-                if "answer" not in formatted_answer:
-                    formatted_answer["answer"] = error_msg
+            if not isinstance(step, dict) or "id" not in step.keys():
+                if step == "main-task":
+                    formatted_answer |= {"id": "main-task", "answer": error_msg, "subtasks": []}
+                elif "subtask" in step:
+                    formatted_answer.setdefault("subtasks", []).append({"id": step, "answer": error_msg})
             else:
-                if "subtasks" in formatted_answer:
-                    found = False
-                    for subtask in formatted_answer["subtasks"]:
-                        if subtask["id"] == step["id"]:
-                            found = True
-                        if "answer" not in subtask:
-                            subtask["answer"] = error_msg
-                    if not found:
-                        formatted_answer["subtasks"].append(step)
+                if step["id"] == "main-task":
+                    formatted_answer |= step
+                    if "answer" not in formatted_answer:
+                        formatted_answer["answer"] = error_msg
+                else:
+                    if "subtasks" in formatted_answer:
+                        found = False
+                        for subtask in formatted_answer["subtasks"]:
+                            if subtask["id"] == step["id"]:
+                                found = True
+                            if "answer" not in subtask:
+                                subtask["answer"] = error_msg
+                        if not found:
+                            formatted_answer["subtasks"].append(step)
         return formatted_answer
 
     @typechecked
