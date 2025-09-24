@@ -13,6 +13,7 @@ data/*/raw/
 tmp_script.py
 # C extensions
 *.so
+result-latex.ipynb
 
 # Distribution / packaging
 .Python

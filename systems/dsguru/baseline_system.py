@@ -391,6 +391,11 @@ class BaselineLLMSystem(System):
         try:
             with open(output_fp, "r") as f:
                 output = json.load(f)
+            if not isinstance(output, Dict):
+                print(f"ERROR: {self.name}: ** ERRORS ** decoding output JSON: {e}")
+                return self._format_answer_on_fail(
+                    answer, f"** ERRORS ** decoding output in {output_fp}"
+                )
         except json.JSONDecodeError as e:
             print(f"ERROR: {self.name}: ** ERRORS ** decoding output JSON: {e}")
             return self._format_answer_on_fail(

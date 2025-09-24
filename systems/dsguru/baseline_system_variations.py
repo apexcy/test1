@@ -19,6 +19,7 @@ class BaselineLLMSystemGPT4oOneShot(BaselineLLMSystem):
             variance="one_shot",
             verbose=verbose,
             supply_data_snippet=True,
+            number_sampled_rows=20,  # Use 80 rows
             *args, **kwargs
         )
 
@@ -74,7 +75,7 @@ class BaselineLLMSystemClaude35FewShot(BaselineLLMSystem):
             variance="few_shot",
             verbose=verbose,
             supply_data_snippet=True,
-            number_sampled_rows=80,  # Use 80 rows
+            number_sampled_rows=50,  # Use 80 rows
             *args, **kwargs
         )
 
