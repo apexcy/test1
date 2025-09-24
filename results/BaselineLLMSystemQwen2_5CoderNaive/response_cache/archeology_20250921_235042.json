@@ -1,0 +1,554 @@
+[
+  {
+    "task_id": "archeology-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average Potassium in ppm from the first and last time the study recorded people in the Maltese area? Assume that Potassium is linearly interpolated between samples. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the climateMeasurements.xlsx file.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data for the Maltese area.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Convert the date column to a datetime object and sort the data by date.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the first and last dates in the filtered data.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Interpolate Potassium values between the first and last dates.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Calculate the average Potassium in ppm for the first and last dates.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-1/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the climateMeasurements.xlsx file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/climateMeasurements.xlsx'\ndata = pd.read_excel(file_path)\n\n# Subtask-1: Identify the relevant columns in the climateMeasurements.xlsx file.\n# Assuming the relevant columns are 'Location', 'Date', and 'Potassium'\nrelevant_columns = ['Location', 'Date', 'Potassium']\ndata = data[relevant_columns]\n\n# Subtask-2: Filter the data for the Maltese area.\nmaltese_data = data[data['Location'].str.contains('Malta', na=False, case=False)]\n\n# Subtask-3: Convert the date column to a datetime object and sort the data by date.\nmaltese_data['Date'] = pd.to_datetime(maltese_data['Date'], errors='coerce')\nmaltese_data = maltese_data.dropna(subset=['Date']).sort_values(by='Date')\n\n# Subtask-4: Identify the first and last dates in the filtered data.\nfirst_date = maltese_data['Date'].min()\nlast_date = maltese_data['Date'].max()\n\n# Subtask-5: Interpolate Potassium values between the first and last dates.\nmaltese_data['Potassium'] = pd.to_numeric(maltese_data['Potassium'], errors='coerce')\nmaltese_data = maltese_data.dropna(subset=['Potassium'])\nmaltese_data = maltese_data.set_index('Date').resample('D').mean().interpolate(method='linear')\n\n# Subtask-6: Calculate the average Potassium in ppm for the first and last dates.\nfirst_potassium = maltese_data.loc[first_date, 'Potassium']\nlast_potassium = maltese_data.loc[last_date, 'Potassium']\naverage_potassium = (first_potassium + last_potassium) / 2\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": relevant_columns,\n        \"subtask-2\": maltese_data.head().to_dict(orient='records'),\n        \"subtask-3\": maltese_data.head().to_dict(orient='records'),\n        \"subtask-4\": {\"first_date\": first_date.strftime('%Y-%m-%d'), \"last_date\": last_date.strftime('%Y-%m-%d')},\n        \"subtask-5\": maltese_data.head().to_dict(orient='records'),\n        \"subtask-6\": round(average_potassium, 4),\n        \"main-task\": round(average_potassium, 4)\n    }, indent=4)\n)",
+    "runtime": 31.786054134368896
+  },
+  {
+    "task_id": "archeology-hard-2",
+    "model_output": {
+      "id": "main-task",
+      "query": "Across the years, what was the percent of years the wet-dry index was increasing? Give your answer in percentage, round your answer to 2 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the climateMeasurements.xlsx file.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean the data by handling missing values and ensuring correct data types.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the percentage of years the wet-dry index was increasing.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-2/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the climateMeasurements.xlsx file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/climateMeasurements.xlsx'\nclimate_data = pd.read_excel(file_path)\n\n# Subtask-1: Identify the relevant columns in the climateMeasurements.xlsx file.\n# Assuming the relevant columns are 'Year' and 'Wet-Dry Index'\nrelevant_columns = ['Year', 'Wet-Dry Index']\nif not all(column in climate_data.columns for column in relevant_columns):\n    raise ValueError(\"The required columns are not present in the climateMeasurements.xlsx file.\")\n\n# Subtask-2: Clean the data by handling missing values and ensuring correct data types.\n# Convert 'Year' to integer and 'Wet-Dry Index' to float\nclimate_data['Year'] = pd.to_numeric(climate_data['Year'], errors='coerce').astype('Int64')\nclimate_data['Wet-Dry Index'] = pd.to_numeric(climate_data['Wet-Dry Index'], errors='coerce')\n\n# Drop rows with missing values in 'Year' or 'Wet-Dry Index'\nclimate_data.dropna(subset=['Year', 'Wet-Dry Index'], inplace=True)\n\n# Sort the data by 'Year' to ensure chronological order\nclimate_data.sort_values(by='Year', inplace=True)\n\n# Subtask-3: Calculate the percentage of years the wet-dry index was increasing.\n# Calculate the difference in 'Wet-Dry Index' between consecutive years\nclimate_data['Index Difference'] = climate_data['Wet-Dry Index'].diff()\n\n# Count the number of years the wet-dry index was increasing\nincreasing_years = (climate_data['Index Difference'] > 0).sum()\n\n# Calculate the percentage of years the wet-dry index was increasing\ntotal_years = len(climate_data) - 1  # Subtract 1 because the first year has no previous year to compare with\npercentage_increasing = (increasing_years / total_years) * 100\n\n# Print the answers for each subtask and the main task\nprint(json.dumps(\n    {\n        \"subtask-1\": relevant_columns,\n        \"subtask-2\": {\n            \"missing_values_dropped\": climate_data.isnull().sum().to_dict(),\n            \"data_types\": climate_data.dtypes.to_dict()\n        },\n        \"subtask-3\": {\n            \"increasing_years\": increasing_years,\n            \"total_years\": total_years,\n            \"percentage_increasing\": round(percentage_increasing, 2)\n        },\n        \"main-task\": round(percentage_increasing, 2)\n    },\n    indent=4\n))",
+    "runtime": 26.153026819229126
+  },
+  {
+    "task_id": "archeology-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average rank of cities in Greece? Assume that if there is an 'or', the average of the two numbers. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data source containing city ranks in Greece.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Check for and handle any missing or inconsistent data in the relevant columns.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the average rank of cities in Greece, considering 'or' values as the average of two numbers.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-3/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Identify the relevant data source containing city ranks in Greece.\n# We assume that 'worldcities.csv' contains the city ranks and country information.\ndata_source = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv'\ncities_df = pd.read_csv(data_source)\n\n# Step 2: Check for and handle any missing or inconsistent data in the relevant columns.\n# We need to check for missing values in the 'city', 'rank', and 'country' columns.\n# We also need to handle any inconsistencies in the 'rank' column, such as 'or' values.\ncities_df.dropna(subset=['city', 'rank', 'country'], inplace=True)\ncities_df = cities_df[cities_df['country'] == 'Greece']\n\n# Handling 'or' values in the 'rank' column\ndef handle_or_values(rank):\n    if 'or' in rank:\n        ranks = rank.split('or')\n        return (float(ranks[0]) + float(ranks[1])) / 2\n    else:\n        return float(rank)\n\ncities_df['rank'] = cities_df['rank'].apply(handle_or_values)\n\n# Step 3: Calculate the average rank of cities in Greece.\naverage_rank = cities_df['rank'].mean()\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"worldcities.csv\",\n        \"subtask-2\": \"Handled missing values and 'or' values in the 'rank' column.\",\n        \"main-task\": round(average_rank, 4)\n    }, indent=4)\n)",
+    "runtime": 21.470909595489502
+  },
+  {
+    "task_id": "archeology-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the amount of calcium in ppm when the dust proxy was the smallest, breaking ties by the minimum wet-dry index? Round your answer to 4 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in climateMeasurements.xlsx.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean and convert the data types of the relevant columns.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Find the row with the smallest dust proxy value, breaking ties by the minimum wet-dry index.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Extract the calcium in ppm value from the identified row.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-4/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/climateMeasurements.xlsx'\ndata = pd.read_excel(file_path)\n\n# Subtask 1: Identify the relevant columns\nrelevant_columns = ['Dust Proxy', 'Wet-Dry Index', 'Calcium (ppm)']\nprint(json.dumps({\"subtask-1\": relevant_columns}, indent=4))\n\n# Subtask 2: Clean and convert the data types of the relevant columns\ndata = data[relevant_columns].dropna()\ndata['Dust Proxy'] = pd.to_numeric(data['Dust Proxy'], errors='coerce')\ndata['Wet-Dry Index'] = pd.to_numeric(data['Wet-Dry Index'], errors='coerce')\ndata['Calcium (ppm)'] = pd.to_numeric(data['Calcium (ppm)'], errors='coerce')\ndata = data.dropna()\nprint(json.dumps({\"subtask-2\": data.dtypes.to_dict()}, indent=4))\n\n# Subtask 3: Find the row with the smallest dust proxy value, breaking ties by the minimum wet-dry index\nmin_dust_proxy = data['Dust Proxy'].min()\nmin_wet_dry_index = data[data['Dust Proxy'] == min_dust_proxy]['Wet-Dry Index'].min()\ntarget_row = data[(data['Dust Proxy'] == min_dust_proxy) & (data['Wet-Dry Index'] == min_wet_dry_index)]\nprint(json.dumps({\"subtask-3\": target_row.to_dict(orient='records')}, indent=4))\n\n# Subtask 4: Extract the calcium in ppm value from the identified row\ncalcium_ppm = target_row['Calcium (ppm)'].values[0]\ncalcium_ppm_rounded = round(calcium_ppm, 4)\nprint(json.dumps({\"subtask-4\": calcium_ppm_rounded, \"main-task\": calcium_ppm_rounded}, indent=4))",
+    "runtime": 19.74993586540222
+  },
+  {
+    "task_id": "archeology-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "query": "In the Maltese dataset, find the year of the most northern Neolithic sample, breaking ties by considering the later year. What is the maximum aluminum value recorded in the climate dataset in the closest year to that year? If there are multiple closest years, take the max aluminum value measured across all of them. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "radiocarbon_database_regional.xlsx",
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the most northern Neolithic sample in the Maltese dataset and find its year, breaking ties by considering the later year.",
+          "data_sources": [
+            "radiocarbon_database_regional.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Find the closest year in the climate dataset to the year identified in subtask-1.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Determine the maximum aluminum value recorded in the closest year(s) identified in subtask-2.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-5/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the necessary datasets\nradiocarbon_data = pd.read_excel('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/radiocarbon_database_regional.xlsx')\nclimate_data = pd.read_excel('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/climateMeasurements.xlsx')\n\n# Subtask 1: Identify the most northern Neolithic sample in the Maltese dataset and find its year, breaking ties by considering the later year.\n# Assuming the dataset has columns 'Country', 'Period', 'Latitude', and 'Year'\nmaltese_neolithic_samples = radiocarbon_data[(radiocarbon_data['Country'] == 'Malta') & (radiocarbon_data['Period'] == 'Neolithic')]\nmaltese_neolithic_samples['Year'] = pd.to_numeric(maltese_neolithic_samples['Year'], errors='coerce')  # Ensure Year is numeric\nmost_northern_sample = maltese_neolithic_samples.sort_values(by=['Latitude', 'Year'], ascending=[False, False]).iloc[0]\nyear_of_most_northern_sample = most_northern_sample['Year']\n\n# Subtask 2: Find the closest year in the climate dataset to the year identified in subtask-1.\n# Assuming the climate dataset has a column 'Year'\nclimate_data['Year'] = pd.to_numeric(climate_data['Year'], errors='coerce')  # Ensure Year is numeric\nclosest_years = climate_data[climate_data['Year'].notna() & (climate_data['Year'] - year_of_most_northern_sample).abs().eq((climate_data['Year'] - year_of_most_northern_sample).abs().min())]\n\n# Subtask 3: Determine the maximum aluminum value recorded in the closest year(s) identified in subtask-2.\n# Assuming the climate dataset has a column 'Aluminum'\nmax_aluminum_value = closest_years['Aluminum'].max()\n\n# Print the answers for each subtask and the main task\nprint(json.dumps(\n    {\n        \"subtask-1\": year_of_most_northern_sample,\n        \"subtask-2\": closest_years['Year'].unique().tolist(),\n        \"subtask-3\": round(max_aluminum_value, 4),\n        \"main-task\": round(max_aluminum_value, 4)\n    }, indent=4)\n)",
+    "runtime": 57.284873723983765
+  },
+  {
+    "task_id": "archeology-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "query": "What city contained in both the southern and western hemispheres has the highest population?",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Which data file contains city population and geographic coordinates?",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "How can we identify cities in both the southern and western hemispheres?",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "What is the highest population among cities in both the southern and western hemispheres?",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-6/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load the worldcities.csv file\nworldcities_file_path = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv'\nworldcities_df = pd.read_csv(worldcities_file_path)\n\n# Step 2: Identify cities in both the southern and western hemispheres\n# Assuming 'Lat' and 'Lng' are the columns for latitude and longitude respectively\n# Southern hemisphere: Lat < 0\n# Western hemisphere: Lng < 0\nsouthern_western_cities = worldcities_df[(worldcities_df['Lat'] < 0) & (worldcities_df['Lng'] < 0)]\n\n# Step 3: Find the city with the highest population among those identified\n# Assuming 'Population' is the column for population\nhighest_population_city = southern_western_cities.loc[southern_western_cities['Population'].idxmax()]\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"worldcities.csv\",\n        \"subtask-2\": \"Cities in both the southern and western hemispheres are identified by Lat < 0 and Lng < 0.\",\n        \"main-task\": highest_population_city.to_dict()\n    }, \n    indent=4\n))",
+    "runtime": 17.863417625427246
+  },
+  {
+    "task_id": "archeology-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many modern cities with a population of over 100k are within 0.1 degrees of ancient Roman-era cities?",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Clean and prepare the 'roman_cities.csv' data for analysis, ensuring latitude and longitude are in the correct format.",
+          "data_sources": [
+            "roman_cities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean and prepare the 'worldcities.csv' data for analysis, ensuring latitude, longitude, and population are in the correct format.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter modern cities with a population of over 100k from the cleaned 'worldcities.csv' data.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the distance between each modern city and each Roman-era city using latitude and longitude.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Count the number of modern cities within 0.1 degrees of any Roman-era city.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-7/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nfrom geopy.distance import geodesic\n\n# Load and clean the Roman cities data\nroman_cities = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/roman_cities.csv')\nroman_cities = roman_cities.dropna(subset=['Latitude', 'Longitude'])\nroman_cities['Latitude'] = pd.to_numeric(roman_cities['Latitude'], errors='coerce')\nroman_cities['Longitude'] = pd.to_numeric(roman_cities['Longitude'], errors='coerce')\nroman_cities = roman_cities.dropna(subset=['Latitude', 'Longitude'])\n\n# Load and clean the world cities data\nworld_cities = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv')\nworld_cities = world_cities.dropna(subset=['lat', 'lng', 'population'])\nworld_cities['lat'] = pd.to_numeric(world_cities['lat'], errors='coerce')\nworld_cities['lng'] = pd.to_numeric(world_cities['lng'], errors='coerce')\nworld_cities['population'] = pd.to_numeric(world_cities['population'], errors='coerce')\nworld_cities = world_cities.dropna(subset=['lat', 'lng', 'population'])\n\n# Filter modern cities with a population of over 100k\nmodern_cities = world_cities[world_cities['population'] > 100000]\n\n# Calculate the distance between each modern city and each Roman-era city\nmodern_cities_within_0_1_degrees = set()\nfor _, modern_city in modern_cities.iterrows():\n    for _, roman_city in roman_cities.iterrows():\n        distance = geodesic((modern_city['lat'], modern_city['lng']), (roman_city['Latitude'], roman_city['Longitude'])).degrees\n        if distance <= 0.1:\n            modern_cities_within_0_1_degrees.add(modern_city['city'])\n\n# Count the number of modern cities within 0.1 degrees of any Roman-era city\nanswer1 = roman_cities.to_dict(orient='records')\nanswer2 = modern_cities.to_dict(orient='records')\nanswer = len(modern_cities_within_0_1_degrees)\n\nprint(json.dumps(\n    {\n        \"subtask-1\": answer1,\n        \"subtask-2\": answer2,\n        \"main-task\": answer\n    }, indent=4)\n)",
+    "runtime": 20.30963706970215
+  },
+  {
+    "task_id": "archeology-easy-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many unique sources were used in the Roman cities dataset?",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the column in the Roman cities dataset that contains information about data sources.",
+          "data_sources": [
+            "roman_cities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Check for missing or inconsistent data in the identified column.",
+          "data_sources": [
+            "roman_cities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Count the number of unique sources in the identified column.",
+          "data_sources": [
+            "roman_cities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-8/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Identify the column in the Roman cities dataset that contains information about data sources.\n# For this example, let's assume the column is named 'source'. This is a hypothetical step and the actual column name should be verified.\nroman_cities_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/roman_cities.csv')\nsource_column = 'source'  # This should be verified in the actual dataset\n\n# Step 2: Check for missing or inconsistent data in the identified column.\nmissing_values = roman_cities_df[source_column].isnull().sum()\ninconsistent_values = roman_cities_df[source_column].dropna().apply(lambda x: not isinstance(x, str)).sum()\n\n# Step 3: Count the number of unique sources in the identified column.\nunique_sources_count = roman_cities_df[source_column].dropna().nunique()\n\n# Printing the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": source_column,\n        \"subtask-2\": {\n            \"missing_values\": missing_values,\n            \"inconsistent_values\": inconsistent_values\n        },\n        \"main-task\": unique_sources_count\n    },\n    indent=4\n))",
+    "runtime": 16.762141466140747
+  },
+  {
+    "task_id": "archeology-hard-9",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the correlation (to 6 decimal places) between the rank of ancient Roman cities and the population of their corresponding modern cities with a population of over one million? For rank, assume that if there is an 'or', the average of the two numbers. Assume that an ancient city is the same as a current city if the distance between the two is less than 0.1 degrees. If there are multiple ancient cities, take the last sample in the data. Round your answer to 6 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Clean and prepare the 'roman_cities.csv' data for analysis, including handling 'or' in the rank column and ensuring correct data types.",
+          "data_sources": [
+            "roman_cities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean and prepare the 'worldcities.csv' data for analysis, including filtering cities with a population over one million and ensuring correct data types.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Match ancient Roman cities with modern cities based on the distance criteria.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the correlation between the rank of ancient Roman cities and the population of their corresponding modern cities.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-9/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport numpy as np\nfrom geopy.distance import geodesic\n\n# Load data\nroman_cities = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/roman_cities.csv')\nworldcities = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv')\n\n# Subtask 1: Clean and prepare the 'roman_cities.csv' data\ndef clean_roman_cities(df):\n    # Handle 'or' in the rank column\n    df['Rank'] = df['Rank'].apply(lambda x: np.mean([int(num) for num in x.split(' or ')]) if isinstance(x, str) and 'or' in x else int(x))\n    # Ensure correct data types\n    df['Rank'] = df['Rank'].astype(float)\n    return df\n\nroman_cities_cleaned = clean_roman_cities(roman_cities)\n\n# Subtask 2: Clean and prepare the 'worldcities.csv' data\ndef clean_worldcities(df):\n    # Filter cities with a population over one million\n    df = df[df['population'] > 1000000]\n    # Ensure correct data types\n    df['lat'] = pd.to_numeric(df['lat'], errors='coerce')\n    df['lng'] = pd.to_numeric(df['lng'], errors='coerce')\n    return df\n\nworldcities_cleaned = clean_worldcities(worldcities)\n\n# Subtask 3: Match ancient Roman cities with modern cities based on the distance criteria\ndef match_cities(roman_df, modern_df):\n    matches = []\n    for _, row_roman in roman_df.iterrows():\n        min_distance = float('inf')\n        closest_city = None\n        for _, row_modern in modern_df.iterrows():\n            distance = geodesic((row_roman['lat'], row_roman['lng']), (row_modern['lat'], row_modern['lng'])).degrees\n            if distance < 0.1 and distance < min_distance:\n                min_distance = distance\n                closest_city = row_modern\n        if closest_city is not None:\n            matches.append((row_roman['City'], closest_city['city'], row_roman['Rank'], closest_city['population']))\n    return pd.DataFrame(matches, columns=['AncientCity', 'ModernCity', 'Rank', 'Population'])\n\nmatched_cities = match_cities(roman_cities_cleaned, worldcities_cleaned)\n\n# Subtask 4: Calculate the correlation\ncorrelation = matched_cities['Rank'].corr(matched_cities['Population'])\n\n# Print answers\nprint(json.dumps(\n    {\n        \"subtask-1\": roman_cities_cleaned.head().to_dict(),\n        \"subtask-2\": worldcities_cleaned.head().to_dict(),\n        \"subtask-3\": matched_cities.head().to_dict(),\n        \"main-task\": round(correlation, 6)\n    }, indent=4)\n)",
+    "runtime": 18.431257963180542
+  },
+  {
+    "task_id": "archeology-easy-10",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which country has the highest average population in its cities?",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data source for city populations by country.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the data from the relevant data source.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the average population for each country.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the country with the highest average population in its cities.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-10/_intermediate/pipeline-0_out.json"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Identify the relevant data source for city populations by country.\n# Based on the file names, 'worldcities.csv' seems to be the most relevant.\n\n# Step 2: Load and clean the data from the relevant data source.\ndata_path = '/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv'\nworldcities_df = pd.read_csv(data_path)\n\n# Check for missing values in the relevant columns\nmissing_values = worldcities_df[['city', 'country', 'population']].isnull().sum()\nprint(json.dumps({\"subtask-2\": {\"missing_values\": missing_values.to_dict()}}, indent=4))\n\n# Drop rows with missing values in the relevant columns\nworldcities_df.dropna(subset=['city', 'country', 'population'], inplace=True)\n\n# Convert population to integer if it's not already\nif worldcities_df['population'].dtype != 'int64':\n    worldcities_df['population'] = pd.to_numeric(worldcities_df['population'], errors='coerce')\n    worldcities_df.dropna(subset=['population'], inplace=True)\n\n# Step 3: Calculate the average population for each country.\naverage_population_by_country = worldcities_df.groupby('country')['population'].mean().reset_index()\nprint(json.dumps({\"subtask-3\": average_population_by_country.to_dict(orient='records')}, indent=4))\n\n# Step 4: Identify the country with the highest average population in its cities.\ncountry_with_highest_avg_population = average_population_by_country.loc[average_population_by_country['population'].idxmax()]\nprint(json.dumps({\"subtask-4\": country_with_highest_avg_population.to_dict()}, indent=4))\n\n# Final answer\nanswer = country_with_highest_avg_population['country']\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+    "runtime": 16.82201051712036
+  },
+  {
+    "task_id": "archeology-easy-11",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average latitude of capital cities? If there're more than one capital in a country, only count the lat of the capital with the largest population. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx",
+        "conflict_brecke.csv",
+        "radiocarbon_database_regional.xlsx",
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in worldcities.csv for city, country, population, and latitude.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data to include only capital cities.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Handle missing or inconsistent data in the relevant columns.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "For countries with more than one capital, select the capital with the largest population.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the average latitude of the selected capital cities.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-easy-11/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Load the worldcities.csv file\nworldcities_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv')\n\n# Subtask-1: Identify the relevant columns in worldcities.csv for city, country, population, and latitude.\nrelevant_columns = ['city', 'country', 'population', 'lat']\nworldcities_df = worldcities_df[relevant_columns]\n\n# Subtask-2: Filter the data to include only capital cities.\n# Assuming there is a column named 'capital' that indicates if a city is a capital\n# If not, we need to assume or find another way to identify capitals, but for this example, we'll assume the column exists\n# If the column does not exist, we would need additional data or a different approach\nworldcities_df = worldcities_df[worldcities_df['capital'] == True]\n\n# Subtask-3: Handle missing or inconsistent data in the relevant columns.\n# Drop rows with missing values in the relevant columns\nworldcities_df.dropna(subset=relevant_columns, inplace=True)\n\n# Convert population to integer if it's not already\nworldcities_df['population'] = worldcities_df['population'].astype(int)\n\n# Subtask-4: For countries with more than one capital, select the capital with the largest population.\n# Group by country and find the city with the maximum population\ncapital_cities_df = worldcities_df.loc[worldcities_df.groupby('country')['population'].idxmax()]\n\n# Subtask-5: Calculate the average latitude of the selected capital cities.\naverage_latitude = round(capital_cities_df['lat'].mean(), 4)\n\n# Print the answers for each subtask and the main task\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Identified relevant columns: city, country, population, lat\",\n        \"subtask-2\": \"Filtered data to include only capital cities\",\n        \"subtask-3\": \"Handled missing or inconsistent data in the relevant columns\",\n        \"subtask-4\": \"Selected the capital with the largest population for each country\",\n        \"subtask-5\": \"Calculated the average latitude of the selected capital cities\",\n        \"main-task\": average_latitude\n    }, indent=4))",
+    "runtime": 21.27293109893799
+  },
+  {
+    "task_id": "archeology-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "query": "Count the number of human conflicts between 800 and 1400 AD, and attribute them as best you can to modern countries. Define a conflict as between two actors that lasts at least a year.",
+      "data_sources": [
+        "conflict_brecke.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the conflict_brecke.csv file to ensure the data types are correct and the relevant columns are available.",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the conflicts to only include those that occurred between 800 and 1400 AD and lasted at least a year.",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Load and clean the worldcities.csv file to ensure the data types are correct and the relevant columns are available.",
+          "data_sources": [
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Map the locations of the conflicts to modern countries using the worldcities.csv data.",
+          "data_sources": [
+            "conflict_brecke.csv",
+            "worldcities.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Count the number of conflicts attributed to each modern country.",
+          "data_sources": [
+            "conflict_brecke.csv",
+            "worldcities.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/archeology-hard-12/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load and clean the conflict_brecke.csv file\nconflict_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/conflict_brecke.csv')\n# Convert 'StartYear' and 'EndYear' to integer, handling any non-numeric values\nconflict_df['StartYear'] = pd.to_numeric(conflict_df['StartYear'], errors='coerce').astype('Int64')\nconflict_df['EndYear'] = pd.to_numeric(conflict_df['EndYear'], errors='coerce').astype('Int64')\n# Drop rows with missing 'StartYear' or 'EndYear'\nconflict_df.dropna(subset=['StartYear', 'EndYear'], inplace=True)\n\n# Subtask 2: Filter the conflicts to only include those that occurred between 800 and 1400 AD and lasted at least a year\nfiltered_conflicts = conflict_df[(conflict_df['StartYear'] >= 800) & (conflict_df['EndYear'] <= 1400) & ((conflict_df['EndYear'] - conflict_df['StartYear']) >= 1)]\n\n# Subtask 3: Load and clean the worldcities.csv file\nworldcities_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/archeology/input/worldcities.csv')\n# Ensure 'City' and 'Country' columns are strings\nworldcities_df['City'] = worldcities_df['City'].astype(str)\nworldcities_df['Country'] = worldcities_df['Country'].astype(str)\n\n# Subtask 4: Map the locations of the conflicts to modern countries using the worldcities.csv data\n# This is a simplified approach assuming the 'Location' column in conflict_brecke.csv can be matched to 'City' in worldcities.csv\n# In practice, more sophisticated geocoding might be necessary\nfiltered_conflicts['Location'] = filtered_conflicts['Location'].astype(str)\nmerged_df = pd.merge(filtered_conflicts, worldcities_df, left_on='Location', right_on='City', how='left')\n\n# Subtask 5: Count the number of conflicts attributed to each modern country\nconflict_counts = merged_df['Country'].value_counts().to_dict()\n\n# Print the answers for each subtask and the main task\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Conflict data loaded and cleaned.\",\n        \"subtask-2\": f\"Filtered conflicts: {len(filtered_conflicts)}\",\n        \"subtask-3\": \"Worldcities data loaded and cleaned.\",\n        \"subtask-4\": \"Conflicts mapped to modern countries.\",\n        \"subtask-5\": conflict_counts,\n        \"main-task\": conflict_counts\n    }, indent=4))",
+    "runtime": 22.88301706314087
+  }
+]

@@ -1,0 +1,166 @@
+sut,workload,task_id,metric,value
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-1,runtime,26.99855558872223
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-1,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-1,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-1,llm_code_eval,"""[false, false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-1,total_token_usage_pipeline,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,runtime,30.250633883476258
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,bleu,1.717427964450093e-78
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,rouge,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,llm_paraphrase,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,total_token_usage_answers,496
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,llm_code_eval,"""[false, false, false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-2,total_token_usage_pipeline,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,runtime,25.168510365486146
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,mean_absolute_error,
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,mean_squared_error,
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,mean_relative_absolute_error,9999.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,rae_score,9999.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,llm_code_eval,"""[false, false, false, true, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-3,total_token_usage_pipeline,1114
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-4,runtime,23.20299642086029
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-4,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-4,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-4,llm_code_eval,"""[false, false, true, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-4,total_token_usage_pipeline,1004
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-5,runtime,22.009476351737977
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-5,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-5,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-5,llm_code_eval,"""[false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-5,total_token_usage_pipeline,994
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-6,runtime,17.31460373401642
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-6,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-6,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-6,llm_code_eval,"""[false, false, false, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-6,total_token_usage_pipeline,1118
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-7,runtime,18.57591049671173
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-7,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-7,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-7,llm_code_eval,"""[false, false, false, false, false, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-7,total_token_usage_pipeline,1267
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-8,runtime,19.29692690372467
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-8,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-8,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-8,llm_code_eval,"""[false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-8,total_token_usage_pipeline,1035
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-9,runtime,16.76843731403351
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-9,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-9,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-9,llm_code_eval,"""[false, true, true, false, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-9,total_token_usage_pipeline,1016
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,runtime,21.622877764701844
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,f1,0.04718693284936479
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,precision,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,recall,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,llm_code_eval,"""[true, true, false, false, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-10,total_token_usage_pipeline,1238
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-11,runtime,12.871118712425233
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-11,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-11,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-11,llm_code_eval,"""[false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-11,total_token_usage_pipeline,1055
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-12,runtime,19.736449885368348
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-12,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-12,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-12,llm_code_eval,"""[false, true, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-12,total_token_usage_pipeline,1125
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-13,runtime,17.385332036018372
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-13,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-13,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-13,llm_code_eval,"""[false, true, false, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-13,total_token_usage_pipeline,1042
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,runtime,27.156073498725892
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,f1,0.24301103570152846
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,precision,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,recall,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,llm_code_eval,"""[true, false, false, true, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-14,total_token_usage_pipeline,1226
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-15,runtime,31.587201285362244
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-15,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-15,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-15,llm_code_eval,"""[false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-15,total_token_usage_pipeline,1095
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-16,runtime,25.77037708759308
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-16,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-16,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-16,llm_code_eval,"""[false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-16,total_token_usage_pipeline,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-17,runtime,16.397535967826844
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-17,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-17,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-17,llm_code_eval,"""[false, false, true, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-17,total_token_usage_pipeline,1138
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-18,runtime,21.669935870170594
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-18,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-18,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-18,llm_code_eval,"""[false, false, false, true, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-18,total_token_usage_pipeline,1311
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-19,runtime,22.312255549430848
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-19,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-19,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-19,llm_code_eval,"""[true, false, false, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-19,total_token_usage_pipeline,1266
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-20,runtime,17.693107056617738
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-20,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-20,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-20,llm_code_eval,"""[false, false, false, true, true, true, true, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-20,total_token_usage_pipeline,1076
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-21,runtime,18.27705399990082
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-21,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-21,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-21,llm_code_eval,"""[false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-21,total_token_usage_pipeline,1187
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-22,runtime,16.721587824821473
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-22,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-22,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-22,llm_code_eval,"""[false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-22,total_token_usage_pipeline,1140
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,runtime,26.847667145729066
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,bleu,5.943821916972524e-155
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,rouge,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,llm_paraphrase,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,total_token_usage_answers,488
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,llm_code_eval,"""[false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-23,total_token_usage_pipeline,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-24,runtime,24.04430811405182
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-24,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-24,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-24,llm_code_eval,"""[false, false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-24,total_token_usage_pipeline,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,runtime,16.298833775520325
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,bleu,5.925872479383165e-79
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,rouge,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,llm_paraphrase,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,total_token_usage_answers,534
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,llm_code_eval,"""[true, false, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-25,total_token_usage_pipeline,1034
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,runtime,16.953339982032777
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,f1,0.1819523897398044
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,precision,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,recall,0.0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,llm_code_eval,"""[true, false, false, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-26,total_token_usage_pipeline,969
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-27,runtime,20.93037359714508
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-27,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-27,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-27,llm_code_eval,"""[true, false, false, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-easy-27,total_token_usage_pipeline,1156
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-28,runtime,20.286711382865906
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-28,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-28,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-28,llm_code_eval,"""[true, false, false, false, true, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-28,total_token_usage_pipeline,1185
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-29,runtime,29.55890290737152
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-29,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-29,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-29,llm_code_eval,"""[false, false, true, false, true, false, true]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-29,total_token_usage_pipeline,1550
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-30,runtime,24.196956086158753
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-30,success,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-30,total_token_usage_answers,0
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-30,llm_code_eval,"""[false, false, false, false, false, false]"""
+BaselineLLMSystemQwen2_5CoderNaive,legal.json,legal-hard-30,total_token_usage_pipeline,1241

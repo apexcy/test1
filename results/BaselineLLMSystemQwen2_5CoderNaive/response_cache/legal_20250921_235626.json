@@ -1,0 +1,1516 @@
+[
+  {
+    "task_id": "legal-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "runtime": 26.821605682373047
+  },
+  {
+    "task_id": "legal-hard-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "runtime": 30.073683977127075
+  },
+  {
+    "task_id": "legal-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "Give the ratio of identity theft reports in 2024 vs 2001? Round to 4 decimal places",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant file containing identity theft reports by year.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the number of identity theft reports for 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Extract the number of identity theft reports for 2001.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the ratio of identity theft reports in 2024 vs 2001.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-3/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Identify the relevant file containing identity theft reports by year.\n# The file '2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv' seems relevant.\n\n# Step 2: Extract the number of identity theft reports for 2024.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv'\ndf = pd.read_csv(file_path)\n\n# Convert 'Year' column to integer to ensure correct data type\ndf['Year'] = pd.to_numeric(df['Year'], errors='coerce')\n\n# Extract the number of identity theft reports for 2024\nidentity_theft_2024 = df[df['Year'] == 2024]['Number of Reports'].sum()\n\n# Step 3: Extract the number of identity theft reports for 2001.\nidentity_theft_2001 = df[df['Year'] == 2001]['Number of Reports'].sum()\n\n# Step 4: Calculate the ratio of identity theft reports in 2024 vs 2001.\nratio = round(identity_theft_2024 / identity_theft_2001, 4)\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Identified '2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv' as the relevant file.\",\n        \"subtask-2\": f\"Number of identity theft reports in 2024: {identity_theft_2024}\",\n        \"subtask-3\": f\"Number of identity theft reports in 2001: {identity_theft_2001}\",\n        \"main-task\": f\"Ratio of identity theft reports in 2024 vs 2001: {ratio}\"\n    }, indent=4)\n)",
+    "runtime": 24.991560459136963
+  },
+  {
+    "task_id": "legal-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many frauds were reported by FTC over the web between 2022 and 2024 in total?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the CSV file for the year and contact method.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data for the years 2022, 2023, and 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data for reports made over the web.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Sum the number of fraud reports over the web for the specified years.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-4/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Load the data\nfile_path = 'csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Contact_Method.csv'\ndata = pd.read_csv(file_path)\n\n# Subtask 1: Identify the relevant columns in the CSV file for the year and contact method.\n# Assuming the columns are named 'Year' and 'Contact Method', and the number of reports is in a column named 'Number of Reports'\n# We will check the first few rows to confirm\nprint(json.dumps({\"subtask-1\": data.head().to_dict()}, indent=4))\n\n# Subtask 2: Filter the data for the years 2022, 2023, and 2024.\nfiltered_by_year = data[data['Year'].isin([2022, 2023, 2024])]\nprint(json.dumps({\"subtask-2\": filtered_by_year.head().to_dict()}, indent=4))\n\n# Subtask 3: Filter the data for reports made over the web.\n# Assuming 'Web' is the value for web reports in the 'Contact Method' column\nfiltered_by_contact_method = filtered_by_year[filtered_by_year['Contact Method'] == 'Web']\nprint(json.dumps({\"subtask-3\": filtered_by_contact_method.head().to_dict()}, indent=4))\n\n# Subtask 4: Sum the number of fraud reports over the web for the specified years.\ntotal_frauds = filtered_by_contact_method['Number of Reports'].sum()\nprint(json.dumps({\"subtask-4\": total_frauds}, indent=4))\n\n# Main task: Print the final answer\nprint(json.dumps({\"main-task\": total_frauds}, indent=4))",
+    "runtime": 23.02604651451111
+  },
+  {
+    "task_id": "legal-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the total number of money befrauded when summed over all payment methods. Give an integer number in millions of dollars.",
+      "data_sources": [
+        "2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the '2024_CSN_Fraud_Reports_by_Payment_Method.csv' file.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean the data by handling missing values and converting data types if necessary.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Sum the total amount of money befrauded across all payment methods.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Convert the total amount to millions of dollars.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-5/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Identify the relevant columns in the '2024_CSN_Fraud_Reports_by_Payment_Method.csv' file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv'\ndf = pd.read_csv(file_path)\n# Assuming the relevant columns are 'Payment Method' and 'Amount Lost'\nrelevant_columns = ['Payment Method', 'Amount Lost']\ndf = df[relevant_columns]\n\n# Step 2: Clean the data by handling missing values and converting data types if necessary.\n# Check for missing values\nmissing_values = df.isnull().sum()\n# Drop rows with missing values in 'Amount Lost'\ndf.dropna(subset=['Amount Lost'], inplace=True)\n# Convert 'Amount Lost' to float\ndf['Amount Lost'] = df['Amount Lost'].astype(float)\n\n# Step 3: Sum the total amount of money befrauded across all payment methods.\ntotal_amount_lost = df['Amount Lost'].sum()\n\n# Step 4: Convert the total amount to millions of dollars.\ntotal_amount_lost_millions = total_amount_lost / 1_000_000\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": relevant_columns,\n        \"subtask-2\": {\n            \"missing_values\": missing_values.to_dict(),\n            \"data_types\": df.dtypes.to_dict()\n        },\n        \"subtask-3\": total_amount_lost,\n        \"subtask-4\": total_amount_lost_millions,\n        \"main-task\": int(total_amount_lost_millions)\n    }, indent=4)\n)",
+    "runtime": 21.832526445388794
+  },
+  {
+    "task_id": "legal-hard-6",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the ratio of reported credit card frauds between 2024 and 2020? (2024 reports ) / (2020 reports) and round to 4 decimal places",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the CSV file for the years 2024 and 2020.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the number of credit card fraud reports for 2024 and 2020.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the ratio of 2024 reports to 2020 reports and round to 4 decimal places.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-6/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Identify the relevant columns in the CSV file for the years 2024 and 2020.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv'\ndf = pd.read_csv(file_path)\n\n# Assuming the columns are named 'Year' and 'Credit Card Fraud'\n# Check the column names to confirm\ncolumns = df.columns.tolist()\nprint(json.dumps({\"subtask-1\": columns}, indent=4))\n\n# Step 2: Extract the number of credit card fraud reports for 2024 and 2020.\n# Convert 'Year' column to integer to ensure correct filtering\ndf['Year'] = pd.to_numeric(df['Year'], errors='coerce')\n\n# Filter the data for 2024 and 2020\ncredit_card_fraud_2024 = df.loc[df['Year'] == 2024, 'Credit Card Fraud'].sum()\ncredit_card_fraud_2020 = df.loc[df['Year'] == 2020, 'Credit Card Fraud'].sum()\n\nprint(json.dumps({\"subtask-2\": {\"2024_reports\": credit_card_fraud_2024, \"2020_reports\": credit_card_fraud_2020}}, indent=4))\n\n# Step 3: Calculate the ratio of 2024 reports to 2020 reports and round to 4 decimal places.\nif credit_card_fraud_2020 != 0:\n    ratio = round(credit_card_fraud_2024 / credit_card_fraud_2020, 4)\nelse:\n    ratio = None  # Handle division by zero\n\nprint(json.dumps({\"main-task\": ratio}, indent=4))",
+    "runtime": 17.137653827667236
+  },
+  {
+    "task_id": "legal-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which identity theft category was growing the fastest between 2020 and 2024 in relative terms?",
+      "data_sources": [
+        "2024_CSN_Identity_Theft_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the identity theft reports by type data for the years 2020 to 2024.",
+          "data_sources": [
+            "2024_CSN_Identity_Theft_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Calculate the growth rate for each identity theft category from 2020 to 2024.",
+          "data_sources": [
+            "2024_CSN_Identity_Theft_Reports_by_Type.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-7/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load and clean the identity theft reports by type data for the years 2020 to 2024.\ndef load_and_clean_data(file_path):\n    # Load the data\n    df = pd.read_csv(file_path)\n    \n    # Convert 'Year' column to integer\n    df['Year'] = pd.to_numeric(df['Year'], errors='coerce')\n    \n    # Filter for the years 2020 to 2024\n    df = df[(df['Year'] >= 2020) & (df['Year'] <= 2024)]\n    \n    # Drop any rows with missing values in critical columns\n    df.dropna(subset=['Year', 'Category', 'Number of Reports'], inplace=True)\n    \n    return df\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv'\ndf_identity_theft = load_and_clean_data(file_path)\n\n# Print the cleaned data for subtask-1\nprint(json.dumps({\"subtask-1\": df_identity_theft.to_dict(orient='records')}, indent=4))\n\n# Subtask 2: Calculate the growth rate for each identity theft category from 2020 to 2024.\ndef calculate_growth_rate(df):\n    # Pivot the table to have categories as columns and years as rows\n    df_pivot = df.pivot(index='Year', columns='Category', values='Number of Reports')\n    \n    # Calculate the growth rate from 2020 to 2024\n    growth_rate = (df_pivot.loc[2024] - df_pivot.loc[2020]) / df_pivot.loc[2020] * 100\n    \n    # Convert the growth rate series to a DataFrame for better readability\n    growth_rate_df = growth_rate.reset_index(name='Growth Rate (%)')\n    growth_rate_df.columns = ['Category', 'Growth Rate (%)']\n    \n    return growth_rate_df\n\n# Calculate the growth rate\ngrowth_rate_df = calculate_growth_rate(df_identity_theft)\n\n# Print the growth rates for subtask-2\nprint(json.dumps({\"subtask-2\": growth_rate_df.to_dict(orient='records')}, indent=4))\n\n# Main task: Identify the category with the highest growth rate\nfastest_growing_category = growth_rate_df.loc[growth_rate_df['Growth Rate (%)'].idxmax()]\n\n# Print the final answer for the main task\nprint(json.dumps({\"main-task\": fastest_growing_category.to_dict()}, indent=4))",
+    "runtime": 18.39896059036255
+  },
+  {
+    "task_id": "legal-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "Are the report counts of for 'frauds and other data' in 2024 consistent for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach? Answer True or False. No explanation needed.",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the relevant data for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach from the Florida data file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data for the year 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Check if the report counts are consistent for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-8/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Load the relevant data for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach from the Florida data file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv'\ndata = pd.read_csv(file_path)\n\n# Step 2: Filter the data for the year 2024.\ndata_2024 = data[data['Year'] == 2024]\n\n# Step 3: Check if the report counts are consistent for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach in 2024.\nmiami_area_data = data_2024[data_2024['Metropolitan Statistical Area'] == 'Miami-Fort Lauderdale-West Palm Beach, FL']\nconsistent = miami_area_data['Report Count'].nunique() == 1\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded for Florida.\",\n        \"subtask-2\": \"Data filtered for the year 2024.\",\n        \"subtask-3\": f\"Consistency check for Miami-Fort Lauderdale-West Palm Beach in 2024: {consistent}\",\n        \"main-task\": consistent\n    }, indent=4))",
+    "runtime": 19.11997699737549
+  },
+  {
+    "task_id": "legal-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "query": "Between 2002 and 2024 inclusive, which year saw the greatest relative increase in total reports (Fraud, Identity Theft and Other) compared to the previous year?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the data from 2024_CSN_Report_Count.csv",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Aggregate total reports (Fraud, Identity Theft and Other) by year",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the relative increase in total reports from the previous year",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the year with the greatest relative increase",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-9/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load and clean the data from 2024_CSN_Report_Count.csv\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ndata = pd.read_csv(file_path)\n\n# Convert 'Year' column to integer\ndata['Year'] = pd.to_numeric(data['Year'], errors='coerce')\n\n# Drop rows with NaN values in 'Year' or 'Total Reports' columns\ndata = data.dropna(subset=['Year', 'Total Reports'])\n\n# Filter data for the years between 2002 and 2024 inclusive\ndata = data[(data['Year'] >= 2002) & (data['Year'] <= 2024)]\n\n# Print the cleaned data for subtask-1\nprint(json.dumps({\"subtask-1\": data.to_dict(orient='records')}, indent=4))\n\n# Step 2: Aggregate total reports (Fraud, Identity Theft and Other) by year\n# Since the data is already aggregated by year, we can proceed to the next step\n\n# Step 3: Calculate the relative increase in total reports from the previous year\ndata['Relative Increase'] = data['Total Reports'].pct_change() * 100\n\n# Print the data with relative increase for subtask-3\nprint(json.dumps({\"subtask-3\": data.to_dict(orient='records')}, indent=4))\n\n# Step 4: Identify the year with the greatest relative increase\n# Drop the first row as it will have NaN for relative increase\ndata = data.dropna(subset=['Relative Increase'])\n\n# Find the year with the maximum relative increase\nmax_increase_year = data.loc[data['Relative Increase'].idxmax()]\n\n# Print the final answer for main-task\nprint(json.dumps({\"main-task\": max_increase_year.to_dict()}, indent=4))",
+    "runtime": 16.591487407684326
+  },
+  {
+    "task_id": "legal-easy-10",
+    "model_output": {
+      "id": "main-task",
+      "query": "In which years were Fraud reports at least 50% of the total reports?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the structure of the '2024_CSN_Number_of_Reports_by_Type.csv' file?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the structure of the '2024_CSN_Report_Count.csv' file?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "How many fraud reports were there each year?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "What is the total number of reports each year?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the percentage of fraud reports out of total reports for each year.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-10/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Subtask 1: Check the structure of '2024_CSN_Number_of_Reports_by_Type.csv'\nfile_path_1 = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndf_reports_by_type = pd.read_csv(file_path_1)\nstructure_reports_by_type = df_reports_by_type.head().to_dict()\nprint(json.dumps({\"subtask-1\": structure_reports_by_type}, indent=4))\n\n# Subtask 2: Check the structure of '2024_CSN_Report_Count.csv'\nfile_path_2 = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ndf_report_count = pd.read_csv(file_path_2)\nstructure_report_count = df_report_count.head().to_dict()\nprint(json.dumps({\"subtask-2\": structure_report_count}, indent=4))\n\n# Subtask 3: Calculate the number of fraud reports each year\ndf_fraud_reports = df_reports_by_type[df_reports_by_type['Report Type'] == 'Fraud']\ndf_fraud_reports = df_fraud_reports[['Year', 'Number of Reports']]\ndf_fraud_reports['Year'] = pd.to_numeric(df_fraud_reports['Year'], errors='coerce')\ndf_fraud_reports = df_fraud_reports.dropna(subset=['Year'])\nfraud_reports_by_year = df_fraud_reports.groupby('Year').sum().reset_index()\nprint(json.dumps({\"subtask-3\": fraud_reports_by_year.to_dict(orient='records')}, indent=4))\n\n# Subtask 4: Calculate the total number of reports each year\ndf_report_count['Year'] = pd.to_numeric(df_report_count['Year'], errors='coerce')\ndf_report_count = df_report_count.dropna(subset=['Year'])\ntotal_reports_by_year = df_report_count.groupby('Year').sum().reset_index()\nprint(json.dumps({\"subtask-4\": total_reports_by_year.to_dict(orient='records')}, indent=4))\n\n# Subtask 5: Calculate the percentage of fraud reports out of total reports for each year\nmerged_df = pd.merge(fraud_reports_by_year, total_reports_by_year, on='Year', suffixes=('_fraud', '_total'))\nmerged_df['Percentage_Fraud'] = (merged_df['Number of Reports_fraud'] / merged_df['Number of Reports_total']) * 100\nyears_with_fraud_at_least_50_percent = merged_df[merged_df['Percentage_Fraud'] >= 50]['Year'].tolist()\nprint(json.dumps({\"subtask-5\": years_with_fraud_at_least_50_percent}, indent=4))\n\n# Main Task: Print the final answer\nprint(json.dumps({\"main-task\": years_with_fraud_at_least_50_percent}, indent=4))",
+    "runtime": 21.44592785835266
+  },
+  {
+    "task_id": "legal-easy-11",
+    "model_output": {
+      "id": "main-task",
+      "query": "Was there ever a year between 2001-2024 inclusive where 'Other' reports were more than half of the total reports? Answer Yes or No. No explanation needed.",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from '2024_CSN_Number_of_Reports_by_Type.csv' and ensure the 'Year' column is of integer type.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data to include only the years between 2001 and 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the total number of reports for each year.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the proportion of 'Other' reports for each year.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Determine if there was any year where 'Other' reports were more than half of the total reports.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-11/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndata = pd.read_csv(file_path)\n\n# Subtask-1: Ensure the 'Year' column is of integer type\ndata['Year'] = pd.to_numeric(data['Year'], errors='coerce')\n\n# Subtask-2: Filter the data to include only the years between 2001 and 2024\nfiltered_data = data[(data['Year'] >= 2001) & (data['Year'] <= 2024)]\n\n# Subtask-3: Calculate the total number of reports for each year\ntotal_reports = filtered_data.groupby('Year')['Number of Reports'].sum().reset_index()\n\n# Subtask-4: Calculate the proportion of 'Other' reports for each year\nother_reports = filtered_data[filtered_data['Type'] == 'Other']\nother_reports = other_reports.merge(total_reports, on='Year', suffixes=('', '_total'))\nother_reports['Proportion_Other'] = other_reports['Number of Reports'] / other_reports['Number of Reports_total']\n\n# Subtask-5: Determine if there was any year where 'Other' reports were more than half of the total reports\nresult = (other_reports['Proportion_Other'] > 0.5).any()\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Year column converted to numeric.\",\n        \"subtask-2\": \"Data filtered for years 2001-2024.\",\n        \"subtask-3\": \"Total reports calculated for each year.\",\n        \"subtask-4\": \"Proportion of 'Other' reports calculated for each year.\",\n        \"subtask-5\": result,\n        \"main-task\": \"Yes\" if result else \"No\"\n    }, indent=4))\n)",
+    "runtime": 12.69416880607605
+  },
+  {
+    "task_id": "legal-easy-12",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the minimum number of report categories that collectively account for at least 50% of reports in 2024?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data file that contains the report categories and their counts for the year 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the data from the identified file to ensure it is in the correct format and handle any missing or inconsistent data.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the total number of reports in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Sort the report categories by the number of reports in descending order.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Determine the minimum number of report categories that collectively account for at least 50% of the total reports.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-12/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Identify the relevant data file\n# Based on the data sources, '2024_CSN_Report_Count.csv' seems to be the most relevant for this task.\n\n# Subtask 2: Load and clean the data\nfile_path = 'csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ntry:\n    df = pd.read_csv(file_path)\nexcept Exception as e:\n    print(f\"Error reading the file: {e}\")\n    df = pd.DataFrame()\n\n# Check for missing values and data types\nprint(json.dumps({\"subtask-2\": {\"missing_values\": df.isnull().sum().to_dict(), \"data_types\": df.dtypes.to_dict()}}, indent=4))\n\n# Convert 'Year' to integer if it's not already\nif df['Year'].dtype != int:\n    df['Year'] = pd.to_numeric(df['Year'], errors='coerce')\n\n# Drop rows with missing values in 'Year' or 'Report Count'\ndf.dropna(subset=['Year', 'Report Count'], inplace=True)\n\n# Subtask 3: Calculate the total number of reports in 2024\ntotal_reports_2024 = df[df['Year'] == 2024]['Report Count'].sum()\nprint(json.dumps({\"subtask-3\": total_reports_2024}, indent=4))\n\n# Subtask 4: Sort the report categories by the number of reports in descending order\nsorted_df = df[df['Year'] == 2024].sort_values(by='Report Count', ascending=False)\nprint(json.dumps({\"subtask-4\": sorted_df[['Report Category', 'Report Count']].to_dict(orient='records')}, indent=4))\n\n# Subtask 5: Determine the minimum number of report categories that collectively account for at least 50% of the total reports\ncumulative_reports = 0\ncategories_needed = 0\nfor index, row in sorted_df.iterrows():\n    cumulative_reports += row['Report Count']\n    categories_needed += 1\n    if cumulative_reports >= 0.5 * total_reports_2024:\n        break\n\nprint(json.dumps({\"main-task\": categories_needed}, indent=4))",
+    "runtime": 19.559499979019165
+  },
+  {
+    "task_id": "legal-easy-13",
+    "model_output": {
+      "id": "main-task",
+      "query": "In 2024, what was the ratio of reports between the most frequent and the least frequent category (rounded to two decimal places)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the file containing the number of reports by type for 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the data from the identified file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data to include only the year 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Determine the most frequent and least frequent report categories in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the ratio of the most frequent to the least frequent report categories.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-13/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Identify the file containing the number of reports by type for 2024.\n# The file '2024_CSN_Number_of_Reports_by_Type.csv' is identified as the relevant source.\n\n# Step 2: Load and clean the data from the identified file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndata = pd.read_csv(file_path)\n\n# Check for missing values and data types\ndata.dropna(inplace=True)\ndata['Year'] = pd.to_numeric(data['Year'], errors='coerce')\ndata['Number of Reports'] = pd.to_numeric(data['Number of Reports'], errors='coerce')\ndata.dropna(subset=['Year', 'Number of Reports'], inplace=True)\n\n# Step 3: Filter the data to include only the year 2024.\ndata_2024 = data[data['Year'] == 2024]\n\n# Step 4: Determine the most frequent and least frequent report categories in 2024.\nmost_frequent = data_2024.loc[data_2024['Number of Reports'].idxmax()]\nleast_frequent = data_2024.loc[data_2024['Number of Reports'].idxmin()]\n\n# Step 5: Calculate the ratio of the most frequent to the least frequent report categories.\nratio = most_frequent['Number of Reports'] / least_frequent['Number of Reports']\nratio_rounded = round(ratio, 2)\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"2024_CSN_Number_of_Reports_by_Type.csv\",\n        \"subtask-2\": \"Data loaded and cleaned.\",\n        \"subtask-3\": \"Data filtered for year 2024.\",\n        \"subtask-4\": {\n            \"most_frequent\": most_frequent['Report Type'],\n            \"least_frequent\": least_frequent['Report Type']\n        },\n        \"subtask-5\": ratio_rounded,\n        \"main-task\": ratio_rounded\n    }, indent=4))",
+    "runtime": 17.20838212966919
+  },
+  {
+    "task_id": "legal-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "query": "What are the top 5 distinct Metropolitan areas in New England that have the most Identity Theft reports in 2024?",
+      "data_sources": [
+        "new_england_states.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+        "State MSA Identity Theft data/Connecticut.csv",
+        "State MSA Identity Theft data/Maine.csv",
+        "State MSA Identity Theft data/Massachusetts.csv",
+        "State MSA Identity Theft data/NewHampshire.csv",
+        "State MSA Identity Theft data/RhodeIsland.csv",
+        "State MSA Identity Theft data/Vermont.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the New England states from the provided data.",
+          "data_sources": [
+            "new_england_states.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the Identity Theft reports data for the New England states.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/Vermont.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data for the year 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/Vermont.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Aggregate the Identity Theft reports by Metropolitan area.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/Vermont.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the top 5 Metropolitan areas with the most Identity Theft reports.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/Vermont.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-14/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\nimport os\n\n# Step 1: Identify the New England states from the provided data.\nnew_england_states_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/new_england_states.csv')\nnew_england_states = new_england_states_df['State'].tolist()\nprint(json.dumps({\"subtask-1\": new_england_states}, indent=4))\n\n# Step 2: Load and clean the Identity Theft reports data for the New England states.\nidentity_theft_files = [\n    'Connecticut.csv',\n    'Maine.csv',\n    'Massachusetts.csv',\n    'NewHampshire.csv',\n    'RhodeIsland.csv',\n    'Vermont.csv'\n]\n\nidentity_theft_data = []\nfor state in identity_theft_files:\n    file_path = f'/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/{state}'\n    if os.path.exists(file_path):\n        df = pd.read_csv(file_path)\n        identity_theft_data.append(df)\n\nidentity_theft_df = pd.concat(identity_theft_data, ignore_index=True)\nidentity_theft_df.dropna(subset=['Year', 'MSA', 'Identity Theft Reports'], inplace=True)\nidentity_theft_df['Year'] = pd.to_numeric(identity_theft_df['Year'], errors='coerce')\nidentity_theft_df['Identity Theft Reports'] = pd.to_numeric(identity_theft_df['Identity Theft Reports'], errors='coerce')\nprint(json.dumps({\"subtask-2\": identity_theft_df.head().to_dict()}, indent=4))\n\n# Step 3: Filter the data for the year 2024.\nidentity_theft_2024_df = identity_theft_df[identity_theft_df['Year'] == 2024]\nprint(json.dumps({\"subtask-3\": identity_theft_2024_df.head().to_dict()}, indent=4))\n\n# Step 4: Aggregate the Identity Theft reports by Metropolitan area.\nidentity_theft_aggregated_df = identity_theft_2024_df.groupby('MSA')['Identity Theft Reports'].sum().reset_index()\nidentity_theft_aggregated_df.sort_values(by='Identity Theft Reports', ascending=False, inplace=True)\nprint(json.dumps({\"subtask-4\": identity_theft_aggregated_df.head().to_dict()}, indent=4))\n\n# Step 5: Identify the top 5 Metropolitan areas with the most Identity Theft reports.\ntop_5_metro_areas = identity_theft_aggregated_df.head(5)\nprint(json.dumps({\"subtask-5\": top_5_metro_areas.to_dict()}, indent=4))\n\n# Final answer\nprint(json.dumps({\"main-task\": top_5_metro_areas.to_dict()}, indent=4))",
+    "runtime": 26.97912359237671
+  },
+  {
+    "task_id": "legal-hard-15",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many total Identity Theft reports were there in 2024 from cross-state Metropolitan Statistical Areas?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+        "State MSA Identity Theft data/Alabama.csv",
+        "State MSA Identity Theft data/Alaska.csv",
+        "State MSA Identity Theft data/Arizona.csv",
+        "State MSA Identity Theft data/Arkansas.csv",
+        "State MSA Identity Theft data/California.csv",
+        "State MSA Identity Theft data/Colorado.csv",
+        "State MSA Identity Theft data/Connecticut.csv",
+        "State MSA Identity Theft data/Delaware.csv",
+        "State MSA Identity Theft data/DistrictofColumbia.csv",
+        "State MSA Identity Theft data/Florida.csv",
+        "State MSA Identity Theft data/Georgia.csv",
+        "State MSA Identity Theft data/Hawaii.csv",
+        "State MSA Identity Theft data/Idaho.csv",
+        "State MSA Identity Theft data/Illinois.csv",
+        "State MSA Identity Theft data/Indiana.csv",
+        "State MSA Identity Theft data/Iowa.csv",
+        "State MSA Identity Theft data/Kansas.csv",
+        "State MSA Identity Theft data/Kentucky.csv",
+        "State MSA Identity Theft data/Louisiana.csv",
+        "State MSA Identity Theft data/Maine.csv",
+        "State MSA Identity Theft data/Maryland.csv",
+        "State MSA Identity Theft data/Massachusetts.csv",
+        "State MSA Identity Theft data/Michigan.csv",
+        "State MSA Identity Theft data/Minnesota.csv",
+        "State MSA Identity Theft data/Mississippi.csv",
+        "State MSA Identity Theft data/Missouri.csv",
+        "State MSA Identity Theft data/Montana.csv",
+        "State MSA Identity Theft data/Nebraska.csv",
+        "State MSA Identity Theft data/Nevada.csv",
+        "State MSA Identity Theft data/NewHampshire.csv",
+        "State MSA Identity Theft data/NewJersey.csv",
+        "State MSA Identity Theft data/NewMexico.csv",
+        "State MSA Identity Theft data/NewYork.csv",
+        "State MSA Identity Theft data/NorthCarolina.csv",
+        "State MSA Identity Theft data/NorthDakota.csv",
+        "State MSA Identity Theft data/Ohio.csv",
+        "State MSA Identity Theft data/Oklahoma.csv",
+        "State MSA Identity Theft data/Oregon.csv",
+        "State MSA Identity Theft data/Pennsylvania.csv",
+        "State MSA Identity Theft data/PuertoRico.csv",
+        "State MSA Identity Theft data/RhodeIsland.csv",
+        "State MSA Identity Theft data/SouthCarolina.csv",
+        "State MSA Identity Theft data/SouthDakota.csv",
+        "State MSA Identity Theft data/Tennessee.csv",
+        "State MSA Identity Theft data/Texas.csv",
+        "State MSA Identity Theft data/Utah.csv",
+        "State MSA Identity Theft data/Vermont.csv",
+        "State MSA Identity Theft data/Virginia.csv",
+        "State MSA Identity Theft data/Washington.csv",
+        "State MSA Identity Theft data/WestVirginia.csv",
+        "State MSA Identity Theft data/Wisconsin.csv",
+        "State MSA Identity Theft data/Wyoming.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the State MSA Identity Theft data files.",
+          "data_sources": [
+            "State MSA Identity Theft data/Alabama.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Aggregate the Identity Theft reports for 2024 from all state MSA files.",
+          "data_sources": [
+            "State MSA Identity Theft data/Alabama.csv",
+            "State MSA Identity Theft data/Alaska.csv",
+            "State MSA Identity Theft data/Arizona.csv",
+            "State MSA Identity Theft data/Arkansas.csv",
+            "State MSA Identity Theft data/California.csv",
+            "State MSA Identity Theft data/Colorado.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Delaware.csv",
+            "State MSA Identity Theft data/DistrictofColumbia.csv",
+            "State MSA Identity Theft data/Florida.csv",
+            "State MSA Identity Theft data/Georgia.csv",
+            "State MSA Identity Theft data/Hawaii.csv",
+            "State MSA Identity Theft data/Idaho.csv",
+            "State MSA Identity Theft data/Illinois.csv",
+            "State MSA Identity Theft data/Indiana.csv",
+            "State MSA Identity Theft data/Iowa.csv",
+            "State MSA Identity Theft data/Kansas.csv",
+            "State MSA Identity Theft data/Kentucky.csv",
+            "State MSA Identity Theft data/Louisiana.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Maryland.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/Michigan.csv",
+            "State MSA Identity Theft data/Minnesota.csv",
+            "State MSA Identity Theft data/Mississippi.csv",
+            "State MSA Identity Theft data/Missouri.csv",
+            "State MSA Identity Theft data/Montana.csv",
+            "State MSA Identity Theft data/Nebraska.csv",
+            "State MSA Identity Theft data/Nevada.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/NewJersey.csv",
+            "State MSA Identity Theft data/NewMexico.csv",
+            "State MSA Identity Theft data/NewYork.csv",
+            "State MSA Identity Theft data/NorthCarolina.csv",
+            "State MSA Identity Theft data/NorthDakota.csv",
+            "State MSA Identity Theft data/Ohio.csv",
+            "State MSA Identity Theft data/Oklahoma.csv",
+            "State MSA Identity Theft data/Oregon.csv",
+            "State MSA Identity Theft data/Pennsylvania.csv",
+            "State MSA Identity Theft data/PuertoRico.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/SouthCarolina.csv",
+            "State MSA Identity Theft data/SouthDakota.csv",
+            "State MSA Identity Theft data/Tennessee.csv",
+            "State MSA Identity Theft data/Texas.csv",
+            "State MSA Identity Theft data/Utah.csv",
+            "State MSA Identity Theft data/Vermont.csv",
+            "State MSA Identity Theft data/Virginia.csv",
+            "State MSA Identity Theft data/Washington.csv",
+            "State MSA Identity Theft data/WestVirginia.csv",
+            "State MSA Identity Theft data/Wisconsin.csv",
+            "State MSA Identity Theft data/Wyoming.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-15/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport os\n\n# Step 1: Identify the relevant columns in the State MSA Identity Theft data files.\n# We will check the first file to identify the relevant columns.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv'\nalabama_data = pd.read_csv(file_path)\nrelevant_columns = alabama_data.columns.tolist()\n\n# Print the relevant columns identified in subtask-1\nprint(json.dumps({\"subtask-1\": relevant_columns}, indent=4))\n\n# Step 2: Aggregate the Identity Theft reports for 2024 from all state MSA files.\n# We will assume that the relevant columns are 'Year' and 'Identity Theft Reports'.\n# We will sum up the 'Identity Theft Reports' for the year 2024 across all files.\n\n# Initialize a variable to store the total number of Identity Theft reports\ntotal_identity_theft_reports = 0\n\n# Directory containing the State MSA Identity Theft data files\ndirectory = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/'\n\n# Iterate over each file in the directory\nfor filename in os.listdir(directory):\n    if filename.endswith('.csv'):\n        file_path = os.path.join(directory, filename)\n        data = pd.read_csv(file_path)\n        \n        # Ensure the 'Year' column is of integer type\n        data['Year'] = pd.to_numeric(data['Year'], errors='coerce')\n        \n        # Filter the data for the year 2024\n        year_2024_data = data[data['Year'] == 2024]\n        \n        # Sum up the 'Identity Theft Reports' for the year 2024\n        total_identity_theft_reports += year_2024_data['Identity Theft Reports'].sum()\n\n# Print the total number of Identity Theft reports for 2024 from all state MSA files\nprint(json.dumps({\"subtask-2\": total_identity_theft_reports}, indent=4))\n\n# Print the final answer\nprint(json.dumps({\"main-task\": total_identity_theft_reports}, indent=4))",
+    "runtime": 31.41025137901306
+  },
+  {
+    "task_id": "legal-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "query": "Among states with at least two metropolitan areas, considering each multi-state metropolitan area separately in each state it belongs to, which state has the highest concentration of identity theft reports in a single metropolitan area?",
+      "data_sources": [
+        "metropolitan_statistics.html",
+        "new_england_states.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+        "State MSA Identity Theft data/Alabama.csv",
+        "State MSA Identity Theft data/Alaska.csv",
+        "State MSA Identity Theft data/Arizona.csv",
+        "State MSA Identity Theft data/Arkansas.csv",
+        "State MSA Identity Theft data/California.csv",
+        "State MSA Identity Theft data/Colorado.csv",
+        "State MSA Identity Theft data/Connecticut.csv",
+        "State MSA Identity Theft data/Delaware.csv",
+        "State MSA Identity Theft data/DistrictofColumbia.csv",
+        "State MSA Identity Theft data/Florida.csv",
+        "State MSA Identity Theft data/Georgia.csv",
+        "State MSA Identity Theft data/Hawaii.csv",
+        "State MSA Identity Theft data/Idaho.csv",
+        "State MSA Identity Theft data/Illinois.csv",
+        "State MSA Identity Theft data/Indiana.csv",
+        "State MSA Identity Theft data/Iowa.csv",
+        "State MSA Identity Theft data/Kansas.csv",
+        "State MSA Identity Theft data/Kentucky.csv",
+        "State MSA Identity Theft data/Louisiana.csv",
+        "State MSA Identity Theft data/Maine.csv",
+        "State MSA Identity Theft data/Maryland.csv",
+        "State MSA Identity Theft data/Massachusetts.csv",
+        "State MSA Identity Theft data/Michigan.csv",
+        "State MSA Identity Theft data/Minnesota.csv",
+        "State MSA Identity Theft data/Mississippi.csv",
+        "State MSA Identity Theft data/Missouri.csv",
+        "State MSA Identity Theft data/Montana.csv",
+        "State MSA Identity Theft data/Nebraska.csv",
+        "State MSA Identity Theft data/Nevada.csv",
+        "State MSA Identity Theft data/NewHampshire.csv",
+        "State MSA Identity Theft data/NewJersey.csv",
+        "State MSA Identity Theft data/NewMexico.csv",
+        "State MSA Identity Theft data/NewYork.csv",
+        "State MSA Identity Theft data/NorthCarolina.csv",
+        "State MSA Identity Theft data/NorthDakota.csv",
+        "State MSA Identity Theft data/Ohio.csv",
+        "State MSA Identity Theft data/Oklahoma.csv",
+        "State MSA Identity Theft data/Oregon.csv",
+        "State MSA Identity Theft data/Pennsylvania.csv",
+        "State MSA Identity Theft data/PuertoRico.csv",
+        "State MSA Identity Theft data/RhodeIsland.csv",
+        "State MSA Identity Theft data/SouthCarolina.csv",
+        "State MSA Identity Theft data/SouthDakota.csv",
+        "State MSA Identity Theft data/Tennessee.csv",
+        "State MSA Identity Theft data/Texas.csv",
+        "State MSA Identity Theft data/Utah.csv",
+        "State MSA Identity Theft data/Vermont.csv",
+        "State MSA Identity Theft data/Virginia.csv",
+        "State MSA Identity Theft data/Washington.csv",
+        "State MSA Identity Theft data/WestVirginia.csv",
+        "State MSA Identity Theft data/Wisconsin.csv",
+        "State MSA Identity Theft data/Wyoming.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify states with at least two metropolitan areas.",
+          "data_sources": [
+            "metropolitan_statistics.html"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract identity theft reports for each metropolitan area in each state.",
+          "data_sources": [
+            "State MSA Identity Theft data/Alabama.csv",
+            "State MSA Identity Theft data/Alaska.csv",
+            "State MSA Identity Theft data/Arizona.csv",
+            "State MSA Identity Theft data/Arkansas.csv",
+            "State MSA Identity Theft data/California.csv",
+            "State MSA Identity Theft data/Colorado.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Delaware.csv",
+            "State MSA Identity Theft data/DistrictofColumbia.csv",
+            "State MSA Identity Theft data/Florida.csv",
+            "State MSA Identity Theft data/Georgia.csv",
+            "State MSA Identity Theft data/Hawaii.csv",
+            "State MSA Identity Theft data/Idaho.csv",
+            "State MSA Identity Theft data/Illinois.csv",
+            "State MSA Identity Theft data/Indiana.csv",
+            "State MSA Identity Theft data/Iowa.csv",
+            "State MSA Identity Theft data/Kansas.csv",
+            "State MSA Identity Theft data/Kentucky.csv",
+            "State MSA Identity Theft data/Louisiana.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Maryland.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/Michigan.csv",
+            "State MSA Identity Theft data/Minnesota.csv",
+            "State MSA Identity Theft data/Mississippi.csv",
+            "State MSA Identity Theft data/Missouri.csv",
+            "State MSA Identity Theft data/Montana.csv",
+            "State MSA Identity Theft data/Nebraska.csv",
+            "State MSA Identity Theft data/Nevada.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/NewJersey.csv",
+            "State MSA Identity Theft data/NewMexico.csv",
+            "State MSA Identity Theft data/NewYork.csv",
+            "State MSA Identity Theft data/NorthCarolina.csv",
+            "State MSA Identity Theft data/NorthDakota.csv",
+            "State MSA Identity Theft data/Ohio.csv",
+            "State MSA Identity Theft data/Oklahoma.csv",
+            "State MSA Identity Theft data/Oregon.csv",
+            "State MSA Identity Theft data/Pennsylvania.csv",
+            "State MSA Identity Theft data/PuertoRico.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/SouthCarolina.csv",
+            "State MSA Identity Theft data/SouthDakota.csv",
+            "State MSA Identity Theft data/Tennessee.csv",
+            "State MSA Identity Theft data/Texas.csv",
+            "State MSA Identity Theft data/Utah.csv",
+            "State MSA Identity Theft data/Vermont.csv",
+            "State MSA Identity Theft data/Virginia.csv",
+            "State MSA Identity Theft data/Washington.csv",
+            "State MSA Identity Theft data/WestVirginia.csv",
+            "State MSA Identity Theft data/Wisconsin.csv",
+            "State MSA Identity Theft data/Wyoming.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the highest concentration of identity theft reports in a single metropolitan area for each state.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the state with the highest concentration of identity theft reports in a single metropolitan area.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-16/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "runtime": 25.593427181243896
+  },
+  {
+    "task_id": "legal-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "query": "If the 2007 report category distribution were exactly like the 2024 ones, how many reports in 2007 would be Auto Related (rounded to the nearest integer)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the distribution of report categories in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the total number of reports in 2007?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-17/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load the 2024 report categories distribution\nreport_categories_2024 = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories_over_Three_Years.csv')\n\n# Filter for the year 2024\nreport_categories_2024 = report_categories_2024[report_categories_2024['Year'] == 2024]\n\n# Calculate the distribution of report categories in 2024\ntotal_reports_2024 = report_categories_2024['Number of Reports'].sum()\nreport_categories_2024['Distribution'] = report_categories_2024['Number of Reports'] / total_reports_2024\n\n# Find the distribution for Auto Related reports in 2024\nauto_related_distribution_2024 = report_categories_2024[report_categories_2024['Report Category'] == 'Auto Related']['Distribution'].values[0]\n\n# Step 2: Load the total number of reports in 2007\nreport_count_2007 = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv')\n\n# Filter for the year 2007\nreport_count_2007 = report_count_2007[report_count_2007['Year'] == 2007]\n\n# Get the total number of reports in 2007\ntotal_reports_2007 = report_count_2007['Number of Reports'].values[0]\n\n# Calculate the number of Auto Related reports in 2007 based on 2024 distribution\nauto_related_reports_2007 = total_reports_2007 * auto_related_distribution_2024\n\n# Round to the nearest integer\nauto_related_reports_2007_rounded = round(auto_related_reports_2007)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": report_categories_2024.to_dict(orient='records'),\n        \"subtask-2\": total_reports_2007,\n        \"main-task\": auto_related_reports_2007_rounded\n    }, indent=4)\n)",
+    "runtime": 16.22058606147766
+  },
+  {
+    "task_id": "legal-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "query": "If the 2007 reports were distributed exactly like the 2024 ones, how many identity theft reports in 2007 would concern people ages 40 or older (rounded to the nearest thousand)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the distribution of identity theft reports by age in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the total number of identity theft reports in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the proportion of identity theft reports concerning people ages 40 or older in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Estimate the number of identity theft reports concerning people ages 40 or older in 2007 based on the 2024 distribution.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-18/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load and inspect the distribution of identity theft reports by age in 2024\nage_distribution_2024 = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv')\nage_distribution_2024['Year'] = pd.to_numeric(age_distribution_2024['Year'], errors='coerce')\nage_distribution_2024_2024 = age_distribution_2024[age_distribution_2024['Year'] == 2024]\nage_distribution_2024_2024['Age'] = pd.to_numeric(age_distribution_2024_2024['Age'], errors='coerce')\n\n# Subtask 2: Load and inspect the total number of identity theft reports in 2024\ntotal_reports_2024 = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-202024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv')\ntotal_reports_2024['Year'] = pd.to_numeric(total_reports_2024['Year'], errors='coerce')\ntotal_reports_2024_2024 = total_reports_2024[total_reports_2024['Year'] == 2024]\ntotal_reports_2024_count = total_reports_2024_2024['Number of Reports'].sum()\n\n# Subtask 3: Calculate the proportion of identity theft reports concerning people ages 40 or older in 2024\nage_distribution_2024_2024_over_40 = age_distribution_2024_2024[age_distribution_2024_2024['Age'] >= 40]\nproportion_over_40 = age_distribution_2024_2024_over_40['Number of Reports'].sum() / age_distribution_2024_2024['Number of Reports'].sum()\n\n# Subtask 4: Estimate the number of identity theft reports concerning people ages 40 or older in 2007 based on the 2024 distribution\nestimated_reports_2007_over_40 = proportion_over_40 * total_reports_2024_count\nestimated_reports_2007_over_40_rounded = round(estimated_reports_2007_over_40, -3)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": age_distribution_2024_2024.to_dict(orient='records'),\n        \"subtask-2\": total_reports_2024_count,\n        \"subtask-3\": proportion_over_40,\n        \"subtask-4\": estimated_reports_2007_over_40_rounded,\n        \"main-task\": estimated_reports_2007_over_40_rounded\n    }, indent=4)\n)",
+    "runtime": 21.49298596382141
+  },
+  {
+    "task_id": "legal-easy-19",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the proportion (round to 3 decimal places) of fraud reporters who lost between $1-$500 in 2024?",
+      "data_sources": [
+        "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the '2024_CSN_Fraud_Reports_by_Amount_Lost.csv' file.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data to include only the year 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data to include only the amount lost between $1-$500.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the total number of fraud reports in 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the number of fraud reports where the amount lost is between $1-$500 in 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Calculate the proportion of fraud reporters who lost between $1-$500 in 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-19/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Load and clean the '2024_CSN_Fraud_Reports_by_Amount_Lost.csv' file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv'\nfraud_reports = pd.read_csv(file_path)\n\n# Convert 'Year' column to integer if it's not already\nif fraud_reports['Year'].dtype != int:\n    fraud_reports['Year'] = pd.to_numeric(fraud_reports['Year'], errors='coerce')\n\n# Drop rows with NaN values in 'Year' column\nfraud_reports.dropna(subset=['Year'], inplace=True)\n\n# Print the cleaned data for subtask-1\nprint(json.dumps({\"subtask-1\": fraud_reports.head().to_dict()}, indent=4))\n\n# Step 2: Filter the data to include only the year 2024.\nfraud_reports_2024 = fraud_reports[fraud_reports['Year'] == 2024]\n\n# Print the filtered data for subtask-2\nprint(json.dumps({\"subtask-2\": fraud_reports_2024.head().to_dict()}, indent=4))\n\n# Step 3: Filter the data to include only the amount lost between $1-$500.\nfraud_reports_2024_filtered = fraud_reports_2024[(fraud_reports_2024['Amount Lost'] >= 1) & (fraud_reports_2024['Amount Lost'] <= 500)]\n\n# Print the filtered data for subtask-3\nprint(json.dumps({\"subtask-3\": fraud_reports_2024_filtered.head().to_dict()}, indent=4))\n\n# Step 4: Calculate the total number of fraud reports in 2024.\ntotal_fraud_reports_2024 = fraud_reports_2024['Number of Reports'].sum()\n\n# Print the total number of fraud reports for subtask-4\nprint(json.dumps({\"subtask-4\": total_fraud_reports_2024}, indent=4))\n\n# Step 5: Calculate the number of fraud reports where the amount lost is between $1-$500 in 2024.\nfraud_reports_2024_filtered_sum = fraud_reports_2024_filtered['Number of Reports'].sum()\n\n# Print the number of filtered fraud reports for subtask-5\nprint(json.dumps({\"subtask-5\": fraud_reports_2024_filtered_sum}, indent=4))\n\n# Step 6: Calculate the proportion of fraud reporters who lost between $1-$500 in 2024.\nproportion = round(fraud_reports_2024_filtered_sum / total_fraud_reports_2024, 3)\n\n# Print the final proportion for main-task\nprint(json.dumps({\"main-task\": proportion}, indent=4))",
+    "runtime": 22.135305643081665
+  },
+  {
+    "task_id": "legal-easy-20",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the percentage of fraud reporters in 2024?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "How many total reports were made in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "How many fraud reports were made in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-20/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load the data for total reports in 2024\ntotal_reports_file = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ntotal_reports_df = pd.read_csv(total_reports_file)\n\n# Ensure the 'Year' column is of integer type\ntotal_reports_df['Year'] = pd.to_numeric(total_reports_df['Year'], errors='coerce')\n\n# Filter for the year 2024\ntotal_reports_2024 = total_reports_df[total_reports_df['Year'] == 2024]['Total Reports'].sum()\n\n# Step 2: Load the data for fraud reports in 2024\nfraud_reports_file = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\nfraud_reports_df = pd.read_csv(fraud_reports_file)\n\n# Ensure the 'Year' column is of integer type\nfraud_reports_df['Year'] = pd.to_numeric(fraud_reports_df['Year'], errors='coerce')\n\n# Filter for the year 2024 and the report type 'Fraud'\nfraud_reports_2024 = fraud_reports_df[(fraud_reports_df['Year'] == 2024) & (fraud_reports_df['Report Type'] == 'Fraud')]['Number of Reports'].sum()\n\n# Calculate the percentage of fraud reporters\nif total_reports_2024 > 0:\n    fraud_percentage = (fraud_reports_2024 / total_reports_2024) * 100\nelse:\n    fraud_percentage = 0\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": total_reports_2024,\n        \"subtask-2\": fraud_reports_2024,\n        \"main-task\": fraud_percentage\n    }, indent=4\n))",
+    "runtime": 17.516157150268555
+  },
+  {
+    "task_id": "legal-easy-21",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the total number of identity theft reporters in Alabama in 2024?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the '2024_CSN_State_Identity_Theft_Reports.csv' file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Identify the relevant columns in the 'State MSA Identity Theft data/Alabama.csv' file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Check for and handle any missing or inconsistent data in the relevant columns.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Sum the total number of identity theft reports for Alabama in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-21/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Identify the relevant columns in the '2024_CSN_State_Identity_Theft_Reports.csv' file.\nstate_identity_theft_file = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv'\nstate_identity_theft_df = pd.read_csv(state_identity_theft_file)\nstate_identity_theft_columns = state_identity_theft_df.columns.tolist()\nprint(json.dumps({\"subtask-1\": state_identity_theft_columns}, indent=4))\n\n# Subtask 2: Identify the relevant columns in the 'State MSA Identity Theft data/Alabama.csv' file.\nalabama_identity_theft_file = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv'\nalabama_identity_theft_df = pd.read_csv(alabama_identity_theft_file)\nalabama_identity_theft_columns = alabama_identity_theft_df.columns.tolist()\nprint(json.dumps({\"subtask-2\": alabama_identity_theft_columns}, indent=4))\n\n# Subtask 3: Check for and handle any missing or inconsistent data in the relevant columns.\n# Assuming 'State' and 'Year' columns are present and 'Number of Reports' is the relevant data column.\nstate_identity_theft_df['Year'] = pd.to_numeric(state_identity_theft_df['Year'], errors='coerce')\nstate_identity_theft_df.dropna(subset=['Year', 'Number of Reports'], inplace=True)\n\nalabama_identity_theft_df['Year'] = pd.to_numeric(alabama_identity_theft_df['Year'], errors='coerce')\nalabama_identity_theft_df.dropna(subset=['Year', 'Number of Reports'], inplace=True)\n\n# Subtask 4: Sum the total number of identity theft reports for Alabama in 2024.\nalabama_2024_reports = state_identity_theft_df[(state_identity_theft_df['State'] == 'Alabama') & (state_identity_theft_df['Year'] == 2024)]['Number of Reports'].sum()\nprint(json.dumps({\"subtask-4\": alabama_2024_reports}, indent=4))\n\n# Final answer\nprint(json.dumps({\"main-task\": alabama_2024_reports}, indent=4))",
+    "runtime": 18.100104093551636
+  },
+  {
+    "task_id": "legal-hard-22",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the proportion (round to 4 decimal places) of all reports who reported identity theft with Back Account (Theft Type) and New Accounts (Theft Subtype)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the identity theft reports data.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data for Back Account (Theft Type) and New Accounts (Theft Subtype).",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the total number of identity theft reports.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the number of reports with Back Account (Theft Type) and New Accounts (Theft Subtype).",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-5",
+          "query": "Compute the proportion of reports with Back Account (Theft Type) and New Accounts (Theft Subtype).",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-22/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Load and clean the identity theft reports data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv'\nidentity_theft_data = pd.read_csv(file_path)\n\n# Check for missing values and data types\nidentity_theft_data.dropna(inplace=True)\nidentity_theft_data['Theft Type'] = identity_theft_data['Theft Type'].astype(str)\nidentity_theft_data['Theft Subtype'] = identity_theft_data['Theft Subtype'].astype(str)\nidentity_theft_data['Number of Reports'] = pd.to_numeric(identity_theft_data['Number of Reports'], errors='coerce')\n\n# Step 2: Filter the data for Back Account (Theft Type) and New Accounts (Theft Subtype)\nfiltered_data = identity_theft_data[(identity_theft_data['Theft Type'] == 'Back Account') & (identity_theft_data['Theft Subtype'] == 'New Accounts')]\n\n# Step 3: Calculate the total number of identity theft reports\ntotal_reports = identity_theft_data['Number of Reports'].sum()\n\n# Step 4: Calculate the number of reports with Back Account (Theft Type) and New Accounts (Theft Subtype)\nback_account_new_accounts_reports = filtered_data['Number of Reports'].sum()\n\n# Step 5: Compute the proportion of reports with Back Account (Theft Type) and New Accounts (Theft Subtype)\nproportion = round(back_account_new_accounts_reports / total_reports, 4)\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded and cleaned.\",\n        \"subtask-2\": filtered_data.to_dict(orient='records'),\n        \"subtask-3\": total_reports,\n        \"subtask-4\": back_account_new_accounts_reports,\n        \"main-task\": proportion\n    }, indent=4)\n)",
+    "runtime": 16.54463791847229
+  },
+  {
+    "task_id": "legal-hard-23",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "runtime": 26.670717239379883
+  },
+  {
+    "task_id": "legal-hard-24",
+    "model_output": {
+      "id": "main-task",
+      "query": "For the state (including DC and PR) with the highest # of reporter of all type of reports (identity theft, fraud and others), which one of its metropolitan area has the highest # of reports for identity theft?",
+      "data_sources": [
+        "2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv",
+        "State MSA Identity Theft data/DistrictofColumbia.csv",
+        "State MSA Identity Theft data/PuertoRico.csv",
+        "State MSA Identity Theft data/Alabama.csv",
+        "State MSA Identity Theft data/Alaska.csv",
+        "State MSA Identity Theft data/Arizona.csv",
+        "State MSA Identity Theft data/Arkansas.csv",
+        "State MSA Identity Theft data/California.csv",
+        "State MSA Identity Theft data/Colorado.csv",
+        "State MSA Identity Theft data/Connecticut.csv",
+        "State MSA Identity Theft data/Delaware.csv",
+        "State MSA Identity Theft data/Florida.csv",
+        "State MSA Identity Theft data/Georgia.csv",
+        "State MSA Identity Theft data/Hawaii.csv",
+        "State MSA Identity Theft data/Idaho.csv",
+        "State MSA Identity Theft data/Illinois.csv",
+        "State MSA Identity Theft data/Indiana.csv",
+        "State MSA Identity Theft data/Iowa.csv",
+        "State MSA Identity Theft data/Kansas.csv",
+        "State MSA Identity Theft data/Kentucky.csv",
+        "State MSA Identity Theft data/Louisiana.csv",
+        "State MSA Identity Theft data/Maine.csv",
+        "State MSA Identity Theft data/Maryland.csv",
+        "State MSA Identity Theft data/Massachusetts.csv",
+        "State MSA Identity Theft data/Michigan.csv",
+        "State MSA Identity Theft data/Minnesota.csv",
+        "State MSA Identity Theft data/Mississippi.csv",
+        "State MSA Identity Theft data/Missouri.csv",
+        "State MSA Identity Theft data/Montana.csv",
+        "State MSA Identity Theft data/Nebraska.csv",
+        "State MSA Identity Theft data/Nevada.csv",
+        "State MSA Identity Theft data/NewHampshire.csv",
+        "State MSA Identity Theft data/NewJersey.csv",
+        "State MSA Identity Theft data/NewMexico.csv",
+        "State MSA Identity Theft data/NewYork.csv",
+        "State MSA Identity Theft data/NorthCarolina.csv",
+        "State MSA Identity Theft data/NorthDakota.csv",
+        "State MSA Identity Theft data/Ohio.csv",
+        "State MSA Identity Theft data/Oklahoma.csv",
+        "State MSA Identity Theft data/Oregon.csv",
+        "State MSA Identity Theft data/Pennsylvania.csv",
+        "State MSA Identity Theft data/RhodeIsland.csv",
+        "State MSA Identity Theft data/SouthCarolina.csv",
+        "State MSA Identity Theft data/SouthDakota.csv",
+        "State MSA Identity Theft data/Tennessee.csv",
+        "State MSA Identity Theft data/Texas.csv",
+        "State MSA Identity Theft data/Utah.csv",
+        "State MSA Identity Theft data/Vermont.csv",
+        "State MSA Identity Theft data/Virginia.csv",
+        "State MSA Identity Theft data/Washington.csv",
+        "State MSA Identity Theft data/WestVirginia.csv",
+        "State MSA Identity Theft data/Wisconsin.csv",
+        "State MSA Identity Theft data/Wyoming.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Which state (including DC and PR) has the highest number of reports of all types?",
+          "data_sources": [
+            "2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the metropolitan area in the identified state with the highest number of identity theft reports?",
+          "data_sources": [
+            "State MSA Identity Theft data/DistrictofColumbia.csv",
+            "State MSA Identity Theft data/PuertoRico.csv",
+            "State MSA Identity Theft data/Alabama.csv",
+            "State MSA Identity Theft data/Alaska.csv",
+            "State MSA Identity Theft data/Arizona.csv",
+            "State MSA Identity Theft data/Arkansas.csv",
+            "State MSA Identity Theft data/California.csv",
+            "State MSA Identity Theft data/Colorado.csv",
+            "State MSA Identity Theft data/Connecticut.csv",
+            "State MSA Identity Theft data/Delaware.csv",
+            "State MSA Identity Theft data/Florida.csv",
+            "State MSA Identity Theft data/Georgia.csv",
+            "State MSA Identity Theft data/Hawaii.csv",
+            "State MSA Identity Theft data/Idaho.csv",
+            "State MSA Identity Theft data/Illinois.csv",
+            "State MSA Identity Theft data/Indiana.csv",
+            "State MSA Identity Theft data/Iowa.csv",
+            "State MSA Identity Theft data/Kansas.csv",
+            "State MSA Identity Theft data/Kentucky.csv",
+            "State MSA Identity Theft data/Louisiana.csv",
+            "State MSA Identity Theft data/Maine.csv",
+            "State MSA Identity Theft data/Maryland.csv",
+            "State MSA Identity Theft data/Massachusetts.csv",
+            "State MSA Identity Theft data/Michigan.csv",
+            "State MSA Identity Theft data/Minnesota.csv",
+            "State MSA Identity Theft data/Mississippi.csv",
+            "State MSA Identity Theft data/Missouri.csv",
+            "State MSA Identity Theft data/Montana.csv",
+            "State MSA Identity Theft data/Nebraska.csv",
+            "State MSA Identity Theft data/Nevada.csv",
+            "State MSA Identity Theft data/NewHampshire.csv",
+            "State MSA Identity Theft data/NewJersey.csv",
+            "State MSA Identity Theft data/NewMexico.csv",
+            "State MSA Identity Theft data/NewYork.csv",
+            "State MSA Identity Theft data/NorthCarolina.csv",
+            "State MSA Identity Theft data/NorthDakota.csv",
+            "State MSA Identity Theft data/Ohio.csv",
+            "State MSA Identity Theft data/Oklahoma.csv",
+            "State MSA Identity Theft data/Oregon.csv",
+            "State MSA Identity Theft data/Pennsylvania.csv",
+            "State MSA Identity Theft data/RhodeIsland.csv",
+            "State MSA Identity Theft data/SouthCarolina.csv",
+            "State MSA Identity Theft data/SouthDakota.csv",
+            "State MSA Identity Theft data/Tennessee.csv",
+            "State MSA Identity Theft data/Texas.csv",
+            "State MSA Identity Theft data/Utah.csv",
+            "State MSA Identity Theft data/Vermont.csv",
+            "State MSA Identity Theft data/Virginia.csv",
+            "State MSA Identity Theft data/Washington.csv",
+            "State MSA Identity Theft data/WestVirginia.csv",
+            "State MSA Identity Theft data/Wisconsin.csv",
+            "State MSA Identity Theft data/Wyoming.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-24/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "runtime": 23.867358207702637
+  },
+  {
+    "task_id": "legal-easy-25",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which branch of the U.S. Military had the largest \"Median Fraud Loss\" reported by its service members in 2024?",
+      "data_sources": [
+        "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the relevant data from the CSV file.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean the data by handling missing values and ensuring correct data types.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data for the year 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the branch of the U.S. Military with the largest 'Median Fraud Loss'.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-25/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Load the relevant data from the CSV file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv'\ndata = pd.read_csv(file_path)\nprint(json.dumps({\"subtask-1\": data.head().to_dict()}, indent=4))\n\n# Step 2: Clean the data by handling missing values and ensuring correct data types.\n# Check for missing values\nmissing_values = data.isnull().sum()\nprint(json.dumps({\"subtask-2\": missing_values.to_dict()}, indent=4))\n\n# Convert 'Year' to integer and 'Median Fraud Loss' to float\ndata['Year'] = pd.to_numeric(data['Year'], errors='coerce')\ndata['Median Fraud Loss'] = pd.to_numeric(data['Median Fraud Loss'], errors='coerce')\n\n# Drop rows with missing values in 'Year' or 'Median Fraud Loss'\ndata = data.dropna(subset=['Year', 'Median Fraud Loss'])\n\n# Step 3: Filter the data for the year 2024.\ndata_2024 = data[data['Year'] == 2024]\nprint(json.dumps({\"subtask-3\": data_2024.to_dict()}, indent=4))\n\n# Step 4: Identify the branch of the U.S. Military with the largest 'Median Fraud Loss'.\nif not data_2024.empty:\n    max_median_loss_branch = data_2024.loc[data_2024['Median Fraud Loss'].idxmax(), 'Military Branch']\n    max_median_loss_value = data_2024.loc[data_2024['Median Fraud Loss'].idxmax(), 'Median Fraud Loss']\n    answer = {\n        \"Branch\": max_median_loss_branch,\n        \"Median Fraud Loss\": max_median_loss_value\n    }\nelse:\n    answer = \"No data available for the year 2024.\"\n\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+    "runtime": 16.121883869171143
+  },
+  {
+    "task_id": "legal-easy-26",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which states had \"Identity Theft\" as their top report category?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from the CSV file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Clean the data by handling missing values and ensuring correct data types.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Identify states where 'Identity Theft' is the top report category.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-26/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Step 1: Load the data from the CSV file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv'\ntry:\n    data = pd.read_csv(file_path)\n    print(json.dumps({\"subtask-1\": \"Data loaded successfully.\"}, indent=4))\nexcept Exception as e:\n    print(json.dumps({\"subtask-1\": f\"Error loading data: {str(e)}\"}, indent=4))\n\n# Step 2: Clean the data by handling missing values and ensuring correct data types\n# Check for missing values\nmissing_values = data.isnull().sum()\nprint(json.dumps({\"subtask-2\": {\"missing_values\": missing_values.to_dict()}}, indent=4))\n\n# Drop rows with missing values in the 'State' and 'Top_Report_Category' columns\ndata_cleaned = data.dropna(subset=['State', 'Top_Report_Category'])\n\n# Ensure 'State' and 'Top_Report_Category' are strings\ndata_cleaned['State'] = data_cleaned['State'].astype(str)\ndata_cleaned['Top_Report_Category'] = data_cleaned['Top_Report_Category'].astype(str)\n\n# Step 3: Identify states where 'Identity Theft' is the top report category\nidentity_theft_states = data_cleaned[data_cleaned['Top_Report_Category'] == 'Identity Theft']['State'].tolist()\nprint(json.dumps({\"subtask-3\": identity_theft_states}, indent=4))\n\n# Final answer\nanswer = identity_theft_states\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+    "runtime": 16.776390075683594
+  },
+  {
+    "task_id": "legal-easy-27",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many states had \"Prizes, Sweepstakes and Lotteries\" in their top-10 report categories in 2024?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from the CSV file.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data for the year 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Check for and handle any missing or inconsistent data in the relevant columns.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify states where 'Prizes, Sweepstakes and Lotteries' is in the top-10 report categories.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Count the number of unique states identified in subtask-4.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-easy-27/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load the data from the CSV file.\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv'\ndata = pd.read_csv(file_path)\n\n# Subtask 2: Filter the data for the year 2024.\n# Assuming the year column is named 'Year' and is of type string or integer.\ndata['Year'] = pd.to_numeric(data['Year'], errors='coerce')  # Convert to numeric, coerce errors to NaN\ndata_2024 = data[data['Year'] == 2024]\n\n# Subtask 3: Check for and handle any missing or inconsistent data in the relevant columns.\n# Check for missing values in the relevant columns\nmissing_values = data_2024[['State', 'Top_Ten_Report_Categories']].isnull().sum()\nprint(json.dumps({\"subtask-3\": {\"missing_values\": missing_values.to_dict()}}, indent=4))\n\n# Drop rows with missing values in the relevant columns\ndata_2024_clean = data_2024.dropna(subset=['State', 'Top_Ten_Report_Categories'])\n\n# Subtask 4: Identify states where 'Prizes, Sweepstakes and Lotteries' is in the top-10 report categories.\n# Assuming 'Top_Ten_Report_Categories' is a string with categories separated by commas\ndata_2024_clean['Top_Ten_Report_Categories'] = data_2024_clean['Top_Ten_Report_Categories'].str.split(',')\nstates_with_prizes = data_2024_clean[data_2024_clean['Top_Ten_Report_Categories'].apply(lambda x: 'Prizes, Sweepstakes and Lotteries' in x)]['State'].unique()\n\n# Subtask 5: Count the number of unique states identified in subtask-4.\ncount_states_with_prizes = len(states_with_prizes)\n\n# Final answer\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded successfully.\",\n        \"subtask-2\": \"Data filtered for the year 2024.\",\n        \"subtask-3\": {\"missing_values\": missing_values.to_dict()},\n        \"subtask-4\": {\"states_with_prizes\": states_with_prizes.tolist()},\n        \"subtask-5\": {\"count_states_with_prizes\": count_states_with_prizes},\n        \"main-task\": {\"count_states_with_prizes\": count_states_with_prizes}\n    }, indent=4))",
+    "runtime": 20.7534236907959
+  },
+  {
+    "task_id": "legal-hard-28",
+    "model_output": {
+      "id": "main-task",
+      "query": "In 2024, as a percentage of all reports for the same demographic, did military consumers report a higher percentage of Imposter Scams than the general population? Answer Yes or No. No explanation needed.",
+      "data_sources": [
+        "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv",
+        "2024_CSN_Number_of_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Extract the number of Imposter Scam reports by military consumers in 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the total number of reports by military consumers in 2024.",
+          "data_sources": [
+            "2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Extract the number of Imposter Scam reports by the general population in 2024.",
+          "data_sources": [
+            "2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Extract the total number of reports by the general population in 2024.",
+          "data_sources": [
+            "2024_CSN_Number_of_Reports_by_Type.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-28/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Extract the number of Imposter Scam reports by military consumers in 2024\nmilitary_reports = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv')\nmilitary_imposter_scams = military_reports[(military_reports['Year'] == 2024) & (military_reports['Report Type'] == 'Imposter Scam')]['Number of Reports'].sum()\n\n# Step 2: Extract the total number of reports by military consumers in 2024\ntotal_military_reports = military_reports[military_reports['Year'] == 2024]['Number of Reports'].sum()\n\n# Step 3: Extract the number of Imposter Scam reports by the general population in 2024\ngeneral_reports = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv')\ngeneral_imposter_scams = general_reports[(general_reports['Year'] == 2024) & (general_reports['Report Type'] == 'Imposter Scam')]['Number of Reports'].sum()\n\n# Step 4: Extract the total number of reports by the general population in 2024\ntotal_general_reports = general_reports[general_reports['Year'] == 2024]['Number of Reports'].sum()\n\n# Calculate percentages\nmilitary_imposter_scam_percentage = (military_imposter_scams / total_military_reports) * 100\ngeneral_imposter_scam_percentage = (general_imposter_scams / total_general_reports) * 100\n\n# Determine if military consumers reported a higher percentage of Imposter Scams\nanswer = \"Yes\" if military_imposter_scam_percentage > general_imposter_scam_percentage else \"No\"\n\n# Print answers\nprint(json.dumps(\n    {\n        \"subtask-1\": military_imposter_scams,\n        \"subtask-2\": total_military_reports,\n        \"subtask-3\": general_imposter_scams,\n        \"subtask-4\": total_general_reports,\n        \"main-task\": answer\n    }, indent=4\n))",
+    "runtime": 20.109761476516724
+  },
+  {
+    "task_id": "legal-hard-29",
+    "model_output": {
+      "id": "main-task",
+      "query": "Among states with 5 or more metro areas, which metropolitan area had the largest percentage of fraud reports in its own state?",
+      "data_sources": [
+        "metropolitan_statistics.html",
+        "new_england_states.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Fraud_Reports_and_Losses.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify states with 5 or more metro areas.",
+          "data_sources": [
+            "metropolitan_statistics.html"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract fraud reports for each metropolitan area in the identified states.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Extract total fraud reports for each state.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Fraud_Reports_and_Losses.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the percentage of fraud reports for each metropolitan area in its state.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Fraud_Reports_and_Losses.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the metropolitan area with the largest percentage of fraud reports in its state.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Fraud_Reports_and_Losses.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-29/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\nfrom bs4 import BeautifulSoup\nimport requests\n\n# Step 1: Identify states with 5 or more metro areas\ndef get_states_with_metro_areas():\n    url = 'https://example.com/path/to/metropolitan_statistics.html'  # Replace with the actual URL or path\n    response = requests.get(url)\n    soup = BeautifulSoup(response.text, 'html.parser')\n    # Assuming the data is in a table, we need to parse it accordingly\n    table = soup.find('table')  # Adjust the selector as needed\n    rows = table.find_all('tr')\n    state_metro_count = {}\n    for row in rows[1:]:  # Skip header row\n        cols = row.find_all('td')\n        state = cols[0].text.strip()\n        metro_count = int(cols[1].text.strip())\n        state_metro_count[state] = metro_count\n    states_with_5_or_more_metro_areas = {state: count for state, count in state_metro_count.items() if count >= 5}\n    return states_with_5_or_more_metro_areas\n\nstates_with_5_or_more_metro_areas = get_states_with_metro_areas()\nprint(json.dumps({\"subtask-1\": states_with_5_or_more_metro_areas}, indent=4))\n\n# Step 2: Extract fraud reports for each metropolitan area in the identified states\ndef load_metro_fraud_reports():\n    file_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv'\n    metro_fraud_reports = pd.read_csv(file_path)\n    return metro_fraud_reports\n\nmetro_fraud_reports = load_metro_fraud_reports()\nprint(json.dumps({\"subtask-2\": metro_fraud_reports.head().to_dict()}, indent=4))\n\n# Step 3: Extract total fraud reports for each state\ndef load_state_fraud_reports():\n    file_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Fraud_Reports_and_Losses.csv'\n    state_fraud_reports = pd.read_csv(file_path)\n    return state_fraud_reports\n\nstate_fraud_reports = load_state_fraud_reports()\nprint(json.dumps({\"subtask-3\": state_fraud_reports.head().to_dict()}, indent=4))\n\n# Step 4: Calculate the percentage of fraud reports for each metropolitan area in its state\ndef calculate_metro_fraud_percentage(metro_fraud_reports, state_fraud_reports, states_with_5_or_more_metro_areas):\n    # Filter metro areas in states with 5 or more metro areas\n    metro_fraud_reports = metro_fraud_reports[metro_fraud_reports['State'].isin(states_with_5_or_more_metro_areas.keys())]\n    # Merge with state fraud reports to get total state fraud reports\n    merged_data = pd.merge(metro_fraud_reports, state_fraud_reports[['State', 'Total Fraud Reports']], on='State', how='left')\n    # Calculate percentage\n    merged_data['Percentage of State Fraud'] = (merged_data['Total Fraud Reports (MSA)'] / merged_data['Total Fraud Reports']) * 100\n    return merged_data\n\nmetro_fraud_percentage = calculate_metro_fraud_percentage(metro_fraud_reports, state_fraud_reports, states_with_5_or_more_metro_areas)\nprint(json.dumps({\"subtask-4\": metro_fraud_percentage.head().to_dict()}, indent=4))\n\n# Step 5: Identify the metropolitan area with the largest percentage of fraud reports in its state\ndef find_max_fraud_metro(metro_fraud_percentage):\n    max_fraud_metro = metro_fraud_percentage.loc[metro_fraud_percentage['Percentage of State Fraud'].idxmax()]\n    return max_fraud_metro\n\nmax_fraud_metro = find_max_fraud_metro(metro_fraud_percentage)\nprint(json.dumps({\"subtask-5\": max_fraud_metro.to_dict()}, indent=4))\nprint(json.dumps({\"main-task\": max_fraud_metro.to_dict()}, indent=4))",
+    "runtime": 29.38195300102234
+  },
+  {
+    "task_id": "legal-hard-30",
+    "model_output": {
+      "id": "main-task",
+      "query": "Does there exist a metropolitan area in which the number of reports of identity theft exceeded the number of reports of fraud in 2024? Answer with Yes or No. No explanation needed.",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the fraud reports data for metropolitan areas in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the identity theft reports data for metropolitan areas in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the fraud and identity theft reports data on metropolitan areas.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Compare the number of identity theft reports to fraud reports for each metropolitan area in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/legal-hard-30/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load and clean the fraud reports data for metropolitan areas in 2024\nfraud_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv')\nfraud_data = fraud_data[fraud_data['Year'] == 2024]\nfraud_data = fraud_data[['Metropolitan Area', 'Number of Reports']]\nfraud_data.columns = ['Metropolitan Area', 'Fraud Reports']\nfraud_data['Metropolitan Area'] = fraud_data['Metropolitan Area'].str.strip()\nfraud_data['Fraud Reports'] = pd.to_numeric(fraud_data['Fraud Reports'], errors='coerce')\n\n# Subtask 2: Load and clean the identity theft reports data for metropolitan areas in 2024\nidentity_theft_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv')\nidentity_theft_data = identity_theft_data[identity_theft_data['Year'] == 2024]\nidentity_theft_data = identity_theft_data[['Metropolitan Area', 'Number of Reports']]\nidentity_theft_data.columns = ['Metropolitan Area', 'Identity Theft Reports']\nidentity_theft_data['Metropolitan Area'] = identity_theft_data['Metropolitan Area'].str.strip()\nidentity_theft_data['Identity Theft Reports'] = pd.to_numeric(identity_theft_data['Identity Theft Reports'], errors='coerce')\n\n# Subtask 3: Merge the fraud and identity theft reports data on metropolitan areas\nmerged_data = pd.merge(fraud_data, identity_theft_data, on='Metropolitan Area', how='inner')\n\n# Subtask 4: Compare the number of identity theft reports to fraud reports for each metropolitan area in 2024\nresult = (merged_data['Identity Theft Reports'] > merged_data['Fraud Reports']).any()\n\n# Print the answers for each subtask and the main task\nprint(json.dumps(\n    {\n        \"subtask-1\": fraud_data.head().to_dict(orient='records'),\n        \"subtask-2\": identity_theft_data.head().to_dict(orient='records'),\n        \"subtask-3\": merged_data.head().to_dict(orient='records'),\n        \"subtask-4\": result,\n        \"main-task\": \"Yes\" if result else \"No\"\n    }, indent=4)\n)",
+    "runtime": 24.02000617980957
+  }
+]

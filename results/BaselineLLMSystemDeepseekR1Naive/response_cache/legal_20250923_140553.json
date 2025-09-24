@@ -1,0 +1,2841 @@
+[
+  {
+    "task_id": "legal-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.27401900291443
+      },
+      {
+        "task_id": "legal-hard-1-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.61645174026489
+      },
+      {
+        "task_id": "legal-hard-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.25419783592224
+      },
+      {
+        "task_id": "legal-hard-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.623101711273193
+      },
+      {
+        "task_id": "legal-hard-1-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "Normalize metropolitan-area names in both dataframes: lower-case, drop trailing 'Metropolitan Statistical Area' or 'MSA', and strip all non-alphanumeric characters, producing a common key. What are the normalized metropolitan-area names from the identity theft report table to be used to join with the population table?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-1-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 32.856019496917725
+      },
+      {
+        "task_id": "legal-hard-1-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.62318968772888
+      },
+      {
+        "task_id": "legal-hard-1-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.44638156890869
+      },
+      {
+        "task_id": "legal-hard-1-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.653366565704346
+      }
+    ],
+    "runtime": 38.78361916542053
+  },
+  {
+    "task_id": "legal-hard-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-2-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the column names in the CSV files within the 'State MSA Identity Theft data' folder?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alaska.csv",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Arizona.csv",
+            "... (all files in 'State MSA Identity Theft data' folder)"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Extract column names from the first readable CSV file in the 'State MSA Identity Theft data' folder.",
+              "data_sources": [
+                "First file in the filtered list"
+              ],
+              "answer": null
+            }
+          ],
+          "answer": null
+        },
+        "code": "import json\nimport csv\nimport os\n\n# Provided data sources (absolute paths)\ndata_sources = [\n    \"/orcd/home/002/gerarvit/Kramabench/data/legal/input/metropolitan_statistics.html\",\n    \"/orcd/home/002/gerarvit/Kramabench/data/legal/input/new_england_states.csv\",\n    \"... (full list of paths)\"\n]\n\n# Filter files in 'State MSA Identity Theft data' folder\nidentity_theft_files = [\n    path for path in data_sources \n    if \"State MSA Identity Theft data\" in path and path.endswith(\".csv\")\n]\n\n# Initialize result\ncolumn_names = []\nerror = None\n\n# Read the first valid CSV file\nfor file_path in identity_theft_files:\n    try:\n        with open(file_path, mode='r', encoding='utf-8', errors='replace') as f:\n            reader = csv.reader(f)\n            header = next(reader)  # Read first row\n            if header:  # Non-empty header\n                column_names = header\n                break\n    except (StopIteration, FileNotFoundError):\n        error = f\"File not found or empty: {os.path.basename(file_path)}\"\n    except Exception as e:\n        error = f\"Error reading {os.path.basename(file_path)}: {str(e)}\"\n\n# Prepare output\nresult = {\n    \"subtask-1\": column_names if column_names else error,\n    \"main-task\": column_names if column_names else error\n}\nprint(json.dumps(result, indent=4))",
+        "runtime": 38.4445641040802
+      },
+      {
+        "task_id": "legal-hard-2-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the expected format of the '# of Reports' column after data cleaning?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/*.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-2-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 45.44894242286682
+      },
+      {
+        "task_id": "legal-hard-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 89.5946090221405
+      },
+      {
+        "task_id": "legal-hard-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.940678119659424
+      },
+      {
+        "task_id": "legal-hard-2-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "Create a 2023 population figure for each metro by linearly interpolating between the 2020 census value and the 2024 estimate. What are the deduced census statistics for each metro in 2023? Report a list of numbers.",
+          "data_sources": [
+            "metropolitan_statistics.html"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Extract and clean the HTML table data.",
+              "data_sources": [
+                "metropolitan_statistics.html"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Normalize metropolitan area names and convert population columns to integers.",
+              "data_sources": [
+                "metropolitan_statistics.html"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Compute 2023 population via linear interpolation and output the list of numbers.",
+              "data_sources": [
+                "metropolitan_statistics.html"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-2-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 49.35141324996948
+      },
+      {
+        "task_id": "legal-hard-2-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.07206130027771
+      },
+      {
+        "task_id": "legal-hard-2-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.74950456619263
+      },
+      {
+        "task_id": "legal-hard-2-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.62110185623169
+      },
+      {
+        "task_id": "legal-hard-2-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.341580629348755
+      }
+    ],
+    "runtime": 37.763832330703735
+  },
+  {
+    "task_id": "legal-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import json\n\n   # The immediate answer: the list of files needed for the main task (the file question)\n   answer = {\n        \"main-task\": [\"csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv\"]\n   }\n\n   print(json.dumps(answer, indent=4))",
+        "runtime": 39.70345878601074
+      },
+      {
+        "task_id": "legal-easy-3-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many columns are in 2024_CSN_Number_of_Reports_by_Type.csv?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": 4
+        },
+        "code": "import csv\nimport json\n\n# Define the absolute file path\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\n\ntry:\n    # Open the file and read the header\n    with open(file_path, 'r', encoding='utf-8') as f:\n        reader = csv.reader(f)\n        header = next(reader)  # Read the first row (header)\n        num_columns = len(header)\nexcept (StopIteration, FileNotFoundError):\n    num_columns = 0  # Handle empty/missing files\n\n# Output the result\nprint(json.dumps({\"main-task\": num_columns}, indent=4))",
+        "runtime": 28.7902352809906
+      },
+      {
+        "task_id": "legal-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.09952735900879
+      },
+      {
+        "task_id": "legal-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.273260831832886
+      },
+      {
+        "task_id": "legal-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 30.93385887145996
+      },
+      {
+        "task_id": "legal-easy-3-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.29620051383972
+      }
+    ],
+    "runtime": 39.6807324886322
+  },
+  {
+    "task_id": "legal-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-4-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.984278440475464
+      },
+      {
+        "task_id": "legal-easy-4-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.61797595024109
+      },
+      {
+        "task_id": "legal-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.20545554161072
+      },
+      {
+        "task_id": "legal-easy-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.86170196533203
+      },
+      {
+        "task_id": "legal-easy-4-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 76.05287337303162
+      }
+    ],
+    "runtime": 32.779924392700195
+  },
+  {
+    "task_id": "legal-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-5-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.814796924591064
+      },
+      {
+        "task_id": "legal-easy-5-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the column names of the needed file 2024_CSN_Fraud_Reports_by_Payment_Method.csv?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Fraud Reports by Payment Method",
+            "Unnamed: 1",
+            "Unnamed: 2"
+          ]
+        },
+        "code": "import json\nimport pandas as pd\nfrom csv import reader\n\n# Absolute path to the CSV file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv'\n\n# Try reading the header with pandas (handles encoding issues)\ntry:\n    # Read only the header row\n    df_header = pd.read_csv(file_path, nrows=0, encoding='utf-8')\n    columns = df_header.columns.tolist()\nexcept UnicodeDecodeError:\n    try:\n        # Fallback to latin1 encoding if UTF-8 fails\n        df_header = pd.read_csv(file_path, nrows=0, encoding='latin1')\n        columns = df_header.columns.tolist()\n    except Exception as e:\n        # Use CSV module as a last resort\n        with open(file_path, 'r', encoding='latin1') as f:\n            csv_reader = reader(f)\n            header = next(csv_reader)\n            columns = [col.strip() for col in header if col.strip()]  # Clean whitespace\n\n# Output the answer\nprint(json.dumps({\"main-task\": columns}, indent=4))",
+        "runtime": 38.93145966529846
+      },
+      {
+        "task_id": "legal-easy-5-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are all the payment methods covered in the data?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in the data file?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Which column contains the payment methods?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "What are the unique payment methods in the identified column?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-5-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 47.59100556373596
+      },
+      {
+        "task_id": "legal-easy-5-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.47387218475342
+      },
+      {
+        "task_id": "legal-easy-5-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.49649953842163
+      }
+    ],
+    "runtime": 41.57586121559143
+  },
+  {
+    "task_id": "legal-hard-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.99982690811157
+      },
+      {
+        "task_id": "legal-hard-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.04003405570984
+      },
+      {
+        "task_id": "legal-hard-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.96234321594238
+      },
+      {
+        "task_id": "legal-hard-6-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.38298273086548
+      },
+      {
+        "task_id": "legal-hard-6-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.04250741004944
+      },
+      {
+        "task_id": "legal-hard-6-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.08906292915344
+      }
+    ],
+    "runtime": 38.541473150253296
+  },
+  {
+    "task_id": "legal-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-7-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which file is needed to analyze the growth of identity theft categories?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+          ],
+          "subtasks": [],
+          "answer": "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+        },
+        "code": "import json\n\nanswer = \"csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv\"\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 37.40212321281433
+      },
+      {
+        "task_id": "legal-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "` and",
+        "runtime": 41.89771318435669
+      },
+      {
+        "task_id": "legal-hard-7-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.13619065284729
+      },
+      {
+        "task_id": "legal-hard-7-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.518564224243164
+      },
+      {
+        "task_id": "legal-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.41011643409729
+      },
+      {
+        "task_id": "legal-hard-7-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.64921450614929
+      },
+      {
+        "task_id": "legal-hard-7-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.36867165565491
+      }
+    ],
+    "runtime": 45.732754945755005
+  },
+  {
+    "task_id": "legal-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "Are the report counts of for 'frauds and other data' in 2024 consistent for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach? Answer True or False. No explanation needed.",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the report count for 'frauds and other data' in 2024 for the Miami-Fort Lauderdale-West Palm Beach MSA from the Florida state MSA file?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the report count for 'frauds and other data' in 2024 for the Miami-Fort Lauderdale-West Palm Beach MSA from the metropolitan areas report file?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Are the two counts equal?",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-8/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.1010525226593
+      },
+      {
+        "task_id": "legal-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.916855335235596
+      },
+      {
+        "task_id": "legal-hard-8-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the column names of 2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+          "data_sources": [
+            "/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Metropolitan Areas: Fraud and Other Reports",
+            "Unnamed: 1",
+            "Unnamed: 2",
+            "Unnamed: 3"
+          ]
+        },
+        "code": "import json\nimport pandas as pd\n\n# Define the file path\nfile_path = \"/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv\"\n\n# Read the CSV with error handling\ntry:\n    # Attempt UTF-8 encoding first\n    df = pd.read_csv(file_path, encoding='utf-8', on_bad_lines='skip')\nexcept UnicodeDecodeError:\n    # Fallback to Latin-1 if UTF-8 fails\n    df = pd.read_csv(file_path, encoding='latin-1', on_bad_lines='skip')\n\n# Extract column names\ncolumn_names = df.columns.tolist()\n\n# Output the result\nprint(json.dumps({\"main-task\": column_names}, indent=4))",
+        "runtime": 24.341013431549072
+      },
+      {
+        "task_id": "legal-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.71726393699646
+      },
+      {
+        "task_id": "legal-hard-8-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.78231334686279
+      },
+      {
+        "task_id": "legal-hard-8-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.78751301765442
+      },
+      {
+        "task_id": "legal-hard-8-7",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Are the report counts of for 'frauds and other data' in 2024 consistent for the Metropolitan area of Miami-Fort Lauderdale-West Palm Beach? Answer True or False. No explanation needed., please answer the following question:\n What is the outcome of comparing the '# of Reports' values from the two selected rows? Answer True or False. \n\n",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the '# of Reports' for Miami-Fort Lauderdale-West Palm Beach in 2024 from the state MSA file (Florida.csv)?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the '# of Reports' for Miami-Fort Lauderdale-West Palm Beach in 2024 from the metropolitan areas file?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Are the two report counts equal?",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-8-7/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 24.754396438598633
+      }
+    ],
+    "runtime": 57.82640099525452
+  },
+  {
+    "task_id": "legal-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "query": "Between 2002 and 2024 inclusive, which year saw the greatest relative increase in total reports (Fraud, Identity Theft and Other) compared to the previous year?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the data: convert Year to integer, handle missing values in report columns, and calculate total reports per year.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter data for years 2002-2024 and sort by year ascending.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate relative increase for each year (from 2003 onward) as (current_year_total - previous_year_total) / previous_year_total.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-4",
+          "query": "Identify the year with maximum relative increase.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-9/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load and preprocess data\ndef load_and_clean_data(file_path):\n    df = pd.read_csv(file_path)\n    \n    # Clean Year column: convert to integer, handle non-integer values\n    df['Year'] = pd.to_numeric(df['Year'], errors='coerce').astype('Int64')\n    \n    # Clean report columns: convert to numeric, replace non-numeric with NaN\n    report_cols = ['Fraud', 'Identity Theft', 'Other']\n    for col in report_cols:\n        df[col] = pd.to_numeric(df[col], errors='coerce')\n    \n    # Calculate total reports\n    df['Total'] = df[report_cols].sum(axis=1, skipna=False)\n    \n    # Drop rows with missing critical values\n    df = df.dropna(subset=['Year', 'Total'])\n    return df\n\n# Main processing\ndef main():\n    file_path = 'csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\n    results = {}\n    \n    # Subtask-1: Load and clean data\n    df = load_and_clean_data(file_path)\n    results['subtask-1'] = \"Data loaded and cleaned. Years converted to int, report columns to float, total calculated.\"\n    \n    # Subtask-2: Filter and sort\n    df = df[(df['Year'] >= 2002) & (df['Year'] <= 2024)].sort_values('Year')\n    results['subtask-2'] = f\"Filtered {len(df)} rows for 2002-2024. Sorted by year.\"\n    \n    # Subtask-3: Calculate relative increases\n    df['Prev_Total'] = df['Total'].shift(1)\n    df['Relative_Increase'] = (df['Total'] - df['Prev_Total']) / df['Prev_Total']\n    results['subtask-3'] = \"Relative increases calculated for 2003-2024.\"\n    \n    # Subtask-4: Find max increase year\n    max_row = df[df['Year'] >= 2003].nlargest(1, 'Relative_Increase')\n    max_year = int(max_row['Year'].iloc[0])\n    max_increase = float(max_row['Relative_Increase'].iloc[0])\n    results['subtask-4'] = f\"Max relative increase in {max_year}: {max_increase:.2%}\"\n    \n    # Main task result\n    results['main-task'] = max_year\n    \n    # Print all results\n    print(json.dumps(results, indent=4))\n\nif __name__ == \"__main__\":\n    main()",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-9-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load 2024_CSN_Report_Count.csv, what are the column names?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Fraud, Identity Theft and Other Reports by Year",
+            ""
+          ]
+        },
+        "code": "import csv\nimport json\n\n# The absolute path of the file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\n\n# We'll try to open with utf-8-sig first (to handle BOM)\ntry:\n    with open(file_path, 'r', encoding='utf-8-sig') as f:\n        reader = csv.reader(f)\n        header = next(reader)\nexcept Exception as e:\n    # If that fails, try without the sig\n    try:\n        with open(file_path, 'r', encoding='utf-8') as f:\n            reader = csv.reader(f)\n            header = next(reader)\n    except:\n        # Then try latin-1\n        try:\n            with open(file_path, 'r', encoding='latin-1') as f:\n                reader = csv.reader(f)\n                header = next(reader)\n        except Exception as e:\n            header = [\"Error reading file: \" + str(e)]\n\n# Now, we have the header. We'll output the column names as a list.\nanswer = header\n\n# Since we are only doing one task, we output:\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 23.34252667427063
+      },
+      {
+        "task_id": "legal-easy-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.531127452850342
+      },
+      {
+        "task_id": "legal-easy-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.56631898880005
+      },
+      {
+        "task_id": "legal-easy-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.8604519367218
+      },
+      {
+        "task_id": "legal-easy-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.01338458061218
+      },
+      {
+        "task_id": "legal-easy-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 27.85000514984131
+      }
+    ],
+    "runtime": 30.269926071166992
+  },
+  {
+    "task_id": "legal-easy-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-10-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 23.967872619628906
+      },
+      {
+        "task_id": "legal-easy-10-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Drop any rows containing missing values. How many data rows are left?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-10-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.48012351989746
+      },
+      {
+        "task_id": "legal-easy-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.569016456604004
+      },
+      {
+        "task_id": "legal-easy-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 26.381319761276245
+      },
+      {
+        "task_id": "legal-easy-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 30.87501835823059
+      },
+      {
+        "task_id": "legal-easy-10-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.05741262435913
+      }
+    ],
+    "runtime": 38.06126546859741
+  },
+  {
+    "task_id": "legal-easy-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-11-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load the file 2024_CSN_Number_of_Reports_by_Type.csv. What are the columns?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Reports by Type",
+            "",
+            "",
+            ""
+          ]
+        },
+        "code": "import csv\nimport json\n\n# The absolute path to the file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\n\n# We are going to open the file and read the header\ntry:\n    with open(file_path, mode='r', encoding='utf-8') as file:\n        reader = csv.reader(file)\n        header = next(reader)  # reads the first row\n        # The columns are in the header\n        columns = header\nexcept Exception as e:\n    columns = f\"Error: {str(e)}\"\n\n# Now, we output the answer for the main-task\n# We are to print a JSON object with the id and the answer\n# Since we only have one task, we print:\nresult = {\n    \"main-task\": columns\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 27.783286333084106
+      },
+      {
+        "task_id": "legal-easy-11-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Drop any rows containing missing values. How many data rows are left?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-11-2/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load the data\nfile_path = 'csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndf = pd.read_csv(file_path)\n\n# Replace common missing value indicators with NaN\ndf.replace([\"NA\", \"N/A\", \"\"], pd.NA, inplace=True)\n\n# Drop rows with any missing values\ncleaned_df = df.dropna()\n\n# Count remaining rows\nrow_count = len(cleaned_df)\n\n# Output the result\nresult = {\"main-task\": row_count}\nprint(json.dumps(result, indent=4))",
+        "runtime": 14.377118587493896
+      },
+      {
+        "task_id": "legal-easy-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.29077363014221
+      },
+      {
+        "task_id": "legal-easy-11-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.06562352180481
+      },
+      {
+        "task_id": "legal-easy-11-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.483643531799316
+      },
+      {
+        "task_id": "legal-easy-11-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.06287860870361
+      }
+    ],
+    "runtime": 34.232770681381226
+  },
+  {
+    "task_id": "legal-easy-12",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-12-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load 2024_CSN_Report_Categories.csv. What are the column names?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": "Error reading the file: 'utf-8' codec can't decode byte 0x93 in position 1489: invalid start byte"
+        },
+        "code": "import json\nimport pandas as pd\n\n# The full path provided\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv'\n\n# Read the header of the CSV\ntry:\n    # Read only the header\n    df = pd.read_csv(file_path, nrows=0)\n    column_names = list(df.columns)\n    # Create the answer dictionary\n    answer = {\n        \"main-task\": column_names\n    }\n    print(json.dumps(answer, indent=4))\nexcept Exception as e:\n    # In case of error, we output an error message\n    error_msg = f\"Error reading the file: {str(e)}\"\n    print(json.dumps({\"main-task\": error_msg}, indent=4))",
+        "runtime": 28.00229263305664
+      },
+      {
+        "task_id": "legal-easy-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.220237016677856
+      },
+      {
+        "task_id": "legal-easy-12-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "Convert the Percentage column in the report by categories table to fractions. What are the fractions?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Read the CSV file and inspect the 'Percentage' column to determine its data type and format.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Clean the 'Percentage' column: remove any non-numeric characters (like '%') and convert to float.",
+              "data_sources": []
+            },
+            {
+              "id": "subtask-3",
+              "query": "Convert the cleaned percentage values to fractions by dividing by 100.",
+              "data_sources": []
+            },
+            {
+              "id": "subtask-4",
+              "query": "Output the fractions as a list or as part of the DataFrame for the next steps.",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-12-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 36.04900527000427
+      },
+      {
+        "task_id": "legal-easy-12-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.94239020347595
+      },
+      {
+        "task_id": "legal-easy-12-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.41572093963623
+      },
+      {
+        "task_id": "legal-easy-12-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.671589851379395
+      },
+      {
+        "task_id": "legal-easy-12-7",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the first 'Rank' value whose cumulative percentage exceeds 0.5?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and clean the data: handle missing values, convert 'Rank' to integer, and convert 'Percentage' to float (removing '%' if needed).",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Sort data by 'Rank' ascending and compute cumulative percentage.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Find the smallest rank where cumulative percentage > 0.5.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-12-7/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 34.39864468574524
+      }
+    ],
+    "runtime": 29.81403946876526
+  },
+  {
+    "task_id": "legal-easy-13",
+    "model_output": {
+      "id": "main-task",
+      "query": "In 2024, what was the ratio of reports between the most frequent and the least frequent category (rounded to two decimal places)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from the CSV file and inspect the columns.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Check if there is a 'Year' column and filter for 2024. If not, assume all data is for 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Preprocess the count column: convert to integer, handling any non-numeric characters and missing values.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Aggregate the counts by category (if necessary) and find the maximum and minimum counts (excluding zeros if any, but note: if a category has zero, it might not be included).",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the ratio (max_count / min_count) and round to two decimal places.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-13/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-13-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Load 2024_CSN_Report_Categories.csv. What are the column names?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-13-1/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load the CSV file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv'\ndf = pd.read_csv(file_path)\n\n# Clean column names: strip whitespace and convert to lowercase\ncleaned_columns = [col.strip().lower() for col in df.columns]\n\n# Prepare and print the result\nresult = {\"main-task\": cleaned_columns}\nprint(json.dumps(result, indent=4))",
+        "runtime": 24.89404582977295
+      },
+      {
+        "task_id": "legal-easy-13-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.443740367889404
+      },
+      {
+        "task_id": "legal-easy-13-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.65184545516968
+      },
+      {
+        "task_id": "legal-easy-13-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.04278635978699
+      },
+      {
+        "task_id": "legal-easy-13-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.45649719238281
+      }
+    ],
+    "runtime": 35.65202283859253
+  },
+  {
+    "task_id": "legal-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-14-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.95791029930115
+      },
+      {
+        "task_id": "legal-hard-14-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.935003995895386
+      },
+      {
+        "task_id": "legal-hard-14-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.91207218170166
+      },
+      {
+        "task_id": "legal-hard-14-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.16124224662781
+      },
+      {
+        "task_id": "legal-hard-14-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.44210743904114
+      },
+      {
+        "task_id": "legal-hard-14-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.479592084884644
+      }
+    ],
+    "runtime": 48.71854376792908
+  },
+  {
+    "task_id": "legal-hard-15",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-15-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.48608660697937
+      },
+      {
+        "task_id": "legal-hard-15-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 27.76731562614441
+      },
+      {
+        "task_id": "legal-hard-15-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.74268293380737
+      },
+      {
+        "task_id": "legal-hard-15-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 30.80359673500061
+      },
+      {
+        "task_id": "legal-hard-15-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.9151451587677
+      }
+    ],
+    "runtime": 29.100801706314087
+  },
+  {
+    "task_id": "legal-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-16-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.31407380104065
+      },
+      {
+        "task_id": "legal-hard-16-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.862607717514038
+      },
+      {
+        "task_id": "legal-hard-16-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import pandas as pd\nimport os\nimport glob\n\n# We are given the list of files. But note: the path might be long. We are to use the provided absolute paths.\n\n# The relevant files are those in the \"State MSA Identity Theft data\" directory.\n# We can filter the list of files to only those that are in the \"State MSA Identity Theft data\" directory.\n\n# The provided list of files includes:\n#   ... 'csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/Alabama.csv', ...\n\n# We can use:\nidentity_theft_msa_files = [f for f in all_files if \"State MSA Identity Theft data\" in f]\n\n# Now, read each file and combine.\n\ndfs = []\nfor file in identity_theft_msa_files:\n    # Read the CSV file\n    df = pd.read_csv(file)\n    # We might want to add a column for the state from the file name? But if the data already has state, then we don't need.\n    # However, let's check: if the data doesn't have a state column, then we must add it.\n    # But the problem says: \"each multi-state metropolitan area separately in each state it belongs to\", so the data should have state.\n    # We'll assume the data has a state column. If not, we can use the file name to extract state and add it.\n    # How? The file name is the state (with .csv). We can extract the base name without extension and use that as state.\n    # But note: the state name in the file might be \"DistrictofColumbia\" for DC, but in the data we might have \"District of Columbia\" or \"DC\". \n    # This might cause inconsistency.\n\n    # Therefore, we should check the columns of the DataFrame. If there's a column named 'State' or similar, we use it. Otherwise, we add.\n\n    # Since we don't have the data, we have to assume. Let's look at the file names: they are state names without spaces (e.g., \"NewYork\"). \n    # But the data might have the state in a different format.\n\n    # Alternatively, we can rely on the data having a state column. The problem states: \"considering each multi-state metropolitan area separately in each state\", so the state must be in the data.\n\n    # We'll read the first file and check the columns? But we are writing code to run without seeing the data.\n\n    # Since we cannot see the data, we have to make an assumption: the data has a column for state.\n\n    # We'll read the file and then append.\n    dfs.append(df)\n\ncombined = pd.concat(dfs, ignore_index=True)",
+        "runtime": 29.086886167526245
+      },
+      {
+        "task_id": "legal-hard-16-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.233436822891235
+      },
+      {
+        "task_id": "legal-hard-16-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.094491720199585
+      }
+    ],
+    "runtime": 40.71979331970215
+  },
+  {
+    "task_id": "legal-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "query": "If the 2007 report category distribution were exactly like the 2024 ones, how many reports in 2007 would be Auto Related (rounded to the nearest integer)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the total number of reports in 2007?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the proportion of Auto Related reports in 2024?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Apply the 2024 Auto Related proportion to the 2007 total reports and round to nearest integer",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-17/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport numpy as np\n\n# Load datasets\nreport_count = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv')\nreport_categories = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv')\n\n# Results dictionary\nresults = {}\n\n# Subtask-1: Get total reports for 2007\n# Handle data issues: Year might be string, missing values, multiple entries\nreport_count['Year'] = pd.to_numeric(report_count['Year'], errors='coerce')\nif report_count['Year'].isna().any():\n    report_count = report_count.dropna(subset=['Year'])\n    \n# Find 2007 data - handle case sensitivity in column names\ncount_col = [col for col in report_count.columns if 'count' in col.lower()][0]\ntry:\n    total_2007 = report_count.loc[report_count['Year'] == 2007, count_col].sum()\n    results[\"subtask-1\"] = int(total_2007)\nexcept:\n    total_2007 = None\n    results[\"subtask-1\"] = \"Error: 2007 data not found\"\n\n# Subtask-2: Get Auto Related proportion for 2024\n# Handle data issues: Category name variations, missing values\nreport_categories = report_categories.applymap(lambda x: x.strip() if isinstance(x, str) else x)\nauto_related_names = ['auto', 'automobile', 'vehicle', 'car']\nauto_col = [col for col in report_categories.columns if any(term in col.lower() for term in auto_related_names)][0]\ntotal_col = [col for col in report_categories.columns if 'total' in col.lower()][0]\n\n# Calculate proportion\ntry:\n    auto_2024 = report_categories[auto_col].iloc[0]\n    total_2024 = report_categories[total_col].iloc[0]\n    proportion_2024 = auto_2024 / total_2024\n    results[\"subtask-2\"] = float(proportion_2024)\nexcept:\n    proportion_2024 = None\n    results[\"subtask-2\"] = \"Error: Could not calculate 2024 proportion\"\n\n# Subtask-3: Calculate and round result\nif isinstance(total_2007, (int, float)) and isinstance(proportion_2024, float):\n    estimated_auto_2007 = total_2007 * proportion_2024\n    rounded_result = round(estimated_auto_2007)\n    results[\"subtask-3\"] = int(rounded_result)\n    results[\"main-task\"] = int(rounded_result)\nelse:\n    results[\"subtask-3\"] = \"Error: Missing required inputs\"\n    results[\"main-task\"] = \"Error: Could not compute final answer\"\n\n# Print results in JSON format\nprint(json.dumps(results, indent=4))",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-17-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.79258704185486
+      },
+      {
+        "task_id": "legal-hard-17-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.578465461730957
+      },
+      {
+        "task_id": "legal-hard-17-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.73378133773804
+      },
+      {
+        "task_id": "legal-hard-17-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.52629637718201
+      },
+      {
+        "task_id": "legal-hard-17-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the proportion of 'Auto Related' reports, expressed as a decimal?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-17-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 41.70457887649536
+      },
+      {
+        "task_id": "legal-hard-17-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.82685351371765
+      }
+    ],
+    "runtime": 38.73341155052185
+  },
+  {
+    "task_id": "legal-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "query": "If the 2007 reports were distributed exactly like the 2024 ones, how many identity theft reports in 2007 would concern people ages 40 or older (rounded to the nearest thousand)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the total number of identity theft reports in 2007?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the proportion of identity theft reports in 2024 for people ages 40 or older?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-18/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-18-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the columns in 2024_CSN_Report_Count.csv?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Fraud, Identity Theft and Other Reports by Year",
+            "Unnamed: 1"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load the CSV file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ndf = pd.read_csv(file_path)\n\n# Extract column names\ncolumns = df.columns.tolist()\n\n# Output the answer\nanswer = {\"main-task\": columns}\nprint(json.dumps(answer, indent=4))",
+        "runtime": 35.837514877319336
+      },
+      {
+        "task_id": "legal-hard-18-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the total number of reports for 2007?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-18-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 35.68479108810425
+      },
+      {
+        "task_id": "legal-hard-18-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.20567274093628
+      },
+      {
+        "task_id": "legal-hard-18-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the proportion of identity theft reports of each age bracket compared to all identity-theft reports? Answer in a list of proportions as floats.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the 2024 identity theft reports by age data and clean it: extract the age brackets and the number of reports, convert the report counts to integers, and remove any non-data rows.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Age.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Calculate the total number of identity theft reports (across all age brackets).",
+              "data_sources": []
+            },
+            {
+              "id": "subtask-3",
+              "query": "For each age bracket, compute the proportion (count in bracket divided by total).",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-18-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.77983784675598
+      },
+      {
+        "task_id": "legal-hard-18-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 26.91485595703125
+      },
+      {
+        "task_id": "legal-hard-18-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.50259041786194
+      }
+    ],
+    "runtime": 30.951351404190063
+  },
+  {
+    "task_id": "legal-easy-19",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-19-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.607497215270996
+      },
+      {
+        "task_id": "legal-easy-19-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.453065395355225
+      },
+      {
+        "task_id": "legal-easy-19-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the numeric value associated with the attribute \"Reports with $ Loss\"?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-19-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.27064514160156
+      },
+      {
+        "task_id": "legal-easy-19-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the column headers of the sub-table named \"Reported Fraud Losses in $1 - $1000 Range\"?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the CSV file and find the row containing the title string. Then extract the next non-empty row as the header row for the sub-table.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-19-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 38.561025619506836
+      },
+      {
+        "task_id": "legal-easy-19-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.46009850502014
+      },
+      {
+        "task_id": "legal-easy-19-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.89049410820007
+      }
+    ],
+    "runtime": 27.086177110671997
+  },
+  {
+    "task_id": "legal-easy-20",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-20-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many columns are there in 2024_CSN_Number_of_Reports_by_Type.csv",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": 4
+        },
+        "code": "import csv\nimport json\n\n# Absolute path to the CSV file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\n\n# Read the header to count columns\ntry:\n    with open(file_path, mode='r', encoding='utf-8') as file:\n        reader = csv.reader(file)\n        header = next(reader)  # Read the first row (header)\n        num_columns = len(header)\nexcept (FileNotFoundError, StopIteration):  # Handle empty/missing files\n    num_columns = 0\n\n# Output the answer\nresult = {\"main-task\": num_columns}\nprint(json.dumps(result, indent=4))",
+        "runtime": 24.990776538848877
+      },
+      {
+        "task_id": "legal-easy-20-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.24333167076111
+      },
+      {
+        "task_id": "legal-easy-20-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 74.10618019104004
+      },
+      {
+        "task_id": "legal-easy-20-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.1931676864624
+      },
+      {
+        "task_id": "legal-easy-20-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.4578173160553
+      },
+      {
+        "task_id": "legal-easy-20-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.010071992874146
+      },
+      {
+        "task_id": "legal-easy-20-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.568177223205566
+      },
+      {
+        "task_id": "legal-easy-20-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.11540603637695
+      }
+    ],
+    "runtime": 41.08000922203064
+  },
+  {
+    "task_id": "legal-easy-21",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-21-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.89578127861023
+      },
+      {
+        "task_id": "legal-easy-21-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Clean the number of reports column. What are the number of reports? Answer in a list of numbers.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-21-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 60.43140244483948
+      },
+      {
+        "task_id": "legal-easy-21-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.173338890075684
+      },
+      {
+        "task_id": "legal-easy-21-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.70104932785034
+      },
+      {
+        "task_id": "legal-easy-21-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.804328203201294
+      },
+      {
+        "task_id": "legal-easy-21-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.398303270339966
+      }
+    ],
+    "runtime": 63.2447304725647
+  },
+  {
+    "task_id": "legal-hard-22",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-22-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.777241945266724
+      },
+      {
+        "task_id": "legal-hard-22-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.03597927093506
+      },
+      {
+        "task_id": "legal-hard-22-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.025612592697144
+      },
+      {
+        "task_id": "legal-hard-22-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.24066424369812
+      },
+      {
+        "task_id": "legal-hard-22-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.10320472717285
+      },
+      {
+        "task_id": "legal-hard-22-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 23.730239152908325
+      },
+      {
+        "task_id": "legal-easy-21-7",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the result of dividing the identity-theft count by the grand-total number of reports? Round to 4 decimal places.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Type.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the total number of identity theft reports for Theft Type = 'Bank Account' and Theft Subtype = 'New Accounts'?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the grand total number of reports (across all types)?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Type.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Divide the result from subtask-1 by the result from subtask-2 and round to 4 decimal places.",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-21-7/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 40.60343146324158
+      }
+    ],
+    "runtime": 36.495134353637695
+  },
+  {
+    "task_id": "legal-hard-23",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-23-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.565409660339355
+      },
+      {
+        "task_id": "legal-hard-23-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.74842715263367
+      },
+      {
+        "task_id": "legal-hard-23-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the table titles containing state ranking information?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Extract the table title from the first row of the identity theft reports file.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract the table title from the first row of the fraud and other reports file.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-23-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.33649396896362
+      },
+      {
+        "task_id": "legal-hard-23-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the column names of the relevant tables?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names of the Identity Theft Reports table?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What are the column names of the Fraud and Other Reports table?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-23-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 39.79556727409363
+      },
+      {
+        "task_id": "legal-hard-23-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What state (including DC and PR) has the highest report density (reports per 100K population) considering all type of reports (identity theft, fraud and others)?, please answer the following question: Inner-join the two tables on state. How many rows are in the join result?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the Identity Theft Reports table and clean the state column (convert to string, strip whitespace, convert to uppercase for consistency).",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load the Fraud and Other Reports table and clean the state column similarly.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Inner join the two cleaned tables on the state column and count the number of rows in the result.",
+              "data_sources": [
+                "cleaned Identity Theft Reports table",
+                "cleaned Fraud and Other Reports table"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-23-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 32.791592597961426
+      },
+      {
+        "task_id": "legal-hard-23-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.8994255065918
+      },
+      {
+        "task_id": "legal-hard-23-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.141255617141724
+      }
+    ],
+    "runtime": 39.70929741859436
+  },
+  {
+    "task_id": "legal-hard-24",
+    "model_output": {
+      "id": "main-task",
+      "query": "For the state (including DC and PR) with the highest # of reporter of all type of reports (identity theft, fraud and others), which one of its metropolitan area has the highest # of reports for identity theft?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the state (including DC and PR) with the highest total number of reports (identity theft + fraud and other)?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "For the state found in subtask-1, which metropolitan area has the highest number of identity theft reports?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-24/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-24-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.025073766708374
+      },
+      {
+        "task_id": "legal-hard-24-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.94095492362976
+      },
+      {
+        "task_id": "legal-hard-24-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.951127767562866
+      },
+      {
+        "task_id": "legal-hard-24-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.164164543151855
+      },
+      {
+        "task_id": "legal-hard-24-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: For the state (including DC and PR) with the highest # of reporter of all type of reports (identity theft, fraud and others), which one of its metropolitan area has the highest # of reports for identity theft?, please answer the following question:\n What is the name of the state/territory whose MSA data is being analyzed?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and preprocess the identity theft reports file: extract state and number of reports, handling any data issues.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and preprocess the fraud and other reports file: extract state and number of reports, handling any data issues.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Combine the two datasets by state, summing the reports for each state to get the total reports per state.",
+              "data_sources": [
+                "subtask-1",
+                "subtask-2"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Find the state with the highest total number of reports.",
+              "data_sources": [
+                "subtask-3"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-24-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 43.00485682487488
+      },
+      {
+        "task_id": "legal-hard-24-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.65896010398865
+      },
+      {
+        "task_id": "legal-hard-24-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 28.15578031539917
+      }
+    ],
+    "runtime": 29.938974380493164
+  },
+  {
+    "task_id": "legal-easy-25",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-25-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which branch of the U.S. Military had the largest \"Median Fraud Loss\" reported by its service members in 2024?, please answer the following question:\n Which file is needed to solve the question? \n\n",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ],
+          "subtasks": [],
+          "answer": "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+        },
+        "code": "import json\n\n# Answer for the immediate question: \"Which file is needed?\"\nanswer = \"csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv\"\n\n# Print result in required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 21.068722248077393
+      },
+      {
+        "task_id": "legal-easy-25-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.18117117881775
+      },
+      {
+        "task_id": "legal-easy-25-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.04804611206055
+      },
+      {
+        "task_id": "legal-easy-25-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which branch of the U.S. Military had the largest \"Median Fraud Loss\" reported by its service members in 2024?, please answer the following question:\n After data cleaning, what are the integer values in the 'Median Fraud Loss' column in the subtable containing the breakdown by branch?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the CSV file and clean the data to extract the rows for the military branches and convert the 'Median Fraud Loss' column to integers.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-25-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.04561495780945
+      },
+      {
+        "task_id": "legal-easy-25-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.16251254081726
+      }
+    ],
+    "runtime": 30.679844617843628
+  },
+  {
+    "task_id": "legal-easy-26",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which states had \"Identity Theft\" as their top report category?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data and inspect the columns to understand the structure.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Identify the column that represents the state and the column that represents the report category. Also, identify the column that indicates the rank (which should be 1 for the top category).",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data to only include rows where the rank is 1 (the top category for that state).",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "From the filtered data, select the rows where the report category is exactly \"Identity Theft\".",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Extract the state names from these rows and return the list of states.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-26/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-26-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which states had \"Identity Theft\" as their top report category?, please answer the following question: Which file is needed to analyze report categories?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+        },
+        "code": "import json\n\nanswer = \"csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv\"\nresult = {\"main-task\": answer}\nprint(json.dumps(result, indent=4))",
+        "runtime": 29.063124656677246
+      },
+      {
+        "task_id": "legal-easy-26-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.15140104293823
+      },
+      {
+        "task_id": "legal-easy-26-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "` and",
+        "runtime": 36.645081520080566
+      },
+      {
+        "task_id": "legal-easy-26-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.720977544784546
+      },
+      {
+        "task_id": "legal-easy-26-5",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which states had \"Identity Theft\" as their top report category?, please answer the following question:\n What column names are used for the dataset in the final steps of the analysis? \n\n",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in the data file?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+              ],
+              "answer": [
+                "State: Top Ten Report Categories",
+                "Unnamed: 1",
+                "Unnamed: 2",
+                "Unnamed: 3"
+              ]
+            }
+          ],
+          "answer": [
+            "State: Top Ten Report Categories",
+            "Unnamed: 1",
+            "Unnamed: 2",
+            "Unnamed: 3"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# The data file path\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv'\n\n# Read the CSV file\ndf = pd.read_csv(file_path)\n\n# Get the column names\ncolumn_names = df.columns.tolist()\n\n# The answer to the subtask-1 and the main-task is the same: the column names\nanswer_subtask1 = column_names\nanswer_main_task = column_names\n\n# Print the answers in the required format\nprint(json.dumps({\n    \"subtask-1\": answer_subtask1,\n    \"main-task\": answer_main_task\n}, indent=4))",
+        "runtime": 28.707900285720825
+      },
+      {
+        "task_id": "legal-easy-26-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.03216195106506
+      }
+    ],
+    "runtime": 41.436734199523926
+  },
+  {
+    "task_id": "legal-easy-27",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-27-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: How many states had \"Prizes, Sweepstakes and Lotteries\" in their top-10 report categories in 2024?, please answer the following question:\n What file(s) are needed to answer this question? \n\n",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ]
+        },
+        "code": "import json\n\n# The answer to the main task: the list of required files\nanswer_main_task = [\"csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv\"]\n\n# We are only printing the answer for the main task because there are no subtasks\nresult = {\n    \"main-task\": answer_main_task\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 22.76042628288269
+      },
+      {
+        "task_id": "legal-easy-27-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.18653321266174
+      },
+      {
+        "task_id": "legal-easy-27-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the column names of 2024_CSN_State_Top_Ten_Report_Categories.csv",
+          "data_sources": [
+            "/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "State: Top Ten Report Categories",
+            "Unnamed: 1",
+            "Unnamed: 2",
+            "Unnamed: 3"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# Define the absolute file path\nfile_path = \"/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv\"\n\n# Read the CSV header to get column names\ntry:\n    # Try UTF-8 encoding first\n    df_header = pd.read_csv(file_path, nrows=0, encoding='utf-8')\nexcept UnicodeDecodeError:\n    # Fallback to latin1 if UTF-8 fails\n    df_header = pd.read_csv(file_path, nrows=0, encoding='latin1')\n\n# Extract column names\ncolumn_names = df_header.columns.tolist()\n\n# Prepare and print the result\nresult = {\"main-task\": column_names}\nprint(json.dumps(result, indent=4))",
+        "runtime": 23.205256938934326
+      },
+      {
+        "task_id": "legal-easy-27-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 24.098094940185547
+      },
+      {
+        "task_id": "legal-easy-27-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many states contain the category 'Prizes, Sweepstakes and Lotteries'?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the data and check the columns and data types.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Check for a year column and filter for 2024 if present. Otherwise, use all data.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Identify the state and category columns. Normalize the category column and filter for rows matching 'Prizes, Sweepstakes and Lotteries'.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Count the distinct states in the filtered data.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-easy-27-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 32.76055097579956
+      }
+    ],
+    "runtime": 35.786094188690186
+  },
+  {
+    "task_id": "legal-hard-28",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-28-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which files are needed for analysis?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+          ]
+        },
+        "code": "import json\n\n# The answer to the main task: which files are needed?\nanswer = {\n    \"main-task\": [\n        \"csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv\",\n        \"csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv\"\n    ]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 36.48090147972107
+      },
+      {
+        "task_id": "legal-hard-28-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.10546875
+      },
+      {
+        "task_id": "legal-hard-28-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.92412805557251
+      },
+      {
+        "task_id": "legal-hard-28-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the integer values in the '# of Reports' column for the military data?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-28-4/_intermediate/errors-0.txt"
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv'\nmilitary_df = pd.read_csv(file_path)\n\n# Clean the '# of Reports' column\n# Step 1: Handle missing values and non-string entries\nreports_col = military_df['# of Reports'].astype(str)  # Convert all to string\n# Step 2: Remove commas and non-digit characters\nreports_cleaned = reports_col.str.replace(',', '').str.extract('(\\d+)', expand=False)  # Extract digits\n# Step 3: Drop NaN values and convert to integers\ninteger_values = reports_cleaned.dropna().astype(int).tolist()\n\n# Output the result\nprint(json.dumps({\"main-task\": integer_values}, indent=4))",
+        "runtime": 40.532628297805786
+      },
+      {
+        "task_id": "legal-hard-28-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the proportion of imposter scam reports among all military reports? Round to 4 digits after decimal.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the count of imposter scam reports for military consumers?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the total number of reports for military consumers?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Reports_by_Military_Consumers.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-28-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 36.455119132995605
+      },
+      {
+        "task_id": "legal-hard-28-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.913628339767456
+      },
+      {
+        "task_id": "legal-hard-28-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 27.545451641082764
+      }
+    ],
+    "runtime": 31.996971130371094
+  },
+  {
+    "task_id": "legal-hard-29",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-29-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.26606822013855
+      },
+      {
+        "task_id": "legal-hard-29-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.25441122055054
+      },
+      {
+        "task_id": "legal-hard-29-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.04185390472412
+      },
+      {
+        "task_id": "legal-hard-29-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.091052293777466
+      },
+      {
+        "task_id": "legal-hard-29-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.45137071609497
+      },
+      {
+        "task_id": "legal-hard-29-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.42626881599426
+      },
+      {
+        "task_id": "legal-hard-29-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.04334759712219
+      }
+    ],
+    "runtime": 29.518451929092407
+  },
+  {
+    "task_id": "legal-hard-30",
+    "model_output": {
+      "id": "main-task",
+      "query": "Does there exist a metropolitan area in which the number of reports of identity theft exceeded the number of reports of fraud in 2024? Answer with Yes or No. No explanation needed.",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the fraud reports data for metropolitan areas in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the identity theft reports data for metropolitan areas in 2024.",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the two datasets on metropolitan area name.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-4",
+          "query": "Compare the number of identity theft reports and fraud reports for each metropolitan area to see if there exists at least one area where identity theft reports > fraud reports.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/legal-hard-30/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-30-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.754329442977905
+      },
+      {
+        "task_id": "legal-hard-30-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.55607199668884
+      },
+      {
+        "task_id": "legal-hard-30-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.50056529045105
+      },
+      {
+        "task_id": "legal-hard-30-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 71.52459955215454
+      },
+      {
+        "task_id": "legal-hard-30-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.666078329086304
+      },
+      {
+        "task_id": "legal-hard-30-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.5585777759552
+      }
+    ],
+    "runtime": 38.27908205986023
+  }
+]

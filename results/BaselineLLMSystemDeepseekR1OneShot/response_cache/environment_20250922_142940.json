@@ -1,0 +1,2281 @@
+[
+  {
+    "task_id": "environment-easy-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "` and",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-1-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the name of the file containing the 2013 beach sampling data?",
+          "data_sources": [
+            "water-body-testing-2013.csv"
+          ],
+          "subtasks": [],
+          "answer": "water-body-testing-2013.csv"
+        },
+        "code": "import json\n\n# The answer to the main task\nanswer_main = \"water-body-testing-2013.csv\"\n\n# We are to output a JSON object with the id as the key and the answer as the value.\n# Since there are no subtasks, we only have the main task.\nresult = {\n    \"main-task\": answer_main\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 18.29367208480835
+      },
+      {
+        "task_id": "environment-easy-1-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.79462814331055
+      },
+      {
+        "task_id": "environment-easy-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.39398407936096
+      },
+      {
+        "task_id": "environment-easy-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.79897904396057
+      }
+    ],
+    "runtime": 56.97213363647461
+  },
+  {
+    "task_id": "environment-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-2-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Between 2002 and 2023 (inclusive), which years had a bacterial exceedance rate in water samples collected from freshwater beaches higher than the average freshwater beach exceedance rate (to 2 decimal places)?, please answer the following question:\n What are the files needed for this analysis?",
+          "data_sources": [
+            "water-body-testing-2002.csv",
+            "water-body-testing-2003.csv",
+            "water-body-testing-2004.csv",
+            "water-body-testing-2005.csv",
+            "water-body-testing-2006.csv",
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv",
+            "water-body-testing-2010.csv",
+            "water-body-testing-2011.csv",
+            "water-body-testing-2012.csv",
+            "water-body-testing-2013.csv",
+            "water-body-testing-2014.csv",
+            "water-body-testing-2015.csv",
+            "water-body-testing-2016.csv",
+            "water-body-testing-2017.csv",
+            "water-body-testing-2018.csv",
+            "water-body-testing-2019.csv",
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "water-body-testing-2002.csv",
+            "water-body-testing-2003.csv",
+            "water-body-testing-2004.csv",
+            "water-body-testing-2005.csv",
+            "water-body-testing-2006.csv",
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv",
+            "water-body-testing-2010.csv",
+            "water-body-testing-2011.csv",
+            "water-body-testing-2012.csv",
+            "water-body-testing-2013.csv",
+            "water-body-testing-2014.csv",
+            "water-body-testing-2015.csv",
+            "water-body-testing-2016.csv",
+            "water-body-testing-2017.csv",
+            "water-body-testing-2018.csv",
+            "water-body-testing-2019.csv",
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ]
+        },
+        "code": "import json\n\n# The list of files needed for the analysis\nfiles = [\n    \"water-body-testing-2002.csv\",\n    \"water-body-testing-2003.csv\",\n    \"water-body-testing-2004.csv\",\n    \"water-body-testing-2005.csv\",\n    \"water-body-testing-2006.csv\",\n    \"water-body-testing-2007.csv\",\n    \"water-body-testing-2008.csv\",\n    \"water-body-testing-2009.csv\",\n    \"water-body-testing-2010.csv\",\n    \"water-body-testing-2011.csv\",\n    \"water-body-testing-2012.csv\",\n    \"water-body-testing-2013.csv\",\n    \"water-body-testing-2014.csv\",\n    \"water-body-testing-2015.csv\",\n    \"water-body-testing-2016.csv\",\n    \"water-body-testing-2017.csv\",\n    \"water-body-testing-2018.csv\",\n    \"water-body-testing-2019.csv\",\n    \"water-body-testing-2020.csv\",\n    \"water-body-testing-2021.csv\",\n    \"water-body-testing-2022.csv\",\n    \"water-body-testing-2023.csv\"\n]\n\n# Print the answer for the main task\nprint(json.dumps({\"main-task\": files}, indent=4))",
+        "runtime": 65.09096908569336
+      },
+      {
+        "task_id": "environment-easy-2-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Between 2002 and 2023 (inclusive), which years had a bacterial exceedance rate in water samples collected from freshwater beaches higher than the average freshwater beach exceedance rate (to 2 decimal places)?, please answer the following question:\n Which column should we filter on to obtain only fresh water data?",
+          "data_sources": [
+            "water-body-testing-2002.csv",
+            "water-body-testing-2003.csv",
+            "water-body-testing-2004.csv",
+            "water-body-testing-2005.csv",
+            "water-body-testing-2006.csv",
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv",
+            "water-body-testing-2010.csv",
+            "water-body-testing-2011.csv",
+            "water-body-testing-2012.csv",
+            "water-body-testing-2013.csv",
+            "water-body-testing-2014.csv",
+            "water-body-testing-2015.csv",
+            "water-body-testing-2016.csv",
+            "water-body-testing-2017.csv",
+            "water-body-testing-2018.csv",
+            "water-body-testing-2019.csv",
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": "Beach Type Description"
+        },
+        "code": "import json\n\n# We can read the first file to confirm the column exists and the values, but we already know from the snippet.\n# Alternatively, we can just output the answer.\n\n# However, to be robust, let's read the first file and check the column.\n\n# But note: the data might have inconsistencies? We are only checking the first file, but the column name are the same in all.\n\n# We'll read the first file: water-body-testing-2002.csv\n\nimport pandas as pd\n\n# Since we are given the full path in the data sources, but in the problem we are only given the file names, we assume the files are in the current directory or we use the provided paths.\n# However, the problem says: \"The data sources you may need to answer the question are: [list of full paths]\"\n\n# We'll use the first file path: '/orcd/home/002/gerarvit/Kramabench/data/environment/input/water-body-testing-2002.csv'\n\n# But note: the problem says we are given the data sources as a list of full paths. However, in the code we are to write, we don't have that list as a variable. \n# But the problem says: \"The data sources you may need to answer the question are: ...\", so we can use that.\n\n# However, for the purpose of this task, we are only going to read the first file to check the column.\n\n# But note: the problem says we are to answer the question without assuming the data is clean. So we should handle the possibility that the column name might be different? \n# But the snippets show consistency.\n\n# Since the task is to output the column name, and we are confident, we can simply output:\n\nanswer_main = \"Beach Type Description\"\n\n# But let's validate by reading the first file.\n\n# We'll read the first file and check the column names and the unique values in \"Beach Type Description\" to confirm.\n\n# However, the problem does not require us to process the entire dataset for this question. We are only asked for the column name.\n\n# We'll output the answer.\n\nresult = {\n    \"main-task\": answer_main\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 93.87519979476929
+      },
+      {
+        "task_id": "environment-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many fresh water samples also display a bacterial exceedance violation in 2002?",
+          "data_sources": [
+            "water-body-testing-2002.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-easy-2-3/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\n\n# Load the data\ndf = pd.read_csv('water-body-testing-2002.csv')\n\n# Clean the 'Beach Type Description' and 'Violation' columns: convert to string, strip, and lower\ndf['Beach Type Description'] = df['Beach Type Description'].astype(str).str.strip().str.lower()\ndf['Violation'] = df['Violation'].astype(str).str.strip().str.lower()\n\n# Also, convert Year to integer? It's already int64, but if there are missing, we might have NaN. We can drop rows with NaN in Year? But the file is for 2002, so we assume all are 2002. But we filter anyway.\n# Filter for year 2002 and fresh water\nfresh_2002 = df[(df['Year'] == 2002) & (df['Beach Type Description'] == 'fresh')]\n\n# Now, from fresh_2002, filter for violation == 'yes'\nfresh_violations_2002 = fresh_2002[fresh_2002['Violation'] == 'yes']\n\n# Count the number of rows\ncount = len(fresh_violations_2002)\n\n# Then, we output the count as the answer for the main task.",
+        "runtime": 46.270429849624634
+      },
+      {
+        "task_id": "environment-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.91871953010559
+      },
+      {
+        "task_id": "environment-easy-2-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 108.09452605247498
+      },
+      {
+        "task_id": "environment-easy-2-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 217.20249700546265
+      },
+      {
+        "task_id": "environment-easy-2-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 144.32136821746826
+      }
+    ],
+    "runtime": 46.418673038482666
+  },
+  {
+    "task_id": "environment-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.42561721801758
+      },
+      {
+        "task_id": "environment-easy-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.7909586429596
+      },
+      {
+        "task_id": "environment-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 83.76110458374023
+      },
+      {
+        "task_id": "environment-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.0280020236969
+      },
+      {
+        "task_id": "environment-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 81.5366005897522
+      }
+    ],
+    "runtime": 56.37381434440613
+  },
+  {
+    "task_id": "environment-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-4-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the percentage (to integer) of time in 2019 to 2023 (inclusive) that the water quality at Quincy's Wollaston Beach has met swimming standards?, please answer the following question:\n Which file(s) are needed for the analysis?",
+          "data_sources": [
+            "water-body-testing-2019.csv",
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "water-body-testing-2019.csv",
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ]
+        },
+        "code": "import json\n\n# The answer to the main task: which files are needed?\nanswer = {\n    \"main-task\": [\n        \"water-body-testing-2019.csv\",\n        \"water-body-testing-2020.csv\",\n        \"water-body-testing-2021.csv\",\n        \"water-body-testing-2022.csv\",\n        \"water-body-testing-2023.csv\"\n    ]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 48.84690761566162
+      },
+      {
+        "task_id": "environment-easy-4-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.72453737258911
+      },
+      {
+        "task_id": "environment-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.61010932922363
+      },
+      {
+        "task_id": "environment-easy-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 64.05481624603271
+      },
+      {
+        "task_id": "environment-easy-4-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.747740268707275
+      },
+      {
+        "task_id": "environment-easy-4-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.6962456703186
+      },
+      {
+        "task_id": "environment-easy-4-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.62139678001404
+      }
+    ],
+    "runtime": 60.546019315719604
+  },
+  {
+    "task_id": "environment-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-5-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which files are needed for the analysis?",
+          "data_sources": [
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv",
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv",
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv"
+          ]
+        },
+        "code": "import json\n\n# Answer: Files needed for the analysis\nanswer = {\n    \"main-task\": [\n        \"monthly_precipitations_boston.csv\",\n        \"monthly_precipitations_chatham.csv\",\n        \"monthly_precipitations_amherst.csv\",\n        \"monthly_precipitations_ashburnham.csv\"\n    ]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 42.99267268180847
+      },
+      {
+        "task_id": "environment-easy-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.78439664840698
+      },
+      {
+        "task_id": "environment-easy-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.389171838760376
+      },
+      {
+        "task_id": "environment-easy-5-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.07706117630005
+      },
+      {
+        "task_id": "environment-easy-5-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.58314800262451
+      },
+      {
+        "task_id": "environment-easy-5-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.56069564819336
+      }
+    ],
+    "runtime": 41.27778244018555
+  },
+  {
+    "task_id": "environment-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-easy-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "` and",
+        "runtime": 85.85181617736816
+      },
+      {
+        "task_id": "environment-easy-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 243.21714401245117
+      },
+      {
+        "task_id": "environment-easy-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.28212594985962
+      },
+      {
+        "task_id": "environment-easy-6-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.3825249671936
+      },
+      {
+        "task_id": "environment-easy-6-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.5907940864563
+      }
+    ],
+    "runtime": 77.9514787197113
+  },
+  {
+    "task_id": "environment-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-7-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What was the difference in bacterial exceedance rates (to 2 decimal places) for marine beach samples collected in 2023 between communities with more than 50% environmental justice (EJ) populations and those with less than 25% EJ populations?, please answer the following question:\n Which file is needed to obtain information about beach sample data in 2023?",
+          "data_sources": [
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": "water-body-testing-2023.csv"
+        },
+        "code": "import json\n\n# Answer: The file containing 2023 beach sample data is explicitly named in the data sources.\nanswer = \"water-body-testing-2023.csv\"\n\n# Output the answer in JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 60.18606090545654
+      },
+      {
+        "task_id": "environment-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the column names we need to perform joining/filtering on in the water sample data?",
+          "data_sources": [
+            "water-body-testing-2023.csv",
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-7-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 67.88220930099487
+      },
+      {
+        "task_id": "environment-hard-7-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.331746339797974
+      },
+      {
+        "task_id": "environment-hard-7-4",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which municipalities are included in the environmental justice data?",
+          "data_sources": [
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Acton",
+            "Acushnet",
+            "Adams",
+            "Agawam",
+            "Amesbury",
+            "Amherst",
+            "Andover",
+            "Aquinnah",
+            "Arlington",
+            "Ashland",
+            "Athol",
+            "Attleboro",
+            "Auburn",
+            "Avon",
+            "Ayer",
+            "Barnstable",
+            "Becket",
+            "Bedford",
+            "Bellingham",
+            "Belmont",
+            "Beverly",
+            "Billerica",
+            "Blackstone",
+            "Boston",
+            "Bourne",
+            "Boxborough",
+            "Braintree",
+            "Brewster",
+            "Bridgewater",
+            "Brockton",
+            "Brookfield",
+            "Brookline",
+            "Buckland",
+            "Burlington",
+            "Cambridge",
+            "Canton",
+            "Carver",
+            "Charlemont",
+            "Chatham",
+            "Chelmsford",
+            "Chelsea",
+            "Chicopee",
+            "Clinton",
+            "Concord",
+            "Dalton",
+            "Danvers",
+            "Dartmouth",
+            "Dedham",
+            "Dennis",
+            "Dracut",
+            "Dudley",
+            "Eastham",
+            "Easthampton",
+            "Everett",
+            "Fairhaven",
+            "Fall River",
+            "Falmouth",
+            "Fitchburg",
+            "Foxborough",
+            "Framingham",
+            "Gardner",
+            "Gloucester",
+            "Grafton",
+            "Great Barrington",
+            "Greenfield",
+            "Halifax",
+            "Hamilton",
+            "Hanover",
+            "Hardwick",
+            "Harvard",
+            "Harwich",
+            "Haverhill",
+            "Hawley",
+            "Hingham",
+            "Hinsdale",
+            "Holbrook",
+            "Holliston",
+            "Holyoke",
+            "Hopkinton",
+            "Hudson",
+            "Lancaster",
+            "Lawrence",
+            "Lee",
+            "Leicester",
+            "Lenox",
+            "Leominster",
+            "Lexington",
+            "Lincoln",
+            "Lowell",
+            "Ludlow",
+            "Lynn",
+            "Malden",
+            "Mansfield",
+            "Marblehead",
+            "Marion",
+            "Marlborough",
+            "Marshfield",
+            "Mashpee",
+            "Maynard",
+            "Medford",
+            "Melrose",
+            "Merrimac",
+            "Methuen",
+            "Middleborough",
+            "Milford",
+            "Millbury",
+            "Millis",
+            "Milton",
+            "Monroe",
+            "Monson",
+            "Montague",
+            "Nantucket",
+            "Natick",
+            "New Bedford",
+            "Newburyport",
+            "Newton",
+            "Norfolk",
+            "North Adams",
+            "North Andover",
+            "North Attleborough",
+            "North Brookfield",
+            "Northampton",
+            "Norwood",
+            "Oak Bluffs",
+            "Orange",
+            "Orleans",
+            "Oxford",
+            "Palmer",
+            "Peabody",
+            "Pepperell",
+            "Pittsfield",
+            "Plymouth",
+            "Provincetown",
+            "Quincy",
+            "Randolph",
+            "Reading",
+            "Revere",
+            "Rockland",
+            "Rockport",
+            "Rowe",
+            "Salem",
+            "Sandwich",
+            "Saugus",
+            "Savoy",
+            "Sharon",
+            "Sheffield",
+            "Shelburne",
+            "Shirley",
+            "Shrewsbury",
+            "Somerville",
+            "South Hadley",
+            "Southbridge",
+            "Spencer",
+            "Springfield",
+            "Stockbridge",
+            "Stoneham",
+            "Stoughton",
+            "Sunderland",
+            "Swampscott",
+            "Taunton",
+            "Tisbury",
+            "Townsend",
+            "Truro",
+            "Tyngsborough",
+            "Wakefield",
+            "Walpole",
+            "Waltham",
+            "Ware",
+            "Wareham",
+            "Warren",
+            "Watertown",
+            "Webster",
+            "Wellesley",
+            "West Brookfield",
+            "West Springfield",
+            "Westborough",
+            "Westfield",
+            "Westford",
+            "Westport",
+            "Weymouth",
+            "Williamstown",
+            "Winchendon",
+            "Winchester",
+            "Winthrop",
+            "Woburn",
+            "Worcester",
+            "Yarmouth"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/environment/input/environmental-justice-populations.csv'\ndf = pd.read_csv(file_path)\n\n# Extract municipalities, drop missing values, and get unique sorted list\nmunicipalities = df['Municipality'].dropna().unique().tolist()\nmunicipalities.sort()  # Sort alphabetically for clarity\n\n# Output the result\nprint(json.dumps({\"main-task\": municipalities}, indent=4))",
+        "runtime": 47.824201345443726
+      },
+      {
+        "task_id": "environment-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many communities have more than 50% EJ population and less than 25% respectively?",
+          "data_sources": [
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Count communities with EJ population percentage > 50%",
+              "data_sources": [
+                "environmental-justice-populations.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Count communities with EJ population percentage < 25%",
+              "data_sources": [
+                "environmental-justice-populations.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-7-5/_intermediate/errors-0.txt"
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the data\ndf = pd.read_csv('environmental-justice-populations.csv')\n\n# Convert percentage column to float and drop missing values\ndf['Percent of population in EJ BGs'] = pd.to_numeric(df['Percent of population in EJ BGs'], errors='coerce')\ndf = df.dropna(subset=['Percent of population in EJ BGs'])\n\n# Count communities with EJ percentage > 50%\ncount_gt_50 = len(df[df['Percent of population in EJ BGs'] > 50])\n\n# Count communities with EJ percentage < 25%\ncount_lt_25 = len(df[df['Percent of population in EJ BGs'] < 25])\n\n# Prepare results\nresults = {\n    \"subtask-1\": count_gt_50,\n    \"subtask-2\": count_lt_25,\n    \"main-task\": [count_gt_50, count_lt_25]\n}\n\n# Print results in JSON format\nprint(json.dumps(results, indent=4))",
+        "runtime": 72.08396434783936
+      },
+      {
+        "task_id": "environment-hard-7-6",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What columns are used for the join operation between the marine beach data and the environmental justice data?",
+          "data_sources": [
+            "water-body-testing-2023.csv",
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [],
+          "answer": {
+            "marine_beach_column": "Community",
+            "ej_column": "Municipality"
+          }
+        },
+        "code": "import json\n\n# We are going to output the answer for the main task.\nanswer = {\n    \"marine_beach_column\": \"Community\",\n    \"ej_column\": \"Municipality\"\n}\n\n# And then print the entire answer set (for all steps) in the required format.\n# Since we only have the main task, we do:\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 33.4305305480957
+      },
+      {
+        "task_id": "environment-hard-7-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.79926657676697
+      },
+      {
+        "task_id": "environment-hard-7-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 123.15796995162964
+      }
+    ],
+    "runtime": 55.60391354560852
+  },
+  {
+    "task_id": "environment-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.63077640533447
+      },
+      {
+        "task_id": "environment-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.56193923950195
+      },
+      {
+        "task_id": "environment-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.50710368156433
+      },
+      {
+        "task_id": "environment-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.108346462249756
+      },
+      {
+        "task_id": "environment-hard-8-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 150.05016446113586
+      },
+      {
+        "task_id": "environment-hard-8-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.509788036346436
+      },
+      {
+        "task_id": "environment-hard-8-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.27605175971985
+      },
+      {
+        "task_id": "environment-hard-8-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 126.32027077674866
+      }
+    ],
+    "runtime": 151.55714321136475
+  },
+  {
+    "task_id": "environment-hard-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-9-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which beaches are the Boston Harbor beaches?",
+          "data_sources": [
+            "boston-harbor-beaches.txt"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-9-1/_intermediate/errors-0.txt"
+        },
+        "code": "import json\n\n# Read the file and extract beach names\nbeaches = []\nwith open('boston-harbor-beaches.txt', 'r') as file:\n    for line in file:\n        stripped_line = line.strip()\n        # Skip empty lines and the separator (non-alphabetic lines)\n        if stripped_line and stripped_line.isprintable() and any(c.isalpha() for c in stripped_line):\n            beaches.append(stripped_line)\n\n# Output the answer\nprint(json.dumps({\"main-task\": beaches}, indent=4))",
+        "runtime": 26.730681657791138
+      },
+      {
+        "task_id": "environment-hard-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.42582821846008
+      },
+      {
+        "task_id": "environment-hard-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.02461838722229
+      },
+      {
+        "task_id": "environment-hard-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.29031181335449
+      },
+      {
+        "task_id": "environment-hard-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.4893810749054
+      },
+      {
+        "task_id": "environment-hard-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 74.92366147041321
+      },
+      {
+        "task_id": "environment-hard-9-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.80020213127136
+      },
+      {
+        "task_id": "environment-hard-9-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.21727466583252
+      }
+    ],
+    "runtime": 47.336520195007324
+  },
+  {
+    "task_id": "environment-hard-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-10-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many data rows are in environmental-justice-populations.csv",
+          "data_sources": [
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [],
+          "answer": 187
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/environment/input/environmental-justice-populations.csv'\ndf = pd.read_csv(file_path)\n\n# Count rows\nnum_rows = len(df)\n\n# Output the answer\nprint(json.dumps({\"main-task\": num_rows}, indent=4))",
+        "runtime": 31.517671823501587
+      },
+      {
+        "task_id": "environment-hard-10-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which municipalities have more than 90% of their population in Environmental Justice Backgrounds (EJ BGs)?",
+          "data_sources": [
+            "environmental-justice-populations.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Amherst",
+            "Aquinnah",
+            "Ashland",
+            "Avon",
+            "Boxborough",
+            "Brockton",
+            "Brookline",
+            "Cambridge",
+            "Charlemont",
+            "Chelsea",
+            "Everett",
+            "Hawley",
+            "Holbrook",
+            "Lawrence",
+            "Lowell",
+            "Lynn",
+            "Malden",
+            "Monroe",
+            "Quincy",
+            "Randolph",
+            "Revere",
+            "Rowe",
+            "Savoy",
+            "Springfield",
+            "Stoughton",
+            "Sunderland",
+            "Worcester"
+          ]
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/environment/input/environmental-justice-populations.csv'\ndf = pd.read_csv(file_path)\n\n# Ensure the percentage column is numeric and handle missing values\ndf['Percent of population in EJ BGs'] = pd.to_numeric(df['Percent of population in EJ BGs'], errors='coerce')\ndf = df.dropna(subset=['Percent of population in EJ BGs'])\n\n# Filter municipalities with >90% EJ population\nfiltered_df = df[df['Percent of population in EJ BGs'] > 90]\nmunicipalities = filtered_df['Municipality'].tolist()\n\n# Output the result\nresult = {\"main-task\": municipalities}\nprint(json.dumps(result, indent=4))",
+        "runtime": 93.20734858512878
+      },
+      {
+        "task_id": "environment-hard-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 106.4728581905365
+      },
+      {
+        "task_id": "environment-hard-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.962604999542236
+      },
+      {
+        "task_id": "environment-hard-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.90247583389282
+      },
+      {
+        "task_id": "environment-hard-10-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which beach in a community with >90% EJ population has water and weather readings?",
+          "data_sources": [
+            "environmental-justice-populations.csv",
+            "water-body-testing-2023.csv",
+            "wollaston_beach_datasheet.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "List all communities with Percent of population in EJ BGs > 90% from environmental-justice-populations.csv",
+              "data_sources": [
+                "environmental-justice-populations.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Check if Quincy is in the list of communities from subtask-1",
+              "data_sources": [
+                "environmental-justice-populations.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Identify the beach name that has weather readings (from the provided datasheet) and is in a community from subtask-1. Since we only have one datasheet (for Wollaston Beach in Quincy), if Quincy is in the list then the beach is Wollaston Beach.",
+              "data_sources": [
+                "wollaston_beach_datasheet.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-10-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 54.75903344154358
+      },
+      {
+        "task_id": "environment-hard-10-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.48136782646179
+      },
+      {
+        "task_id": "environment-hard-10-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 132.4111351966858
+      },
+      {
+        "task_id": "environment-hard-10-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.277315616607666
+      },
+      {
+        "task_id": "environment-hard-10-10",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.077831983566284
+      },
+      {
+        "task_id": "environment-hard-10-11",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.300132751464844
+      }
+    ],
+    "runtime": 33.74855184555054
+  },
+  {
+    "task_id": "environment-hard-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-11-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.77851128578186
+      },
+      {
+        "task_id": "environment-hard-11-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.494425535202026
+      },
+      {
+        "task_id": "environment-hard-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.72030711174011
+      },
+      {
+        "task_id": "environment-hard-11-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 79.85420203208923
+      },
+      {
+        "task_id": "environment-hard-11-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 115.58939528465271
+      },
+      {
+        "task_id": "environment-hard-11-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 126.74800419807434
+      },
+      {
+        "task_id": "environment-hard-11-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.4730658531189
+      },
+      {
+        "task_id": "environment-hard-11-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.19780731201172
+      }
+    ],
+    "runtime": 68.11891603469849
+  },
+  {
+    "task_id": "environment-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-12-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which beaches are the Boston Harbor beaches?",
+          "data_sources": [
+            "boston-harbor-beaches.txt"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Constitution Beach",
+            "Castle Island Beach",
+            "Pleasure Bay Beach",
+            "City Point Beach",
+            "M Street Beach",
+            "Carson Beach",
+            "Malibu Beach",
+            "Tenean Beach",
+            "Wollaston Beach"
+          ]
+        },
+        "code": "import json\n\n# Read the text file and extract beach names\nbeach_list = []\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/environment/input/boston-harbor-beaches.txt'\n\nwith open(file_path, 'r') as file:\n    for line in file:\n        stripped_line = line.strip()\n        # Skip empty lines and the separator line\n        if stripped_line and stripped_line != \"====================\":\n            beach_list.append(stripped_line)\n\n# Output the result\nresult = {\"main-task\": beach_list}\nprint(json.dumps(result, indent=4))",
+        "runtime": 23.72322678565979
+      },
+      {
+        "task_id": "environment-hard-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.42092943191528
+      },
+      {
+        "task_id": "environment-hard-12-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which Boston Harbor beach had the highest number of samples that failed to meet swimming standards when there was no rainfall in the preceding three days? A sample meets the standard if it contains fewer than 104 counts of Enterococcus per 100 milliliters of water., please answer the following question:\n Which columns are considered measurement columns? \n\n",
+          "data_sources": [
+            "constitution_beach_datasheet.csv",
+            "carson_beach_datasheet.csv",
+            "pleasure_bay_and_castle_island_beach_datasheet.csv",
+            "m_street_beach_datasheet.csv",
+            "city_point_beach_datasheet.csv",
+            "malibu_beach_datasheet.csv",
+            "tenean_beach_datasheet.csv",
+            "wollaston_beach_datasheet.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-12-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 55.95705461502075
+      },
+      {
+        "task_id": "environment-hard-12-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "Where could beach location information be found in the original csvs?",
+          "data_sources": [
+            "constitution_beach_datasheet.csv",
+            "carson_beach_datasheet.csv",
+            "pleasure_bay_and_castle_island_beach_datasheet.csv",
+            "m_street_beach_datasheet.csv",
+            "city_point_beach_datasheet.csv",
+            "malibu_beach_datasheet.csv",
+            "tenean_beach_datasheet.csv",
+            "wollaston_beach_datasheet.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-12-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 63.880520820617676
+      },
+      {
+        "task_id": "environment-hard-12-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.01813316345215
+      },
+      {
+        "task_id": "environment-hard-12-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.08443069458008
+      },
+      {
+        "task_id": "environment-hard-12-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.28895807266235
+      },
+      {
+        "task_id": "environment-hard-12-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.46755027770996
+      }
+    ],
+    "runtime": 43.44187259674072
+  },
+  {
+    "task_id": "environment-hard-13",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-13-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.228073835372925
+      },
+      {
+        "task_id": "environment-hard-13-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.74957013130188
+      },
+      {
+        "task_id": "environment-hard-13-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.88388252258301
+      },
+      {
+        "task_id": "environment-hard-13-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 80.60033106803894
+      },
+      {
+        "task_id": "environment-hard-13-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.6290283203125
+      },
+      {
+        "task_id": "environment-hard-13-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 112.51402974128723
+      },
+      {
+        "task_id": "environment-hard-13-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.24077868461609
+      }
+    ],
+    "runtime": 36.145063400268555
+  },
+  {
+    "task_id": "environment-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-14-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: From 2007 to 2009 (inclusive), between fresh water beaches and marine beaches, which had a higher correlation between monthly rainfall and their exceedance rate in the summer (Jun, Jul, Aug)? Regions whose rainfall data effect Fresh water beaches are Boston, Chatham, Amherst, Ashburnham. Regions whose rainfall data effect Marine beaches are Boston and Chatham. Impute missing values with median of the month in non-missing years., please answer the following question:\n Which water testing files are needed for the analysis? \n\n",
+          "data_sources": [
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv"
+          ]
+        },
+        "code": "import json\n\n# Answer to the main task: Which water testing files are needed?\nanswer = {\n    \"main-task\": [\n        \"water-body-testing-2007.csv\",\n        \"water-body-testing-2008.csv\",\n        \"water-body-testing-2009.csv\"\n    ]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 18.64893388748169
+      },
+      {
+        "task_id": "environment-hard-14-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 96.83729243278503
+      },
+      {
+        "task_id": "environment-hard-14-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the marine water exceedance counts each year?",
+          "data_sources": [
+            "water-body-testing-2007.csv",
+            "water-body-testing-2008.csv",
+            "water-body-testing-2009.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-14-3/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\nimport json\n\n# Initialize a dictionary to hold the counts for each year\nexceedance_counts = {}\n\n# Years of interest\nyears = [2007, 2008, 2009]\n\nfor year in years:\n    # Construct the file name\n    file_name = f'water-body-testing-{year}.csv'\n    # Read the CSV file\n    df = pd.read_csv(file_name)\n    \n    # Convert relevant columns to string and then to lowercase for case-insensitive comparison\n    df['Beach Type Description'] = df['Beach Type Description'].astype(str).str.lower()\n    df['Violation'] = df['Violation'].astype(str).str.lower()\n    \n    # Filter for marine beaches\n    marine_df = df[df['Beach Type Description'] == 'marine']\n    \n    # Count the number of violations (where 'Violation' is 'yes')\n    count = marine_df[marine_df['Violation'] == 'yes'].shape[0]\n    \n    exceedance_counts[year] = count\n\n# Now, we output the answer for the main task\n# The question is about marine water exceedance counts each year, so we output a dictionary with the counts per year.\n\n# We are also asked to print in a JSON format with the id as the key.\n# Since we only have the main task, we do:\nresult = {\n    \"main-task\": exceedance_counts\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 57.828245639801025
+      },
+      {
+        "task_id": "environment-hard-14-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.00410485267639
+      },
+      {
+        "task_id": "environment-hard-14-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.46435809135437
+      },
+      {
+        "task_id": "environment-hard-14-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.42437243461609
+      },
+      {
+        "task_id": "environment-hard-14-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.089532136917114
+      },
+      {
+        "task_id": "environment-hard-14-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.70983362197876
+      }
+    ],
+    "runtime": 46.091543197631836
+  },
+  {
+    "task_id": "environment-hard-15",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-15-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which beach names are included in the dataset? (for fresh water beaches)",
+          "data_sources": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Extract fresh water beach names from each year and combine",
+              "data_sources": [
+                "water-body-testing-2020.csv",
+                "water-body-testing-2021.csv",
+                "water-body-testing-2022.csv",
+                "water-body-testing-2023.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-15-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 38.35176634788513
+      },
+      {
+        "task_id": "environment-hard-15-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which fresh water beach is the most polluted since 2020 (inclusive)? Most polluted is defined as highest average exceedance rate since 2020, and only consider the beaches that are measured in all the years from 2020 to 2023 (inclusive)., please answer the following question:\n What beach types are included in the analysis? \n\n",
+          "data_sources": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Fresh"
+          ]
+        },
+        "code": "import json\n\n# The beach types included in the analysis are only \"Fresh\", because the overall goal is about fresh water beaches.\nanswer = [\"Fresh\"]\n\n# Print the answer in the required format.\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 52.904945611953735
+      },
+      {
+        "task_id": "environment-hard-15-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What character is used to split the 'Beach Name' column?",
+          "data_sources": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-15-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 37.86906409263611
+      },
+      {
+        "task_id": "environment-hard-15-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the per-beach sample count and violation count for all years? Return the values for 2020 as [beach name, sample count in 2020, exceedance count in 2020]",
+          "data_sources": [
+            "water-body-testing-2020.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the 2020 data and filter for fresh water beaches.",
+              "data_sources": [
+                "water-body-testing-2020.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "For each beach, count the total samples and the number of violations (where Violation is 'Yes', case-insensitive) in 2020.",
+              "data_sources": [
+                "water-body-testing-2020.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-15-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 46.472349882125854
+      },
+      {
+        "task_id": "environment-hard-15-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.12785935401917
+      },
+      {
+        "task_id": "environment-hard-15-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.09962010383606
+      },
+      {
+        "task_id": "environment-hard-15-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.64882493019104
+      }
+    ],
+    "runtime": 42.639795541763306
+  },
+  {
+    "task_id": "environment-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-16-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.57910633087158
+      },
+      {
+        "task_id": "environment-hard-16-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 62.02479958534241
+      },
+      {
+        "task_id": "environment-hard-16-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.50292921066284
+      },
+      {
+        "task_id": "environment-hard-16-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 271.12629771232605
+      },
+      {
+        "task_id": "environment-hard-16-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.268049478530884
+      },
+      {
+        "task_id": "environment-hard-16-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.42274045944214
+      }
+    ],
+    "runtime": 67.44641852378845
+  },
+  {
+    "task_id": "environment-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-17-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the seasonal exceedance rate (in percentage, to 2 decimal places) of Chatham's Bucks Creek Beach in the summer (June, July, August) with the most rainfall in its area? Impute missing values with median of the month in non-missing years., please answer the following question:\n Which file contains year precipitations? \n\n",
+          "data_sources": [
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv",
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv",
+            "precipitations_beaches_community.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the precipitation data files and determine which one is for Chatham.",
+              "data_sources": [
+                "monthly_precipitations_chatham.csv"
+              ],
+              "answer": "Warning: No answer found in the Python pipeline."
+            }
+          ],
+          "answer": "monthly_precipitations_chatham.csv"
+        },
+        "code": "import json\n\n# The file that contains year precipitations for Chatham is:\nanswer = \"monthly_precipitations_chatham.csv\"\n\n# Since the question is part of the overall task and we are to answer this specific question, we output:\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 55.65797567367554
+      },
+      {
+        "task_id": "environment-hard-17-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What months are selected from the precipitation data?",
+          "data_sources": [
+            "monthly_precipitations_chatham.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "June",
+            "July",
+            "August"
+          ]
+        },
+        "code": "import json\n\n# The months selected are June, July, August.\nanswer = [\"June\", \"July\", \"August\"]\n\n# We are only answering the main task for this question.\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 27.251209259033203
+      },
+      {
+        "task_id": "environment-hard-17-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.40329074859619
+      },
+      {
+        "task_id": "environment-hard-17-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.3474223613739
+      },
+      {
+        "task_id": "environment-hard-17-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What year corresponds to the highest total summer rainfall?",
+          "data_sources": [
+            "monthly_precipitations_chatham.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-17-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 56.839449644088745
+      },
+      {
+        "task_id": "environment-hard-17-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.54198741912842
+      },
+      {
+        "task_id": "environment-hard-17-7",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many samples are available for 2006 for the Bucks Creek beach?",
+          "data_sources": [
+            "water-body-testing-2006.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-17-7/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\n\n# Load the data\ndf = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/environment/input/water-body-testing-2006.csv')\n\n# Convert Beach Name to string and strip\ndf['Beach Name'] = df['Beach Name'].astype(str).str.strip()\n\n# Filter for Bucks Creek Beach\nbucks_creek_df = df[df['Beach Name'] == 'Bucks Creek Beach']\n\n# Count the number of samples\ncount = len(bucks_creek_df)\n\n# Print the answer for this subtask\nprint(json.dumps({\"main-task\": count}, indent=4))",
+        "runtime": 43.56962585449219
+      },
+      {
+        "task_id": "environment-hard-17-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.120551109313965
+      },
+      {
+        "task_id": "environment-hard-17-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.80566883087158
+      }
+    ],
+    "runtime": 44.05247092247009
+  },
+  {
+    "task_id": "environment-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-18-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What files contain monthly precipitation data?",
+          "data_sources": [
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv",
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv",
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv"
+          ]
+        },
+        "code": "import json\n\n# Identify files containing monthly precipitation data\nprecipitation_files = [\n    \"monthly_precipitations_amherst.csv\",\n    \"monthly_precipitations_ashburnham.csv\",\n    \"monthly_precipitations_boston.csv\",\n    \"monthly_precipitations_chatham.csv\"\n]\n\n# Print answer in JSON format\nprint(json.dumps({\n    \"main-task\": precipitation_files\n}, indent=4))",
+        "runtime": 29.62451481819153
+      },
+      {
+        "task_id": "environment-hard-18-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.73931837081909
+      },
+      {
+        "task_id": "environment-hard-18-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.80578136444092
+      },
+      {
+        "task_id": "environment-hard-18-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.285189390182495
+      },
+      {
+        "task_id": "environment-hard-18-5",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which files contain the water-body-testing data for the years 2020--2023?",
+          "data_sources": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ]
+        },
+        "code": "import json\n\n# Answer to the main task\nanswer = [\n    \"water-body-testing-2020.csv\",\n    \"water-body-testing-2021.csv\",\n    \"water-body-testing-2022.csv\",\n    \"water-body-testing-2023.csv\"\n]\n\n# Print the answer in JSON format\nprint(json.dumps({\n    \"main-task\": answer\n}, indent=4))",
+        "runtime": 45.46817374229431
+      },
+      {
+        "task_id": "environment-hard-18-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "For every year, what is the proportion of 'Fresh' beaches with a 'Violation' equal to 'yes' for each year?",
+          "data_sources": [
+            "water-body-testing-2020.csv",
+            "water-body-testing-2021.csv",
+            "water-body-testing-2022.csv",
+            "water-body-testing-2023.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-2020",
+              "query": "For 2020, what is the proportion of fresh beach samples with violation 'yes'?",
+              "data_sources": [
+                "water-body-testing-2020.csv"
+              ]
+            },
+            {
+              "id": "subtask-2021",
+              "query": "For 2021, what is the proportion of fresh beach samples with violation 'yes'?",
+              "data_sources": [
+                "water-body-testing-2021.csv"
+              ]
+            },
+            {
+              "id": "subtask-2022",
+              "query": "For 2022, what is the proportion of fresh beach samples with violation 'yes'?",
+              "data_sources": [
+                "water-body-testing-2022.csv"
+              ]
+            },
+            {
+              "id": "subtask-2023",
+              "query": "For 2023, what is the proportion of fresh beach samples with violation 'yes'?",
+              "data_sources": [
+                "water-body-testing-2023.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-18-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 42.55191230773926
+      },
+      {
+        "task_id": "environment-hard-18-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.49150085449219
+      },
+      {
+        "task_id": "environment-hard-18-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.15525794029236
+      }
+    ],
+    "runtime": 63.48222041130066
+  },
+  {
+    "task_id": "environment-hard-19",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-19-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.72908687591553
+      },
+      {
+        "task_id": "environment-hard-19-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Filter data for marine beaches. What value of beach type can be used to filter the dataset for marine beaches?",
+          "data_sources": [
+            "water-body-testing-2002.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the unique values in the 'Beach Type Description' column?",
+              "data_sources": [
+                "water-body-testing-2002.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-19-2/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load sample files to inspect beach type values\nfile_paths = [\n    'water-body-testing-2002.csv',\n    'water-body-testing-2003.csv',\n    'water-body-testing-2004.csv'\n]\n\nbeach_types = set()\n\nfor file in file_paths:\n    df = pd.read_csv(file)\n    # Handle potential case inconsistencies by converting to uppercase\n    if 'Beach Type Description' in df.columns:\n        types = df['Beach Type Description'].str.upper().dropna().unique()\n        beach_types.update(types)\n\n# Convert set to sorted list for consistent output\nbeach_types_list = sorted(beach_types)\n\n# Identify marine beach filter value\nmarine_value = \"MARINE\" if \"MARINE\" in beach_types_list else None\n\n# Prepare answers\nanswers = {\n    \"subtask-1\": beach_types_list,\n    \"main-task\": marine_value\n}\n\nprint(json.dumps(answers, indent=4))",
+        "runtime": 94.63546442985535
+      },
+      {
+        "task_id": "environment-hard-19-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.97673559188843
+      },
+      {
+        "task_id": "environment-hard-19-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.84924364089966
+      },
+      {
+        "task_id": "environment-hard-19-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What files contain monthly precipitation data for marine beaches?",
+          "data_sources": [
+            "precipitations_beaches_community.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-19-5/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\n\n# Read the beach type file\ndf = pd.read_csv('precipitations_beaches_community.csv')\n# Filter for marine beaches\nmarine_communities = df[df['Beach Type'] == 'Marine']['Community'].str.strip().str.lower().tolist()\n\n# Form the file names\nfile_names = [f\"monthly_precipitations_{community}.csv\" for community in marine_communities]",
+        "runtime": 64.16945314407349
+      },
+      {
+        "task_id": "environment-hard-19-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Clean missing monthly values with the median across remaining rows. What is the value that represents missing data?",
+          "data_sources": [
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-19-6/_intermediate/errors-0.txt"
+        },
+        "code": "import json\n\n   # The missing data representation is \"M\" as observed in the data snippet.\n   answer = \"M\"\n\n   # Print the answer in the required JSON format.\n   print(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 37.71642565727234
+      },
+      {
+        "task_id": "environment-hard-19-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.718738079071045
+      },
+      {
+        "task_id": "environment-hard-19-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.05622410774231
+      },
+      {
+        "task_id": "environment-hard-19-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 62.95518898963928
+      }
+    ],
+    "runtime": 59.89518904685974
+  },
+  {
+    "task_id": "environment-hard-20",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "environment-hard-20-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: In 2015, what are the three most polluted beaches of the city that had the least rainfall in the summer (June, July, August)?, please answer the following question:\n What files contain monthly precipitation data?",
+          "data_sources": [
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv",
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "monthly_precipitations_amherst.csv",
+            "monthly_precipitations_ashburnham.csv",
+            "monthly_precipitations_boston.csv",
+            "monthly_precipitations_chatham.csv"
+          ]
+        },
+        "code": "import json\n\n# Identify files containing monthly precipitation data\nprecipitation_files = [\n    \"monthly_precipitations_amherst.csv\",\n    \"monthly_precipitations_ashburnham.csv\",\n    \"monthly_precipitations_boston.csv\",\n    \"monthly_precipitations_chatham.csv\"\n]\n\n# Output the answer\nprint(json.dumps({\n    \"main-task\": precipitation_files\n}, indent=4))",
+        "runtime": 46.96668219566345
+      },
+      {
+        "task_id": "environment-hard-20-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.17517900466919
+      },
+      {
+        "task_id": "environment-hard-20-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.22499871253967
+      },
+      {
+        "task_id": "environment-hard-20-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.95577383041382
+      },
+      {
+        "task_id": "environment-hard-20-5",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: In 2015, what are the three most polluted beaches of the city that had the least rainfall in the summer (June, July, August)?, please answer the following question:\n Which file contain the water-body-testing data for the year 2015? \n\n",
+          "data_sources": [
+            "water-body-testing-2015.csv"
+          ],
+          "subtasks": [],
+          "answer": "water-body-testing-2015.csv"
+        },
+        "code": "import json\n\n# The file name is directly identified from the list\nanswer = \"water-body-testing-2015.csv\"\n\n# Print the answer in the required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 40.81646275520325
+      },
+      {
+        "task_id": "environment-hard-20-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Load the water quality file for 2015. Clean the beach names by splitting on \"@\" and keep only the beaches for the community equal to the city of Chatham. What are the unique beach names in the dataset?",
+          "data_sources": [
+            "water-body-testing-2015.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the data from 'water-body-testing-2015.csv' and handle any missing values in the relevant columns (Community and Beach Name).",
+              "data_sources": [
+                "water-body-testing-2015.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Clean the Beach Name column by splitting each entry on '@' and taking the first part (or the part before the '@'). If there is no '@', then the entire string is kept. Strip any extra spaces.",
+              "data_sources": [
+                "water-body-testing-2015.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Filter the dataset to include only rows where the Community is 'Chatham' (after converting to string and stripping any extra spaces).",
+              "data_sources": [
+                "water-body-testing-2015.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Extract the unique beach names from the cleaned Beach Name column in the filtered dataset.",
+              "data_sources": [
+                "water-body-testing-2015.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/environment-hard-20-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 39.98067665100098
+      },
+      {
+        "task_id": "environment-hard-20-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.2742133140564
+      },
+      {
+        "task_id": "environment-hard-20-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.03105974197388
+      },
+      {
+        "task_id": "environment-hard-20-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.78947353363037
+      }
+    ],
+    "runtime": 74.44360995292664
+  }
+]

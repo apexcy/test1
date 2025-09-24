@@ -1,0 +1,870 @@
+[
+  {
+    "task_id": "astronomy-easy-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-1-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which file contains the forecasted Ap for March 10-12, 2025?",
+          "data_sources": [
+            "geomag_forecast/0309geomag_forecast.txt"
+          ],
+          "subtasks": [],
+          "answer": "geomag_forecast/0309geomag_forecast.txt"
+        },
+        "code": "import json\n\n# Since we are only asked for the file name and we have identified it from the data source list and the preview, we can directly output.\nanswer = \"geomag_forecast/0309geomag_forecast.txt\"\n\n# We are to output the answer in a JSON format for the main task.\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 45.99952840805054
+      },
+      {
+        "task_id": "astronomy-easy-1-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which files contains the observed Ap for March 10-12, 2025?",
+          "data_sources": [
+            "geomag_forecast/0311geomag_forecast.txt",
+            "geomag_forecast/0312geomag_forecast.txt",
+            "geomag_forecast/0313geomag_forecast.txt"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-easy-1-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 47.62454056739807
+      },
+      {
+        "task_id": "astronomy-easy-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.331467628479004
+      },
+      {
+        "task_id": "astronomy-easy-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.64999961853027
+      },
+      {
+        "task_id": "astronomy-easy-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.075419187545776
+      }
+    ],
+    "runtime": 63.81826043128967
+  },
+  {
+    "task_id": "astronomy-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "query": "Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 vs July 2018.",
+      "data_sources": [
+        "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+        "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Find the peak atmospheric mass density for March 2014 from the given data file.",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Find the peak atmospheric mass density for July 2018 from the given data file.",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the ratio of the peak density in March 2014 to that in July 2018.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-easy-2/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-2-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Identify the files containing the density data for 2014 and 2018",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          ],
+          "subtasks": [],
+          "answer": {
+            "2014": "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+            "2018": "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          }
+        },
+        "code": "import json\n\n# The provided data file names in the problem (we are told in the problem)\ndata_file_names = ['STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv', \n                   'STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv']\n\n# We know the first one is 2014 and the second is 2018 because of the years in the filenames.\n\nanswer = {\n    \"2014\": data_file_names[0],\n    \"2018\": data_file_names[1]\n}\n\n# But note: the problem says the data sources we are given in the code are absolute paths. \n# However, we are not using the absolute paths because the question only asks for the file names as provided.\n\n# Print the answer for the main task\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 81.20937776565552
+      },
+      {
+        "task_id": "astronomy-easy-2-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 69.85056209564209
+      },
+      {
+        "task_id": "astronomy-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the maximum value of the atmospheric mass density in July 2018 recorded from the data?",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Check if the provided data file contains any data for July 2018.",
+              "data_sources": [
+                "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-easy-2-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 151.94179153442383
+      },
+      {
+        "task_id": "astronomy-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 vs July 2018.",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the peak atmospheric mass density for Swarm A in March 2014?",
+              "data_sources": [
+                "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the peak atmospheric mass density for Swarm A in July 2018?",
+              "data_sources": [
+                "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-easy-2-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 96.27431440353394
+      }
+    ],
+    "runtime": 74.07204914093018
+  },
+  {
+    "task_id": "astronomy-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-3-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Using Swarm Alpha satellite data available by the warmup dataset, find the average atmospheric density measured between 450km and 500km altitude during in 2015 for availiable data points at 00:00 of each day in the initial state file. Clean up the density measurement data (n/a values or 9.99E32)., please answer the following question:\n What is the initial state file in the warmup dataset?",
+          "data_sources": [
+            "STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv"
+          ],
+          "subtasks": [],
+          "answer": "STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv"
+        },
+        "code": "import json\n\n# The initial state file is provided in the data sources list.\n# Since there is only one data source, we can use that.\ndata_sources = ['STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv']\ninitial_state_file = data_sources[0]  # because there is only one file\n\n# Alternatively, we can note that the problem says the data sources are given, but in the code we are told the data sources we may need are: \n# ['/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv']\n# However, the problem says: \"The data sources you may need to answer the question are: ...\", so we can use that.\n\n# But note: the problem says we are given the data file names: ['STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv'] at the beginning.\n\n# Since the code environment might not have the full path, but the problem context provided a relative path, we use the relative path.\n\n# However, the problem says: \"The data sources you may need to answer the question are: ...\", and that is a list. We are to use that list.\n\n# But in the problem statement, the data source is given as: \n#   Data file names: ['STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv']\n\n# So we can simply output that.\n\n# Therefore, the answer is the string: \"STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv\"\n\n# We output the answer in the required JSON format.\n\nanswer = {\n    \"main-task\": \"STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv\"\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 63.91346526145935
+      },
+      {
+        "task_id": "astronomy-easy-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 218.17505717277527
+      },
+      {
+        "task_id": "astronomy-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 175.9930441379547
+      },
+      {
+        "task_id": "astronomy-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 220.72924542427063
+      },
+      {
+        "task_id": "astronomy-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 446.26441955566406
+      },
+      {
+        "task_id": "astronomy-easy-3-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 216.45596146583557
+      }
+    ],
+    "runtime": 486.7636444568634
+  },
+  {
+    "task_id": "astronomy-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-4-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the file that contains sunspot data for 1960-2020?",
+          "data_sources": [
+            "SILSO/SN_y_tot_V2.0.csv"
+          ],
+          "subtasks": [],
+          "answer": "SILSO/SN_y_tot_V2.0.csv"
+        },
+        "code": "import json\n\n# The answer to the main task\nanswer = \"SILSO/SN_y_tot_V2.0.csv\"\n\n# Print the answer in the required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 39.981751441955566
+      },
+      {
+        "task_id": "astronomy-easy-4-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.84843635559082
+      },
+      {
+        "task_id": "astronomy-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 82.81066918373108
+      },
+      {
+        "task_id": "astronomy-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 69.92162847518921
+      },
+      {
+        "task_id": "astronomy-easy-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.55880165100098
+      }
+    ],
+    "runtime": 47.879359006881714
+  },
+  {
+    "task_id": "astronomy-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-5-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Estimate the total count of satellite major altitude changes (change of altitude > 1000m within 12h) for satellite 48445 during 2024 using TLE history. Use skifield's itrf_xyz to estimate altitude from TLE., please answer the following question:\n What is the file name? \n\n",
+          "data_sources": [
+            "TLE/48445.tle"
+          ],
+          "subtasks": [],
+          "answer": "TLE/48445.tle"
+        },
+        "code": "import json\n\n# The answer to the main task is the file name\nanswer = \"TLE/48445.tle\"\n\n# Print the answer in JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 30.028148412704468
+      },
+      {
+        "task_id": "astronomy-easy-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.29037046432495
+      },
+      {
+        "task_id": "astronomy-easy-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.05352568626404
+      },
+      {
+        "task_id": "astronomy-easy-5-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.35220766067505
+      }
+    ],
+    "runtime": 40.7826714515686
+  },
+  {
+    "task_id": "astronomy-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.18662095069885
+      },
+      {
+        "task_id": "astronomy-easy-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.75645351409912
+      },
+      {
+        "task_id": "astronomy-easy-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.646111726760864
+      },
+      {
+        "task_id": "astronomy-easy-6-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.293752670288086
+      },
+      {
+        "task_id": "astronomy-easy-6-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.90907049179077
+      },
+      {
+        "task_id": "astronomy-easy-6-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.009010314941406
+      }
+    ],
+    "runtime": 54.9320752620697
+  },
+  {
+    "task_id": "astronomy-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-7-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 1715.7418658733368
+      },
+      {
+        "task_id": "astronomy-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.94284987449646
+      },
+      {
+        "task_id": "astronomy-hard-7-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What are the required columns from the GOES data?",
+          "data_sources": [],
+          "subtasks": [],
+          "answer": [
+            "xrsb_flux_observed",
+            "xrsa_flux_observed"
+          ]
+        },
+        "code": "import json\n\n# Since the required columns are given in the problem statement, we can directly output them.\nanswer = [\"xrsb_flux_observed\", \"xrsa_flux_observed\"]\n\n# Print the answer in the required format.\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 32.93743872642517
+      },
+      {
+        "task_id": "astronomy-hard-7-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.3018913269043
+      },
+      {
+        "task_id": "astronomy-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.72981286048889
+      },
+      {
+        "task_id": "astronomy-hard-7-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.110297441482544
+      },
+      {
+        "task_id": "astronomy-hard-7-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.79897999763489
+      }
+    ],
+    "runtime": 38.72413611412048
+  },
+  {
+    "task_id": "astronomy-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.66110706329346
+      },
+      {
+        "task_id": "astronomy-hard-8-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the hourly average Kp value?",
+          "data_sources": [
+            "omni2/omni2_Kp_Index.lst"
+          ],
+          "subtasks": [],
+          "answer": 8.375
+        },
+        "code": "import json\n\n# We are only using the Kp index file for this subtask\nkp_file = '/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/omni2/omni2_Kp_Index.lst'\n\nkp_values = []  # to store the actual Kp values (divided by 10)\n\nwith open(kp_file, 'r') as f:\n    for line in f:\n        # Skip empty lines\n        if not line.strip():\n            continue\n        parts = line.split()\n        # We expect 4 parts: year, day, hour, kp_value\n        if len(parts) < 4:\n            continue\n        year = parts[0]\n        day = parts[1]\n        # We are only interested in May 11, 2024: which is day 132 of 2024\n        if year == '2024' and day == '132':\n            # Extract the Kp value (fourth column)\n            kp_int = parts[3]\n            try:\n                kp_int = int(kp_int)\n                # Convert to actual Kp: divide by 10\n                kp_actual = kp_int / 10.0\n                kp_values.append(kp_actual)\n            except ValueError:\n                # Skip if conversion fails\n                continue\n\n# Now, we should have 24 values? Let's check the length and then compute the average\nif len(kp_values) == 0:\n    average_kp = None\nelse:\n    average_kp = sum(kp_values) / len(kp_values)\n\n# Print the answer for this task (which is the main task for this question) in the required format.\n# Since the overall output expects a dictionary with the task id and the answer, and we are only answering one question (this one) in this code, we output:\n# But note: the instruction says to print a dictionary with the id and the answer. The id for this task is \"main-task\" as per our plan.\n\n# However, note: the overall context has multiple tasks? But this code is only for the subtask of the overall project? \n\n# Actually, the question we are answering now is: \"What is the hourly average Kp value?\" and we are treating it as a main task in this plan.\n\n# So we output:\nprint(json.dumps({\"main-task\": average_kp}, indent=4))",
+        "runtime": 43.66378951072693
+      },
+      {
+        "task_id": "astronomy-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the hourly resampled acceleration data values?",
+          "data_sources": [
+            "swarm/SW_OPER_ACCACAL_2__20240511T000000_20240511T235959_0304.cdf"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-hard-8-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 43.18450689315796
+      },
+      {
+        "task_id": "astronomy-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.40591621398926
+      },
+      {
+        "task_id": "astronomy-hard-8-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.464759826660156
+      },
+      {
+        "task_id": "astronomy-hard-8-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 30.386435747146606
+      },
+      {
+        "task_id": "astronomy-hard-8-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.862605571746826
+      },
+      {
+        "task_id": "astronomy-hard-8-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.86726689338684
+      }
+    ],
+    "runtime": 47.68022966384888
+  },
+  {
+    "task_id": "astronomy-hard-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-9-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.6146764755249
+      },
+      {
+        "task_id": "astronomy-hard-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 30.66286063194275
+      },
+      {
+        "task_id": "astronomy-hard-9-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "Load individual TLE pairs from TLE satellite file for SATCAT 43180.",
+          "data_sources": [
+            "TLE/43180.tle"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/astronomy-hard-9-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 39.44237017631531
+      },
+      {
+        "task_id": "astronomy-hard-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.44000792503357
+      },
+      {
+        "task_id": "astronomy-hard-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.61445093154907
+      },
+      {
+        "task_id": "astronomy-hard-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.9766366481781
+      },
+      {
+        "task_id": "astronomy-hard-9-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 28.7439386844635
+      }
+    ],
+    "runtime": 49.6213014125824
+  },
+  {
+    "task_id": "astronomy-hard-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-10-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 1175.5743968486786
+      },
+      {
+        "task_id": "astronomy-hard-10-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 72.57048773765564
+      },
+      {
+        "task_id": "astronomy-hard-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.35778760910034
+      },
+      {
+        "task_id": "astronomy-hard-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.20960450172424
+      },
+      {
+        "task_id": "astronomy-hard-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.76801323890686
+      },
+      {
+        "task_id": "astronomy-hard-10-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 62.93627595901489
+      },
+      {
+        "task_id": "astronomy-hard-10-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 70.13969588279724
+      }
+    ],
+    "runtime": 91.2293267250061
+  },
+  {
+    "task_id": "astronomy-hard-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-11-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.24333119392395
+      },
+      {
+        "task_id": "astronomy-hard-11-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.28137445449829
+      },
+      {
+        "task_id": "astronomy-hard-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.14323019981384
+      },
+      {
+        "task_id": "astronomy-hard-11-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.75207233428955
+      },
+      {
+        "task_id": "astronomy-hard-11-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.22647309303284
+      }
+    ],
+    "runtime": 45.73070549964905
+  },
+  {
+    "task_id": "astronomy-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-12-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.04766392707825
+      },
+      {
+        "task_id": "astronomy-hard-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 69.755215883255
+      },
+      {
+        "task_id": "astronomy-hard-12-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.320873737335205
+      },
+      {
+        "task_id": "astronomy-hard-12-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.89895248413086
+      }
+    ],
+    "runtime": 59.97111535072327
+  }
+]

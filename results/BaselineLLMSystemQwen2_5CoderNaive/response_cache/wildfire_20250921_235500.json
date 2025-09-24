@@ -1,0 +1,1101 @@
+[
+  {
+    "task_id": "wildfire-easy-1",
+    "model_output": {
+      "id": "main-task",
+      "query": "Find the 3-month period with the highest total acres burned since Jan 2000, according to NOAA. What was the total acres burned in that period?",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "noaa_wildfires_monthly_stats.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the relevant data from noaa_wildfires.csv and noaa_wildfires_monthly_stats.csv.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Ensure the date columns are in the correct datetime format.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Aggregate the data to get total acres burned per month.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the total acres burned for each 3-month period.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the 3-month period with the highest total acres burned.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-1/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load and clean the relevant data from noaa_wildfires.csv and noaa_wildfires_monthly_stats.csv\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nnoaa_wildfires_monthly_stats = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires_monthly_stats.csv')\n\n# Step 2: Ensure the date columns are in the correct datetime format\nnoaa_wildfires['Date'] = pd.to_datetime(noaa_wildfires['Date'], errors='coerce')\nnoaa_wildfires_monthly_stats['Date'] = pd.to_datetime(noaa_wildfires_monthly_stats['Date'], errors='coerce')\n\n# Step 3: Aggregate the data to get total acres burned per month\nmonthly_acres = noaa_wildfires.groupby(noaa_wildfires['Date'].dt.to_period('M'))['Acres'].sum().reset_index()\nmonthly_acres['Date'] = monthly_acres['Date'].dt.to_timestamp()\n\n# Step 4: Calculate the total acres burned for each 3-month period\nmonthly_acres['3_month_acres'] = monthly_acres['Acres'].rolling(window=3).sum()\n\n# Step 5: Identify the 3-month period with the highest total acres burned\nmax_3_month_period = monthly_acres.loc[monthly_acres['3_month_acres'].idxmax()]\n\n# Print the answers for each step\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded and cleaned.\",\n        \"subtask-2\": \"Date columns converted to datetime format.\",\n        \"subtask-3\": monthly_acres.head().to_dict(orient='records'),\n        \"subtask-4\": monthly_acres[['Date', '3_month_acres']].head().to_dict(orient='records'),\n        \"subtask-5\": max_3_month_period.to_dict()\n    }, indent=4)\n)",
+    "runtime": 32.4028582572937
+  },
+  {
+    "task_id": "wildfire-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which NIFC geographic area intersects with the most US states? Give the abbreviation of the geographic area",
+      "data_sources": [
+        "nifc_geographic_areas.gpkg",
+        "usa.gpkg"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the NIFC geographic areas data.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load the US states data.",
+          "data_sources": [
+            "usa.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Intersect the NIFC geographic areas with the US states.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg",
+            "usa.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Count the number of states each NIFC geographic area intersects with.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg",
+            "usa.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the NIFC geographic area with the highest intersection count.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg",
+            "usa.gpkg"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-2/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport geopandas as gpd\n\n# Subtask 1: Load the NIFC geographic areas data\nnifc_geographic_areas = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg')\nprint(json.dumps({\"subtask-1\": nifc_geographic_areas.head().to_dict()}, indent=4))\n\n# Subtask 2: Load the US states data\nusa_states = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/usa.gpkg')\nprint(json.dumps({\"subtask-2\": usa_states.head().to_dict()}, indent=4))\n\n# Subtask 3: Intersect the NIFC geographic areas with the US states\nintersections = gpd.sjoin(nifc_geographic_areas, usa_states, how=\"inner\", predicate=\"intersects\")\nprint(json.dumps({\"subtask-3\": intersections.head().to_dict()}, indent=4))\n\n# Subtask 4: Count the number of states each NIFC geographic area intersects with\nintersection_counts = intersections.groupby('NAME')['STATE_NAME'].nunique().reset_index(name='state_count')\nprint(json.dumps({\"subtask-4\": intersection_counts.head().to_dict()}, indent=4))\n\n# Subtask 5: Identify the NIFC geographic area with the highest intersection count\nmax_intersection_area = intersection_counts.loc[intersection_counts['state_count'].idxmax()]\nprint(json.dumps({\"subtask-5\": max_intersection_area.to_dict()}, indent=4))\n\n# Main task: Output the abbreviation of the geographic area\n# Assuming 'NAME' is the column for the geographic area name and 'ABBREV' is the column for the abbreviation in usa_states\nmax_intersection_area_name = max_intersection_area['NAME']\nabbreviation = usa_states[usa_states['NAME'] == max_intersection_area_name]['ABBREV'].values[0]\nprint(json.dumps({\"main-task\": abbreviation}, indent=4))",
+    "runtime": 17.84266948699951
+  },
+  {
+    "task_id": "wildfire-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which US states (using full names) fall into the most number of NIFC Geographic Areas?",
+      "data_sources": [
+        "nifc_geographic_areas.gpkg",
+        "state_abbreviation_to_state.json"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and inspect the nifc_geographic_areas.gpkg file to understand its structure.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load the state_abbreviation_to_state.json file to map state abbreviations to full names.",
+          "data_sources": [
+            "state_abbreviation_to_state.json"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Identify the state abbreviations associated with each NIFC Geographic Area.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Count the number of NIFC Geographic Areas each state falls into.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Map the state abbreviations to their full names.",
+          "data_sources": [
+            "state_abbreviation_to_state.json"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-3/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport geopandas as gpd\nimport pandas as pd\n\n# Subtask 1: Load and inspect the nifc_geographic_areas.gpkg file to understand its structure.\nnifc_geographic_areas = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg')\nprint(json.dumps({\"subtask-1\": nifc_geographic_areas.head().to_dict()}, indent=4))\n\n# Subtask 2: Load the state_abbreviation_to_state.json file to map state abbreviations to full names.\nwith open('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/state_abbreviation_to_state.json', 'r') as file:\n    state_abbreviation_to_state = json.load(file)\nprint(json.dumps({\"subtask-2\": state_abbreviation_to_state}, indent=4))\n\n# Subtask 3: Identify the state abbreviations associated with each NIFC Geographic Area.\n# Assuming there is a column named 'STATE' in the nifc_geographic_areas that contains state abbreviations.\nstate_counts = nifc_geographic_areas['STATE'].value_counts()\nprint(json.dumps({\"subtask-3\": state_counts.to_dict()}, indent=4))\n\n# Subtask 4: Count the number of NIFC Geographic Areas each state falls into.\n# This is already done in subtask 3, but we'll restate it for clarity.\nstate_counts = nifc_geographic_areas['STATE'].value_counts().reset_index()\nstate_counts.columns = ['STATE_ABBR', 'COUNT']\nprint(json.dumps({\"subtask-4\": state_counts.to_dict(orient='records')}, indent=4))\n\n# Subtask 5: Map the state abbreviations to their full names.\nstate_counts['STATE_NAME'] = state_counts['STATE_ABBR'].map(state_abbreviation_to_state)\nprint(json.dumps({\"subtask-5\": state_counts.to_dict(orient='records')}, indent=4))\n\n# Main task: Identify the US states (using full names) that fall into the most number of NIFC Geographic Areas.\nstate_with_max_areas = state_counts.sort_values(by='COUNT', ascending=False).head(1)\nprint(json.dumps({\"main-task\": state_with_max_areas.to_dict(orient='records')}, indent=4))",
+    "runtime": 19.534106969833374
+  },
+  {
+    "task_id": "wildfire-hard-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "Find the year with the highest suppression cost per acre of human-caused fire. What was the cost per acre, rounded to the nearest cent?",
+      "data_sources": [
+        "nifc_human_caused_acres.csv",
+        "nifc_suppression_costs.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the nifc_human_caused_acres.csv file.",
+          "data_sources": [
+            "nifc_human_caused_acres.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the nifc_suppression_costs.csv file.",
+          "data_sources": [
+            "nifc_suppression_costs.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned data from nifc_human_caused_acres.csv and nifc_suppression_costs.csv.",
+          "data_sources": [
+            "nifc_human_caused_acres.csv",
+            "nifc_suppression_costs.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the suppression cost per acre for each year.",
+          "data_sources": [
+            "nifc_human_caused_acres.csv",
+            "nifc_suppression_costs.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the year with the highest suppression cost per acre.",
+          "data_sources": [
+            "nifc_human_caused_acres.csv",
+            "nifc_suppression_costs.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-4/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Subtask 1: Load and clean the nifc_human_caused_acres.csv file.\nhuman_caused_acres = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_human_caused_acres.csv')\nhuman_caused_acres['Year'] = pd.to_numeric(human_caused_acres['Year'], errors='coerce')\nhuman_caused_acres.dropna(subset=['Year', 'Acres'], inplace=True)\nhuman_caused_acres['Acres'] = pd.to_numeric(human_caused_acres['Acres'], errors='coerce')\nhuman_caused_acres.dropna(subset=['Acres'], inplace=True)\n\n# Subtask 2: Load and clean the nifc_suppression_costs.csv file.\nsuppression_costs = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_suppression_costs.csv')\nsuppression_costs['Year'] = pd.to_numeric(suppression_costs['Year'], errors='coerce')\nsuppression_costs.dropna(subset=['Year', 'Total Suppression Cost'], inplace=True)\nsuppression_costs['Total Suppression Cost'] = pd.to_numeric(suppression_costs['Total Suppression Cost'], errors='coerce')\nsuppression_costs.dropna(subset=['Total Suppression Cost'], inplace=True)\n\n# Subtask 3: Merge the cleaned data from nifc_human_caused_acres.csv and nifc_suppression_costs.csv.\nmerged_data = pd.merge(human_caused_acres, suppression_costs, on='Year', how='inner')\n\n# Subtask 4: Calculate the suppression cost per acre for each year.\nmerged_data['Cost Per Acre'] = merged_data['Total Suppression Cost'] / merged_data['Acres']\n\n# Subtask 5: Identify the year with the highest suppression cost per acre.\nmax_cost_per_acre_year = merged_data.loc[merged_data['Cost Per Acre'].idxmax()]\nyear_with_max_cost = max_cost_per_acre_year['Year']\nmax_cost_per_acre = round(max_cost_per_acre_year['Cost Per Acre'], 2)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Loaded and cleaned nifc_human_caused_acres.csv\",\n        \"subtask-2\": \"Loaded and cleaned nifc_suppression_costs.csv\",\n        \"subtask-3\": \"Merged the cleaned data from nifc_human_caused_acres.csv and nifc_suppression_costs.csv\",\n        \"subtask-4\": \"Calculated the suppression cost per acre for each year\",\n        \"subtask-5\": f\"Year with the highest suppression cost per acre: {year_with_max_cost}, Cost per acre: {max_cost_per_acre}\",\n        \"main-task\": {\n            \"year\": int(year_with_max_cost),\n            \"cost_per_acre\": max_cost_per_acre\n        }\n    }, indent=4))",
+    "runtime": 30.954397916793823
+  },
+  {
+    "task_id": "wildfire-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "query": "On average, how many more annual fires are reported by NOAA compared to NIFC since 2000? Round to the nearest whole number.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "nifc_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the NOAA wildfires data.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the NIFC wildfires data.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Aggregate the number of annual fires reported by NOAA since 2000.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Aggregate the number of annual fires reported by NIFC since 2000.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the average number of annual fires reported by NOAA since 2000.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Calculate the average number of annual fires reported by NIFC since 2000.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-7",
+          "query": "Calculate the difference between the average number of annual fires reported by NOAA and NIFC.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-5/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load and clean the NOAA wildfires data\nnoaa_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nnoaa_data['Year'] = pd.to_datetime(noaa_data['Year'], errors='coerce').dt.year\nnoaa_data = noaa_data.dropna(subset=['Year'])\nnoaa_data = noaa_data[noaa_data['Year'] >= 2000]\n\n# Load and clean the NIFC wildfires data\nnifc_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\nnifc_data['Year'] = pd.to_datetime(nifc_data['Year'], errors='coerce').dt.year\nnifc_data = nifc_data.dropna(subset=['Year'])\nnifc_data = nifc_data[nifc_data['Year'] >= 2000]\n\n# Aggregate the number of annual fires reported by NOAA since 2000\nnoaa_annual_fires = noaa_data.groupby('Year')['Fires'].sum().reset_index()\n\n# Aggregate the number of annual fires reported by NIFC since 2000\nnifc_annual_fires = nifc_data.groupby('Year')['Fires'].sum().reset_index()\n\n# Calculate the average number of annual fires reported by NOAA since 2000\nnoaa_avg_fires = noaa_annual_fires['Fires'].mean()\n\n# Calculate the average number of annual fires reported by NIFC since 2000\nnifc_avg_fires = nifc_annual_fires['Fires'].mean()\n\n# Calculate the difference between the average number of annual fires reported by NOAA and NIFC\ndifference = round(noaa_avg_fires - nifc_avg_fires)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"NOAA data loaded and cleaned\",\n        \"subtask-2\": \"NIFC data loaded and cleaned\",\n        \"subtask-3\": noaa_annual_fires.to_dict(),\n        \"subtask-4\": nifc_annual_fires.to_dict(),\n        \"subtask-5\": noaa_avg_fires,\n        \"subtask-6\": nifc_avg_fires,\n        \"subtask-7\": difference,\n        \"main-task\": difference\n    }, indent=4))",
+    "runtime": 27.698932647705078
+  },
+  {
+    "task_id": "wildfire-hard-6",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the correlation between (1) the difference between the number of NOAA and NIFC-reported fires and (2) the difference between the acres burned by NOAA and NIFC-reported fires, on an annual basis? Answer to three decimal places.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "nifc_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the NOAA wildfires data.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the NIFC wildfires data.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Aggregate the number of fires and acres burned by NOAA on an annual basis.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Aggregate the number of fires and acres burned by NIFC on an annual basis.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the difference between the number of fires reported by NOAA and NIFC annually.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Calculate the difference between the acres burned by NOAA and NIFC annually.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-7",
+          "query": "Calculate the correlation between the differences in the number of fires and acres burned annually.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-6/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load and clean the NOAA wildfires data\nnoaa_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nnoaa_data['FIRE_YEAR'] = pd.to_datetime(noaa_data['FIRE_YEAR'], errors='coerce').dt.year\nnoaa_data.dropna(subset=['FIRE_YEAR'], inplace=True)\nnoaa_data['FIRE_YEAR'] = noaa_data['FIRE_YEAR'].astype(int)\n\n# Load and clean the NIFC wildfires data\nnifc_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\nnifc_data['FIRE_YEAR'] = pd.to_datetime(nifc_data['FIRE_YEAR'], errors='coerce').dt.year\nnifc_data.dropna(subset=['FIRE_YEAR'], inplace=True)\nnifc_data['FIRE_YEAR'] = nifc_data['FIRE_YEAR'].astype(int)\n\n# Aggregate the number of fires and acres burned by NOAA on an annual basis\nnoaa_annual = noaa_data.groupby('FIRE_YEAR').agg({\n    'FIRE_NAME': 'nunique',  # Count unique fires\n    'GIS_ACRES': 'sum'       # Sum acres burned\n}).reset_index()\n\n# Aggregate the number of fires and acres burned by NIFC on an annual basis\nnifc_annual = nifc_data.groupby('FIRE_YEAR').agg({\n    'FIRE_NAME': 'nunique',  # Count unique fires\n    'GIS_ACRES': 'sum'       # Sum acres burned\n}).reset_index()\n\n# Calculate the difference between the number of fires reported by NOAA and NIFC annually\nfire_diff = pd.merge(noaa_annual, nifc_annual, on='FIRE_YEAR', suffixes=('_noaa', '_nifc'))\nfire_diff['fire_difference'] = fire_diff['FIRE_NAME_noaa'] - fire_diff['FIRE_NAME_nifc']\n\n# Calculate the difference between the acres burned by NOAA and NIFC annually\nacres_diff = pd.merge(noaa_annual, nifc_annual, on='FIRE_YEAR', suffixes=('_noaa', '_nifc'))\nacres_diff['acres_difference'] = acres_diff['GIS_ACRES_noaa'] - acres_diff['GIS_ACRES_nifc']\n\n# Calculate the correlation between the differences in the number of fires and acres burned annually\ncorrelation = fire_diff['fire_difference'].corr(acres_diff['acres_difference'])\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"NOAA data loaded and cleaned.\",\n        \"subtask-2\": \"NIFC data loaded and cleaned.\",\n        \"subtask-3\": noaa_annual.head().to_dict(),\n        \"subtask-4\": nifc_annual.head().to_dict(),\n        \"subtask-5\": fire_diff[['FIRE_YEAR', 'fire_difference']].head().to_dict(),\n        \"subtask-6\": acres_diff[['FIRE_YEAR', 'acres_difference']].head().to_dict(),\n        \"main-task\": round(correlation, 3)\n    }, indent=4)\n)",
+    "runtime": 22.96454167366028
+  },
+  {
+    "task_id": "wildfire-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which geographic area had the most anomalous year (by Z-score) in terms of total acres burned compared to its historical annual average, and what year was it in? Answer with the geographic area and year, separated by a comma.",
+      "data_sources": [
+        "Wildfire_Acres_by_State.csv",
+        "nifc_geographic_areas.gpkg"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the Wildfire_Acres_by_State.csv file.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the nifc_geographic_areas.gpkg file.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned data from Wildfire_Acres_by_State.csv and nifc_geographic_areas.gpkg.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv",
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the historical annual average and standard deviation of acres burned for each geographic area.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the Z-score for each year's total acres burned for each geographic area.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Identify the year with the highest absolute Z-score for each geographic area.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-7",
+          "query": "Determine the geographic area and year with the highest absolute Z-score.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-7/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport geopandas as gpd\nfrom shapely.geometry import Point\n\n# Subtask 1: Load and clean the Wildfire_Acres_by_State.csv file.\nwildfire_acres = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Wildfire_Acres_by_State.csv')\nwildfire_acres['Year'] = pd.to_numeric(wildfire_acres['Year'], errors='coerce')\nwildfire_acres['Acres'] = pd.to_numeric(wildfire_acres['Acres'], errors='coerce')\nwildfire_acres.dropna(subset=['Year', 'Acres'], inplace=True)\n\n# Subtask 2: Load and clean the nifc_geographic_areas.gpkg file.\ngeographic_areas = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg')\ngeographic_areas['STATE_NAME'] = geographic_areas['STATE_NAME'].str.strip()\n\n# Subtask 3: Merge the cleaned data from Wildfire_Acres_by_State.csv and nifc_geographic_areas.gpkg.\nmerged_data = pd.merge(wildfire_acres, geographic_areas, left_on='State', right_on='STATE_NAME', how='left')\nmerged_data.dropna(subset=['STATE_NAME'], inplace=True)\n\n# Subtask 4: Calculate the historical annual average and standard deviation of acres burned for each geographic area.\ngrouped_data = merged_data.groupby(['STATE_NAME']).agg({'Acres': ['mean', 'std']}).reset_index()\ngrouped_data.columns = ['STATE_NAME', 'Mean_Acres', 'Std_Acres']\n\n# Subtask 5: Calculate the Z-score for each year's total acres burned for each geographic area.\nmerged_data = pd.merge(merged_data, grouped_data, on='STATE_NAME', how='left')\nmerged_data['Z_Score'] = (merged_data['Acres'] - merged_data['Mean_Acres']) / merged_data['Std_Acres']\n\n# Subtask 6: Identify the year with the highest absolute Z-score for each geographic area.\nmerged_data['Abs_Z_Score'] = merged_data['Z_Score'].abs()\nmax_z_score_per_area = merged_data.loc[merged_data.groupby('STATE_NAME')['Abs_Z_Score'].idxmax()]\n\n# Subtask 7: Determine the geographic area and year with the highest absolute Z-score.\nmost_anomalous_year = max_z_score_per_area.loc[max_z_score_per_area['Abs_Z_Score'].idxmax()]\n\nanswer1 = wildfire_acres.head().to_dict(orient='records')\nanswer2 = geographic_areas.head().to_dict(orient='records')\nanswer = f\"{most_anomalous_year['STATE_NAME']}, {most_anomalous_year['Year']}\"\n\nprint(json.dumps(\n    {\n        \"subtask-1\": answer1,\n        \"subtask-2\": answer2,\n        \"main-task\": answer\n    }, indent=4\n))",
+    "runtime": 26.813948392868042
+  },
+  {
+    "task_id": "wildfire-easy-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "Did lighting or humans cause more fires impacting above 100 acres? Answer with **only** 'Lightning' or 'Human'. No explanation needed.",
+      "data_sources": [
+        "nifc_human_caused_acres.csv",
+        "nifc_lightning_caused_acres.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the total acres burned by human-caused fires above 100 acres?",
+          "data_sources": [
+            "nifc_human_caused_acres.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the total acres burned by lightning-caused fires above 100 acres?",
+          "data_sources": [
+            "nifc_lightning_caused_acres.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-8/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nhuman_caused_acres = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_human_caused_acres.csv')\nlightning_caused_acres = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_lightning_caused_acres.csv')\n\n# Ensure the data types are correct\nhuman_caused_acres['Acres'] = pd.to_numeric(human_caused_acres['Acres'], errors='coerce')\nlightning_caused_acres['Acres'] = pd.to_numeric(lightning_caused_acres['Acres'], errors='coerce')\n\n# Filter for fires impacting above 100 acres\nhuman_caused_acres_filtered = human_caused_acres[human_caused_acres['Acres'] > 100]\nlightning_caused_acres_filtered = lightning_caused_acres[lightning_caused_acres['Acres'] > 100]\n\n# Calculate the total acres burned\ntotal_human_acres = human_caused_acres_filtered['Acres'].sum()\ntotal_lightning_acres = lightning_caused_acres_filtered['Acres'].sum()\n\n# Determine the cause with more acres burned\nanswer = 'Lightning' if total_lightning_acres > total_human_acres else 'Human'\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": total_human_acres,\n        \"subtask-2\": total_lightning_acres,\n        \"main-task\": answer\n    }, indent=4\n))",
+    "runtime": 17.857781410217285
+  },
+  {
+    "task_id": "wildfire-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many more or less fatalities occurred due to wildfires on days with humidity less than 30% compared to the average? Positive numbers indicate more, and negative numbers will indicate less. Round to four decimal places.",
+      "data_sources": [
+        "Fire_Weather_Data_2002-2014_2016.csv",
+        "nifc_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the Fire_Weather_Data_2002-2014_2016.csv file.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the nifc_wildfires.csv file.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned Fire_Weather_Data_2002-2014_2016.csv and nifc_wildfires.csv files on the date column.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the average number of fatalities from wildfires.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the average number of fatalities from wildfires on days with humidity less than 30%.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Compute the difference between the average fatalities on days with humidity less than 30% and the overall average.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "nifc_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-9/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Load and clean the Fire_Weather_Data_2002-2014_2016.csv file\nfire_weather_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Fire_Weather_Data_2002-2014_2016.csv')\nfire_weather_data['DATE'] = pd.to_datetime(fire_weather_data['DATE'], errors='coerce')\nfire_weather_data.dropna(subset=['DATE', 'HUMIDITY'], inplace=True)\nfire_weather_data['HUMIDITY'] = pd.to_numeric(fire_weather_data['HUMIDITY'], errors='coerce')\nfire_weather_data.dropna(subset=['HUMIDITY'], inplace=True)\n\n# Load and clean the nifc_wildfires.csv file\nwildfires_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\nwildfires_data['FIRE_YEAR'] = pd.to_datetime(wildfires_data['FIRE_YEAR'], format='%Y', errors='coerce')\nwildfires_data.dropna(subset=['FIRE_YEAR', 'FATALITIES'], inplace=True)\nwildfires_data['FATALITIES'] = pd.to_numeric(wildfires_data['FATALITIES'], errors='coerce')\nwildfires_data.dropna(subset=['FATALITIES'], inplace=True)\n\n# Merge the cleaned Fire_Weather_Data_2002-2014_2016.csv and nifc_wildfires.csv files on the date column\nmerged_data = pd.merge(fire_weather_data, wildfires_data, left_on='DATE', right_on='FIRE_YEAR', how='inner')\n\n# Calculate the average number of fatalities from wildfires\naverage_fatalities = merged_data['FATALITIES'].mean()\n\n# Calculate the average number of fatalities from wildfires on days with humidity less than 30%\naverage_fatalities_low_humidity = merged_data[merged_data['HUMIDITY'] < 30]['FATALITIES'].mean()\n\n# Compute the difference between the average fatalities on days with humidity less than 30% and the overall average\ndifference = round(average_fatalities_low_humidity - average_fatalities, 4)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Fire_Weather_Data_2002-2014_2016.csv loaded and cleaned.\",\n        \"subtask-2\": \"nifc_wildfires.csv loaded and cleaned.\",\n        \"subtask-3\": \"Data merged on the date column.\",\n        \"subtask-4\": average_fatalities,\n        \"subtask-5\": average_fatalities_low_humidity,\n        \"subtask-6\": difference,\n        \"main-task\": difference\n    }, indent=4))",
+    "runtime": 25.701098918914795
+  },
+  {
+    "task_id": "wildfire-hard-10",
+    "model_output": {
+      "id": "main-task",
+      "query": "By count, are there more fires in Democratic states or Republican states? Answer **only** with 'Democratic' or 'Republican'.",
+      "data_sources": [
+        "Wildfire_Fires_by_State.csv",
+        "democratic_vs_republican_votes_by_usa_state_2020.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the Wildfire_Fires_by_State.csv file.",
+          "data_sources": [
+            "Wildfire_Fires_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the democratic_vs_republican_votes_by_usa_state_2020.csv file.",
+          "data_sources": [
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned Wildfire_Fires_by_State.csv with the cleaned democratic_vs_republican_votes_by_usa_state_2020.csv on state names.",
+          "data_sources": [
+            "Wildfire_Fires_by_State.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Aggregate the number of fires by political affiliation (Democratic or Republican).",
+          "data_sources": [
+            "Wildfire_Fires_by_State.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Determine which political affiliation has more fires.",
+          "data_sources": [
+            "Wildfire_Fires_by_State.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-10/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Subtask 1: Load and clean the Wildfire_Fires_by_State.csv file.\nwildfire_fires_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Wildfire_Fires_by_State.csv')\n# Assuming the file has a column 'State' and 'Number of Fires'\nwildfire_fires_df = wildfire_fires_df.dropna(subset=['State', 'Number of Fires'])\nwildfire_fires_df['Number of Fires'] = pd.to_numeric(wildfire_fires_df['Number of Fires'], errors='coerce')\nwildfire_fires_df = wildfire_fires_df.dropna(subset=['Number of Fires'])\n\n# Subtask 2: Load and clean the democratic_vs_republican_votes_by_usa_state_2020.csv file.\npolitical_affiliation_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/democratic_vs_republican_votes_by_usa_state_2020.csv')\n# Assuming the file has columns 'State' and 'Party'\npolitical_affiliation_df = political_affiliation_df.dropna(subset=['State', 'Party'])\n\n# Subtask 3: Merge the cleaned Wildfire_Fires_by_State.csv with the cleaned democratic_vs_republican_votes_by_usa_state_2020.csv on state names.\nmerged_df = pd.merge(wildfire_fires_df, political_affiliation_df, on='State', how='inner')\n\n# Subtask 4: Aggregate the number of fires by political affiliation (Democratic or Republican).\nfires_by_party = merged_df.groupby('Party')['Number of Fires'].sum().reset_index()\n\n# Subtask 5: Determine which political affiliation has more fires.\nresult = fires_by_party.loc[fires_by_party['Number of Fires'].idxmax(), 'Party']\n\n# Print the answers for each subtask and the final result\nprint(json.dumps(\n    {\n        \"subtask-1\": wildfire_fires_df.head().to_dict(),\n        \"subtask-2\": political_affiliation_df.head().to_dict(),\n        \"subtask-3\": merged_df.head().to_dict(),\n        \"subtask-4\": fires_by_party.to_dict(),\n        \"main-task\": result\n    }, indent=4)\n)",
+    "runtime": 22.78649091720581
+  },
+  {
+    "task_id": "wildfire-hard-11",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which state has the most land area (in Acres) impacted by fire, per capita?",
+      "data_sources": [
+        "Wildfire_Acres_by_State.csv",
+        "NST-EST2024-POP.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the Wildfire_Acres_by_State.csv file.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the NST-EST2024-POP.xlsx file.",
+          "data_sources": [
+            "NST-EST2024-POP.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned data from Wildfire_Acres_by_State.csv and NST-EST2024-POP.xlsx.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv",
+            "NST-EST2024-POP.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the land area impacted by fire per capita for each state.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv",
+            "NST-EST2024-POP.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-11/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Subtask 1: Load and clean the Wildfire_Acres_by_State.csv file\nwildfire_acres_df = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Wildfire_Acres_by_State.csv')\n# Assuming the column names are 'State' and 'Acres', we need to check and clean these columns\nwildfire_acres_df['State'] = wildfire_acres_df['State'].astype(str).str.strip()\nwildfire_acres_df['Acres'] = pd.to_numeric(wildfire_acres_df['Acres'], errors='coerce')\nwildfire_acres_df.dropna(subset=['Acres'], inplace=True)\n\n# Subtask 2: Load and clean the NST-EST2024-POP.xlsx file\npopulation_df = pd.read_excel('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/NST-EST2024-POP.xlsx')\n# Assuming the column names are 'State' and 'Population', we need to check and clean these columns\npopulation_df['State'] = population_df['State'].astype(str).str.strip()\npopulation_df['Population'] = pd.to_numeric(population_df['Population'], errors='coerce')\npopulation_df.dropna(subset=['Population'], inplace=True)\n\n# Subtask 3: Merge the cleaned data from Wildfire_Acres_by_State.csv and NST-EST2024-POP.xlsx\nmerged_df = pd.merge(wildfire_acres_df, population_df, on='State', how='inner')\n\n# Subtask 4: Calculate the land area impacted by fire per capita for each state\nmerged_df['Acres_per_Capita'] = merged_df['Acres'] / merged_df['Population']\n\n# Main task: Find the state with the most land area impacted by fire per capita\nstate_with_max_impact = merged_df.loc[merged_df['Acres_per_Capita'].idxmax()]\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": wildfire_acres_df.head().to_dict(),\n        \"subtask-2\": population_df.head().to_dict(),\n        \"subtask-3\": merged_df.head().to_dict(),\n        \"subtask-4\": state_with_max_impact.to_dict(),\n        \"main-task\": state_with_max_impact['State']\n    }, indent=4)\n)",
+    "runtime": 19.760891675949097
+  },
+  {
+    "task_id": "wildfire-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "query": "Has fire start distribution around the year shifted earlier or later over time? Answer with **only** 'Yes' or 'No'. No explanation needed.",
+      "data_sources": [
+        "nifc_wildfires.csv",
+        "noaa_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the earliest and latest fire start date in the dataset?",
+          "data_sources": [
+            "nifc_wildfires.csv",
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "How is the fire start date distributed over the years?",
+          "data_sources": [
+            "nifc_wildfires.csv",
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Has the median fire start date shifted over time?",
+          "data_sources": [
+            "nifc_wildfires.csv",
+            "noaa_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-12/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nnifc_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\n\n# Combine the datasets if necessary\n# For this task, we will assume that the 'nifc_wildfires.csv' has the necessary data\n# If 'noaa_wildfires.csv' has additional relevant data, it can be merged here\n\n# Ensure the date column is in datetime format\nnifc_wildfires['DISCOVERY_DATE'] = pd.to_datetime(nifc_wildfires['DISCOVERY_DATE'], errors='coerce')\n\n# Subtask-1: Find the earliest and latest fire start date\nearliest_date = nifc_wildfires['DISCOVERY_DATE'].min()\nlatest_date = nifc_wildfires['DISCOVERY_DATE'].max()\n\n# Subtask-2: Distribution of fire start dates over the years\nnifc_wildfires['Year'] = nifc_wildfires['DISCOVERY_DATE'].dt.year\nyearly_median_start = nifc_wildfires.groupby('Year')['DISCOVERY_DATE'].median()\n\n# Subtask-3: Check if the median fire start date has shifted over time\nmedian_start_shifted = yearly_median_start.diff().dropna().any()\n\n# Determine the final answer\nanswer = 'Yes' if median_start_shifted else 'No'\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": {\"earliest_date\": earliest_date.strftime('%Y-%m-%d'), \"latest_date\": latest_date.strftime('%Y-%m-%d')},\n        \"subtask-2\": yearly_median_start.to_dict(),\n        \"subtask-3\": median_start_shifted,\n        \"main-task\": answer\n    }, indent=4\n))",
+    "runtime": 20.709275722503662
+  },
+  {
+    "task_id": "wildfire-easy-13",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which of the 10 NICC-defined geographic areas requested the most helicopters for firefighting?",
+      "data_sources": [
+        "cleaned_helicopter_requests_by_region.csv",
+        "nifc_geographic_areas.gpkg"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the structure of the cleaned_helicopter_requests_by_region.csv file?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the structure of the nifc_geographic_areas.gpkg file?",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "How many helicopter requests are there per NICC-defined geographic area?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv",
+            "nifc_geographic_areas.gpkg"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-13/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport geopandas as gpd\n\n# Subtask 1: Check the structure of cleaned_helicopter_requests_by_region.csv\nhelicopter_requests = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/cleaned_helicopter_requests_by_region.csv')\nstructure_helicopter_requests = helicopter_requests.head()\n\n# Subtask 2: Check the structure of nifc_geographic_areas.gpkg\ngeographic_areas = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg')\nstructure_geographic_areas = geographic_areas.head()\n\n# Subtask 3: Count helicopter requests per NICC-defined geographic area\n# Assuming there is a column in helicopter_requests that corresponds to the geographic area ID or name\n# and that this column is named 'geographic_area' (this needs to be verified from the actual data structure)\nhelicopter_requests['geographic_area'] = helicopter_requests['geographic_area'].astype(str)  # Ensure correct data type\n\n# Group by geographic area and count the number of requests\nhelicopter_requests_count = helicopter_requests.groupby('geographic_area').size().reset_index(name='request_count')\n\n# Find the top 10 NICC-defined geographic areas with the most helicopter requests\ntop_10_areas = helicopter_requests_count.nlargest(10, 'request_count')\n\n# Print the answers for each subtask and the final answer\nprint(json.dumps(\n    {\n        \"subtask-1\": structure_helicopter_requests.to_dict(orient='records'),\n        \"subtask-2\": structure_geographic_areas.to_dict(orient='records'),\n        \"subtask-3\": helicopter_requests_count.to_dict(orient='records'),\n        \"main-task\": top_10_areas.to_dict(orient='records')\n    }, indent=4)\n)",
+    "runtime": 19.83023762702942
+  },
+  {
+    "task_id": "wildfire-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the correlation between the proportion of generally unsafe air quality days according to the EPA and the amount of land affected by fires in 2024? Round to 2 decimal places.",
+      "data_sources": [
+        "annual_aqi_by_county_2024.csv",
+        "Wildfire_Acres_by_State.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Extract the proportion of generally unsafe air quality days for each state in 2024.",
+          "data_sources": [
+            "annual_aqi_by_county_2024.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the total acres affected by fires for each state in 2024.",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Aggregate the proportion of unsafe air quality days at the state level.",
+          "data_sources": [
+            "annual_aqi_by_county_2024.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Join the aggregated air quality data with the wildfire acres data by state.",
+          "data_sources": [
+            "annual_aqi_by_county_2024.csv",
+            "Wildfire_Acres_by_State.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the correlation between the proportion of unsafe air quality days and the amount of land affected by fires.",
+          "data_sources": [
+            "annual_aqi_by_county_2024.csv",
+            "Wildfire_Acres_by_State.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-14/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\naqi_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/annual_aqi_by_county_2024.csv')\nwildfire_acres_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Wildfire_Acres_by_State.csv')\n\n# Subtask 1: Extract the proportion of generally unsafe air quality days for each state in 2024\n# Assuming 'State' and 'AQI' columns exist in the aqi_data\naqi_data['State'] = aqi_data['State'].str.strip()  # Clean state names\naqi_data['AQI'] = pd.to_numeric(aqi_data['AQI'], errors='coerce')  # Convert AQI to numeric, coerce errors to NaN\nunsafe_days = aqi_data[aqi_data['AQI'] > 100]  # Assuming AQI > 100 is generally unsafe\n\n# Subtask 2: Extract the total acres affected by fires for each state in 2024\nwildfire_acres_data['State'] = wildfire_acres_data['State'].str.strip()  # Clean state names\nwildfire_acres_data['Acres'] = pd.to_numeric(wildfire_acres_data['Acres'], errors='coerce')  # Convert Acres to numeric, coerce errors to NaN\nwildfire_acres_2024 = wildfire_acres_data[wildfire_acres_data['Year'] == 2024]\n\n# Subtask 3: Aggregate the proportion of unsafe air quality days at the state level\nunsafe_days_proportion = unsafe_days.groupby('State').size() / aqi_data.groupby('State').size()\nunsafe_days_proportion = unsafe_days_proportion.reset_index(name='UnsafeDaysProportion')\n\n# Subtask 4: Join the aggregated air quality data with the wildfire acres data by state\nmerged_data = pd.merge(unsafe_days_proportion, wildfire_acres_2024[['State', 'Acres']], on='State', how='inner')\n\n# Subtask 5: Calculate the correlation between the proportion of unsafe air quality days and the amount of land affected by fires\ncorrelation = merged_data['UnsafeDaysProportion'].corr(merged_data['Acres']).round(2)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": unsafe_days.head().to_dict(orient='records'),\n        \"subtask-2\": wildfire_acres_2024.head().to_dict(orient='records'),\n        \"subtask-3\": unsafe_days_proportion.head().to_dict(orient='records'),\n        \"subtask-4\": merged_data.head().to_dict(orient='records'),\n        \"main-task\": correlation\n    }, indent=4)\n)",
+    "runtime": 24.78237771987915
+  },
+  {
+    "task_id": "wildfire-easy-15",
+    "model_output": {
+      "id": "main-task",
+      "query": "According to NOAA, in Julies, are the size of a fire and the median wind speed in the area strongly correlated? The answer should be Yes or No.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "noaa_wildfires_monthly_stats.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the relevant data from noaa_wildfires.csv and noaa_wildfires_monthly_stats.csv.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data to include only records from July.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the correlation between the size of a fire and the median wind speed in July.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-easy-15/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Step 1: Load and clean the relevant data from noaa_wildfires.csv and noaa_wildfires_monthly_stats.csv\ntry:\n    noaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\n    noaa_wildfires_monthly_stats = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires_monthly_stats.csv')\nexcept Exception as e:\n    print(f\"Error loading data: {e}\")\n    noaa_wildfires = pd.DataFrame()\n    noaa_wildfires_monthly_stats = pd.DataFrame()\n\n# Clean data: Convert date columns to datetime and ensure numeric types for relevant columns\nnoaa_wildfires['DISCOVERY_DATE'] = pd.to_datetime(noaa_wildfires['DISCOVERY_DATE'], errors='coerce')\nnoaa_wildfires['FIRE_SIZE'] = pd.to_numeric(noaa_wildfires['FIRE_SIZE'], errors='coerce')\n\nnoaa_wildfires_monthly_stats['DATE'] = pd.to_datetime(noaa_wildfires_monthly_stats['DATE'], errors='coerce')\nnoaa_wildfires_monthly_stats['MEDIAN_WIND_SPEED'] = pd.to_numeric(noaa_wildfires_monthly_stats['MEDIAN_WIND_SPEED'], errors='coerce')\n\n# Step 2: Filter the data to include only records from July\njuly_wildfires = noaa_wildfires[noaa_wildfires['DISCOVERY_DATE'].dt.month == 7]\njuly_wind_stats = noaa_wildfires_monthly_stats[noaa_wildfires_monthly_stats['DATE'].dt.month == 7]\n\n# Step 3: Calculate the correlation between the size of a fire and the median wind speed in July\n# We need to merge the two datasets on a common key, which might be the date or a location identifier\n# For simplicity, let's assume we can merge on the date (year and month) and calculate the correlation\njuly_wildfires['YEAR_MONTH'] = july_wildfires['DISCOVERY_DATE'].dt.to_period('M')\njuly_wind_stats['YEAR_MONTH'] = july_wind_stats['DATE'].dt.to_period('M')\n\nmerged_data = pd.merge(july_wildfires, july_wind_stats, on='YEAR_MONTH', how='inner')\n\n# Calculate the correlation\ncorrelation = merged_data['FIRE_SIZE'].corr(merged_data['MEDIAN_WIND_SPEED'])\n\n# Determine if the correlation is strong\n# A correlation coefficient close to 1 or -1 indicates a strong correlation\nstrong_correlation = abs(correlation) > 0.7\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded and cleaned.\",\n        \"subtask-2\": \"Data filtered for July.\",\n        \"subtask-3\": f\"Correlation coefficient: {correlation}, Strong correlation: {strong_correlation}\",\n        \"main-task\": \"Yes\" if strong_correlation else \"No\"\n    }, indent=4))",
+    "runtime": 21.45716428756714
+  },
+  {
+    "task_id": "wildfire-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "query": "According to NOAA, find the breakdowns of causes of fires of each geographical region for fires with known causes that start in the months of January, February, and March? Perform a chi-square statistics test. What are the chi-square statistic and p-value? Report a list of two numbers.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "nifc_geographic_areas.gpkg"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the NOAA wildfires data for the specified months and known causes.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the geographic areas data to map states to regions.",
+          "data_sources": [
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge the cleaned NOAA wildfires data with the geographic areas data.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the breakdown of causes of fires for each geographical region.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_geographic_areas.gpkg"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Perform a chi-square statistics test on the breakdown of causes of fires.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_geographic_areas.gpkg"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-16/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport geopandas as gpd\nfrom scipy.stats import chi2_contingency\n\n# Subtask 1: Load and clean the NOAA wildfires data for the specified months and known causes.\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nnoaa_wildfires['DISCOVERY_DATE'] = pd.to_datetime(noaa_wildfires['DISCOVERY_DATE'])\nnoaa_wildfires = noaa_wildfires[(noaa_wildfires['DISCOVERY_DATE'].dt.month.isin([1, 2, 3])) & (noaa_wildfires['CAUSE'].notna())]\nprint(json.dumps({\"subtask-1\": noaa_wildfires.head().to_dict()}, indent=4))\n\n# Subtask 2: Load and clean the geographic areas data to map states to regions.\ngeographic_areas = gpd.read_file('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg')\ngeographic_areas = geographic_areas[['STATE', 'REGION']]\nprint(json.dumps({\"subtask-2\": geographic_areas.head().to_dict()}, indent=4))\n\n# Subtask 3: Merge the cleaned NOAA wildfires data with the geographic areas data.\nmerged_data = pd.merge(noaa_wildfires, geographic_areas, left_on='STATE', right_on='STATE', how='left')\nprint(json.dumps({\"subtask-3\": merged_data.head().to_dict()}, indent=4))\n\n# Subtask 4: Calculate the breakdown of causes of fires for each geographical region.\ncause_breakdown = pd.crosstab(merged_data['REGION'], merged_data['CAUSE'])\nprint(json.dumps({\"subtask-4\": cause_breakdown.to_dict()}, indent=4))\n\n# Subtask 5: Perform a chi-square statistics test on the breakdown of causes of fires.\nchi2, p, dof, ex = chi2_contingency(cause_breakdown)\nprint(json.dumps({\"subtask-5\": {\"chi2\": chi2, \"p\": p}}, indent=4))\n\n# Main task: Report the chi-square statistic and p-value.\nprint(json.dumps({\"main-task\": [chi2, p]}, indent=4))",
+    "runtime": 22.561726570129395
+  },
+  {
+    "task_id": "wildfire-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average elevation (in feet) of the weather stations used for fire site monitoring in the NOAA dataset?",
+      "data_sources": [
+        "PublicView_RAWS_-3515561676727363726.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in the PublicView_RAWS_-3515561676727363726.csv file.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Check for missing values in the elevation column.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Convert the elevation data to a numeric type if necessary.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the average elevation of the weather stations.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-17/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/PublicView_RAWS_-3515561676727363726.csv'\ndata = pd.read_csv(file_path)\n\n# Subtask-1: Identify the relevant columns in the PublicView_RAWS_-3515561676727363726.csv file.\n# Assuming the relevant column for elevation is 'Elevation (feet)'\nrelevant_columns = data.columns.tolist()\nprint(json.dumps({\"subtask-1\": relevant_columns}, indent=4))\n\n# Subtask-2: Check for missing values in the elevation column.\nmissing_values = data['Elevation (feet)'].isnull().sum()\nprint(json.dumps({\"subtask-2\": missing_values}, indent=4))\n\n# Subtask-3: Convert the elevation data to a numeric type if necessary.\ndata['Elevation (feet)'] = pd.to_numeric(data['Elevation (feet)'], errors='coerce')\n\n# Subtask-4: Calculate the average elevation of the weather stations.\naverage_elevation = data['Elevation (feet)'].mean()\nprint(json.dumps({\"subtask-4\": average_elevation}, indent=4))\n\n# Final answer\nprint(json.dumps({\"main-task\": average_elevation}, indent=4))",
+    "runtime": 18.373101711273193
+  },
+  {
+    "task_id": "wildfire-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "query": "Based on the NOAA dataset, controlling for the weather, do more aggressive suppression actually contribute to fire ending faster and affecting less buildings?",
+      "data_sources": [
+        "Fire_Weather_Data_2002-2014_2016.csv",
+        "noaa_wildfires.csv",
+        "noaa_wildfires_monthly_stats.csv",
+        "nifc_wildfires.csv",
+        "cleaned_helicopter_requests_by_region.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What are the relevant columns in the NOAA dataset for weather conditions?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What are the relevant columns in the NIFC wildfires dataset for fire suppression and impact?",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "What are the relevant columns in the helicopter requests dataset for aggressive suppression?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "How can we join the datasets based on common keys?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "nifc_wildfires.csv",
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "How can we control for weather conditions in the analysis?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_monthly_stats.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "What statistical methods can be used to determine the effect of aggressive suppression on fire duration and impact?",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-18/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the NOAA wildfire data\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nnoaa_wildfires_monthly_stats = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires_monthly_stats.csv')\n\n# Load the NIFC wildfires data\nnifc_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\n\n# Load the helicopter requests data\nhelicopter_requests = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/cleaned_helicopter_requests_by_region.csv')\n\n# Subtask-1: Identify relevant columns in NOAA datasets for weather conditions\nnoaa_columns = noaa_wildfires.columns.tolist()\nnoaa_monthly_columns = noaa_wildfires_monthly_stats.columns.tolist()\nweather_columns = [col for col in noaa_columns if 'temp' in col.lower() or 'precip' in col.lower() or 'humidity' in col.lower() or 'wind' in col.lower()]\nweather_monthly_columns = [col for col in noaa_monthly_columns if 'temp' in col.lower() or 'precip' in col.lower() or 'humidity' in col.lower() or 'wind' in col.lower()]\n\n# Subtask-2: Identify relevant columns in NIFC wildfires dataset for fire suppression and impact\nnifc_columns = nifc_wildfires.columns.tolist()\nsuppression_columns = [col for col in nifc_columns if 'suppression' in col.lower() or 'cost' in col.lower()]\nimpact_columns = [col for col in nifc_columns if 'duration' in col.lower() or 'structures' in col.lower()]\n\n# Subtask-3: Identify relevant columns in helicopter requests dataset for aggressive suppression\nhelicopter_columns = helicopter_requests.columns.tolist()\naggressive_suppression_columns = [col for col in helicopter_columns if 'helicopter' in col.lower() or 'request' in col.lower()]\n\n# Subtask-4: Determine common keys for joining datasets\ncommon_keys = list(set(noaa_wildfires['FIRE_NAME']).intersection(set(nifc_wildfires['FIRE_NAME'])).intersection(set(helicopter_requests['FIRE_NAME'])))\n\n# Subtask-5: Plan for controlling weather conditions in the analysis\n# This would involve using the identified weather columns to normalize or adjust the data for weather effects\n\n# Subtask-6: Plan for statistical methods\n# This could involve regression analysis or machine learning models to control for weather and assess the impact of suppression\n\n# Print answers\nprint(json.dumps(\n    {\n        \"subtask-1\": {\n            \"noaa_columns\": noaa_columns,\n            \"noaa_monthly_columns\": noaa_monthly_columns,\n            \"weather_columns\": weather_columns,\n            \"weather_monthly_columns\": weather_monthly_columns\n        },\n        \"subtask-2\": {\n            \"nifc_columns\": nifc_columns,\n            \"suppression_columns\": suppression_columns,\n            \"impact_columns\": impact_columns\n        },\n        \"subtask-3\": {\n            \"helicopter_columns\": helicopter_columns,\n            \"aggressive_suppression_columns\": aggressive_suppression_columns\n        },\n        \"subtask-4\": {\n            \"common_keys\": common_keys\n        },\n        \"subtask-5\": \"Plan to control for weather conditions using identified weather columns\",\n        \"subtask-6\": \"Plan to use regression analysis or machine learning models to assess the impact of suppression\"\n    },\n    indent=4\n))",
+    "runtime": 23.95890974998474
+  },
+  {
+    "task_id": "wildfire-hard-19",
+    "model_output": {
+      "id": "main-task",
+      "query": "In 2016, what percentage (to 2 decimal places) of fires were brought under control with it raining moderately or heavily (>0.05 in) in the fire area on the same or a day before the control day? Assume that the narrowest diameter of the fire area is 1km. Under this assumption, if a weather station falls into the fire area, you can use the detailed weather observation from that station for that fire incident.",
+      "data_sources": [
+        "Fire_Weather_Data_2002-2014_2016.csv",
+        "nifc_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the fire data for the year 2016 from nifc_wildfires.csv.",
+          "data_sources": [
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean the weather data for the year 2016 from Fire_Weather_Data_2002-2014_2016.csv.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the weather data to include only records with precipitation > 0.05 inches.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Join the fire data with the filtered weather data to find fires that were brought under control with rain on the same or a day before the control day.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "nifc_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the percentage of fires brought under control with rain on the same or a day before the control day.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "nifc_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-19/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\nfrom datetime import datetime, timedelta\n\n# Load and clean the fire data for the year 2016 from nifc_wildfires.csv\nfire_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_wildfires.csv')\nfire_data['DISCOVERY_DATE'] = pd.to_datetime(fire_data['DISCOVERY_DATE'], errors='coerce')\nfire_data['CONT_DATE'] = pd.to_datetime(fire_data['CONT_DATE'], errors='coerce')\nfire_data_2016 = fire_data[(fire_data['DISCOVERY_DATE'].dt.year == 2016) & (fire_data['CONT_DATE'].dt.year == 2016)]\nfire_data_2016 = fire_data_2016.dropna(subset=['DISCOVERY_DATE', 'CONT_DATE', 'LATITUDE', 'LONGITUDE'])\n\n# Load and clean the weather data for the year 2016 from Fire_Weather_Data_2002-2014_2016.csv\nweather_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/Fire_Weather_Data_2002-2014_2016.csv')\nweather_data['DATE'] = pd.to_datetime(weather_data['DATE'], errors='coerce')\nweather_data_2016 = weather_data[weather_data['DATE'].dt.year == 2016]\nweather_data_2016 = weather_data_2016.dropna(subset=['DATE', 'LATITUDE', 'LONGITUDE', 'PRCP'])\n\n# Filter the weather data to include only records with precipitation > 0.05 inches\nweather_data_2016_rainy = weather_data_2016[weather_data_2016['PRCP'] > 0.05]\n\n# Join the fire data with the filtered weather data to find fires that were brought under control with rain on the same or a day before the control day\ndef is_within_radius(lat1, lon1, lat2, lon2, radius_km=0.5):  # 0.5 km radius for 1km diameter circle\n    from math import radians, sin, cos, acos\n    R = 6371  # Earth radius in kilometers\n    phi1, phi2 = map(radians, [lat1, lat2])\n    dphi = radians(lat2 - lat1)\n    dlambda = radians(lon2 - lon1)\n    a = sin(dphi/2)**2 + cos(phi1) * cos(phi2) * sin(dlambda/2)**2\n    return 2 * R * acos(min(1, cos(dphi) * cos(dlambda) + 2 * a - 1)) <= radius_km\n\nfires_with_rain = []\nfor index, fire in fire_data_2016.iterrows():\n    fire_control_date = fire['CONT_DATE']\n    fire_location = (fire['LATITUDE'], fire['LONGITUDE'])\n    for _, weather in weather_data_2016_rainy.iterrows():\n        weather_date = weather['DATE']\n        weather_location = (weather['LATITUDE'], weather['LONGITUDE'])\n        if weather_date in [fire_control_date, fire_control_date - timedelta(days=1)] and is_within_radius(*fire_location, *weather_location):\n            fires_with_rain.append(index)\n            break\n\n# Calculate the percentage of fires brought under control with rain on the same or a day before the control day\ntotal_fires_2016 = len(fire_data_2016)\nfires_with_rain_count = len(fires_with_rain)\npercentage_fires_with_rain = round((fires_with_rain_count / total_fires_2016) * 100, 2)\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Fire data for 2016 loaded and cleaned.\",\n        \"subtask-2\": \"Weather data for 2016 loaded and cleaned.\",\n        \"subtask-3\": \"Weather data filtered for precipitation > 0.05 inches.\",\n        \"subtask-4\": f\"Joined fire data with weather data, found {fires_with_rain_count} fires with rain on control day or day before.\",\n        \"main-task\": f\"Percentage of fires brought under control with rain on the same or a day before the control day: {percentage_fires_with_rain}%\"\n    }, indent=4))",
+    "runtime": 33.43913388252258
+  },
+  {
+    "task_id": "wildfire-hard-20",
+    "model_output": {
+      "id": "main-task",
+      "query": "According to NOAA, what percentage (to 2 decimal places) of wildfires account for at least 90% of residential houses damaged in 2008?",
+      "data_sources": [
+        "noaa_wildfires.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean the noaa_wildfires.csv file to ensure the data types are correct and handle missing values.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the data to include only the year 2008.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the total number of residential houses damaged in 2008.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Sort the wildfires by the number of residential houses damaged in descending order.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Determine the cumulative percentage of residential houses damaged by each wildfire.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Find the percentage of wildfires that account for at least 90% of residential houses damaged.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-20/_intermediate/errors-0.txt"
+    },
+    "code": "import pandas as pd\nimport json\n\n# Load and clean the noaa_wildfires.csv file\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\n# Convert 'FIRE_YEAR' to integer and handle missing values\nnoaa_wildfires['FIRE_YEAR'] = pd.to_numeric(noaa_wildfires['FIRE_YEAR'], errors='coerce').fillna(0).astype(int)\n# Convert 'STRUCTURES_DESTROYED' to integer and handle missing values\nnoaa_wildfires['STRUCTURES_DESTROYED'] = pd.to_numeric(noaa_wildfires['STRUCTURES_DESTROYED'], errors='coerce').fillna(0).astype(int)\n\n# Filter the data to include only the year 2008\nnoaa_wildfires_2008 = noaa_wildfires[noaa_wildfires['FIRE_YEAR'] == 2008]\n\n# Calculate the total number of residential houses damaged in 2008\ntotal_structures_destroyed = noaa_wildfires_2008['STRUCTURES_DESTROYED'].sum()\n\n# Sort the wildfires by the number of residential houses damaged in descending order\nnoaa_wildfires_2008_sorted = noaa_wildfires_2008.sort_values(by='STRUCTURES_DESTROYED', ascending=False)\n\n# Determine the cumulative percentage of residential houses damaged by each wildfire\nnoaa_wildfires_2008_sorted['Cumulative_Structures_Destroyed'] = noaa_wildfires_2008_sorted['STRUCTURES_DESTROYED'].cumsum()\nnoaa_wildfires_2008_sorted['Cumulative_Percentage'] = (noaa_wildfires_2008_sorted['Cumulative_Structures_Destroyed'] / total_structures_destroyed) * 100\n\n# Find the percentage of wildfires that account for at least 90% of residential houses damaged\nwildfires_needed = noaa_wildfires_2008_sorted[noaa_wildfires_2008_sorted['Cumulative_Percentage'] >= 90]\npercentage_of_wildfires = (len(wildfires_needed) / len(noaa_wildfires_2008_sorted)) * 100\n\n# Print the answers\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Data loaded and cleaned.\",\n        \"subtask-2\": \"Data filtered for the year 2008.\",\n        \"subtask-3\": f\"Total structures destroyed in 2008: {total_structures_destroyed}\",\n        \"subtask-4\": \"Data sorted by structures destroyed in descending order.\",\n        \"subtask-5\": \"Cumulative percentage of structures destroyed calculated.\",\n        \"subtask-6\": f\"Percentage of wildfires accounting for at least 90% of residential houses damaged: {percentage_of_wildfires:.2f}%\",\n        \"main-task\": f\"{percentage_of_wildfires:.2f}%\"\n    }, indent=4))",
+    "runtime": 27.204459190368652
+  },
+  {
+    "task_id": "wildfire-hard-21",
+    "model_output": {
+      "id": "main-task",
+      "query": "Based on NOAA data, what are the top 3 states that lost the most residential property in value between 2005 and 2010 (including 2005 and 2010)? Answer in state full names and do not discard rows with missing values unecessarily.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "state_abbreviation_to_state.json"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant columns in noaa_wildfires.csv for state, year, and residential property loss.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Convert the year column to integer type and filter the data for the years 2005 to 2010.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Aggregate the residential property loss by state for the years 2005 to 2010.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Map state abbreviations to full state names using state_abbreviation_to_state.json.",
+          "data_sources": [
+            "state_abbreviation_to_state.json"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Identify the top 3 states with the highest total residential property loss.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "state_abbreviation_to_state.json"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemQwen2_5CoderNaive/wildfire-hard-21/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data\nnoaa_wildfires = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nwith open('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/state_abbreviation_to_state.json') as f:\n    state_abbrev_to_full = json.load(f)\n\n# Subtask-1: Identify relevant columns\n# Assuming the relevant columns are 'STATE', 'FIRE_YEAR', and 'RESIDENTIAL_PROPERTY_LOSS'\n# We will check the first few rows to confirm\nprint(json.dumps({\"subtask-1\": noaa_wildfires.head().to_dict()}, indent=4))\n\n# Subtask-2: Convert year to integer and filter for 2005-2010\nnoaa_wildfires['FIRE_YEAR'] = pd.to_numeric(noaa_wildfires['FIRE_YEAR'], errors='coerce')\nfiltered_wildfires = noaa_wildfires[(noaa_wildfires['FIRE_YEAR'] >= 2005) & (noaa_wildfires['FIRE_YEAR'] <= 2010)]\nprint(json.dumps({\"subtask-2\": filtered_wildfires.head().to_dict()}, indent=4))\n\n# Subtask-3: Aggregate residential property loss by state\naggregated_loss = filtered_wildfires.groupby('STATE')['RESIDENTIAL_PROPERTY_LOSS'].sum().reset_index()\nprint(json.dumps({\"subtask-3\": aggregated_loss.head().to_dict()}, indent=4))\n\n# Subtask-4: Map state abbreviations to full state names\naggregated_loss['STATE_FULL'] = aggregated_loss['STATE'].map(state_abbrev_to_full)\nprint(json.dumps({\"subtask-4\": aggregated_loss.head().to_dict()}, indent=4))\n\n# Subtask-5: Identify top 3 states with highest residential property loss\ntop_3_states = aggregated_loss.sort_values(by='RESIDENTIAL_PROPERTY_LOSS', ascending=False).head(3)\nprint(json.dumps({\"subtask-5\": top_3_states[['STATE_FULL', 'RESIDENTIAL_PROPERTY_LOSS']].to_dict()}, indent=4))\n\n# Final answer\nanswer = top_3_states[['STATE_FULL', 'RESIDENTIAL_PROPERTY_LOSS']].to_dict(orient='records')\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+    "runtime": 26.65803289413452
+  }
+]

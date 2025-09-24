@@ -1,0 +1,582 @@
+[
+  {
+    "task_id": "biomedical-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 91.9998767375946
+      },
+      {
+        "task_id": "biomedical-hard-1-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.31320023536682
+      },
+      {
+        "task_id": "biomedical-hard-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 95.60583400726318
+      },
+      {
+        "task_id": "biomedical-hard-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.48697066307068
+      },
+      {
+        "task_id": "biomedical-hard-1-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 115.22384738922119
+      }
+    ],
+    "runtime": 81.68971991539001
+  },
+  {
+    "task_id": "biomedical-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-2-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 77.89982557296753
+      },
+      {
+        "task_id": "biomedical-easy-2-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.59468913078308
+      },
+      {
+        "task_id": "biomedical-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.96008920669556
+      },
+      {
+        "task_id": "biomedical-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 74.11181497573853
+      }
+    ],
+    "runtime": 54.006662368774414
+  },
+  {
+    "task_id": "biomedical-hard-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the age of the patient with the lowest APP-Z score?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Find the sheet and column name for APP-Z score in the provided Excel files.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Find the sheet and column name for patient age and patient identifier (if needed) in the provided Excel files.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "If APP-Z and age are in the same table, then extract the row with the minimum APP-Z score and get the age. Otherwise, join the tables on patient identifier and then find the row with the minimum APP-Z score and get the age.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1FewShot/biomedical-hard-3/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 93.80857253074646
+      },
+      {
+        "task_id": "biomedical-hard-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 72.10480237007141
+      },
+      {
+        "task_id": "biomedical-hard-3-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the value of the 'idx' column corresponding to the row with the minimum 'APP_Z_score'?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify which sheet contains the required columns ('idx' and 'APP_Z_score')",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc7.xlsx"
+              ],
+              "answer": "B-APM subtypes"
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load the identified sheet and clean the 'APP_Z_score' column (handle missing values, convert to numeric)",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc7.xlsx"
+              ],
+              "answer": "Cleaned 95 rows"
+            },
+            {
+              "id": "subtask-3",
+              "query": "Find the row with minimum 'APP_Z_score' and extract its 'idx' value",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc7.xlsx"
+              ],
+              "answer": "S019"
+            }
+          ],
+          "answer": "S019"
+        },
+        "code": "import json\nimport pandas as pd\n\n# Initialize results dictionary\nresults = {}\n\n# Subtask-1: Identify sheet with required columns\ndef find_target_sheet(file_path):\n    sheet_names = pd.ExcelFile(file_path).sheet_names\n    for sheet in sheet_names:\n        df_header = pd.read_excel(file_path, sheet_name=sheet, nrows=0)\n        cols = [col.lower().replace('-', '_') for col in df_header.columns]\n        if 'idx' in cols and 'app_z_score' in cols:\n            return sheet\n    return None\n\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc7.xlsx'\ntarget_sheet = find_target_sheet(file_path)\nresults[\"subtask-1\"] = target_sheet\n\nif not target_sheet:\n    results[\"main-task\"] = \"Required columns not found in any sheet\"\nelse:\n    # Subtask-2: Load and clean data\n    df = pd.read_excel(file_path, sheet_name=target_sheet)\n    \n    # Standardize column names\n    df.columns = [col.lower().replace('-', '_') for col in df.columns]\n    \n    # Clean APP_Z_score: convert to numeric, handle missing values\n    df['app_z_score'] = pd.to_numeric(df['app_z_score'], errors='coerce')\n    df_clean = df.dropna(subset=['idx', 'app_z_score'])\n    \n    # Subtask-3: Find row with min APP_Z_score\n    if df_clean.empty:\n        min_idx = \"No valid data after cleaning\"\n    else:\n        min_row = df_clean.loc[df_clean['app_z_score'].idxmin()]\n        min_idx = min_row['idx']\n    \n    results[\"subtask-2\"] = f\"Cleaned {len(df_clean)} rows\"\n    results[\"subtask-3\"] = min_idx\n    results[\"main-task\"] = min_idx\n\n# Print results in JSON format\nprint(json.dumps(results, indent=4))",
+        "runtime": 87.22363710403442
+      },
+      {
+        "task_id": "biomedical-hard-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.6606752872467
+      }
+    ],
+    "runtime": 71.34341311454773
+  },
+  {
+    "task_id": "biomedical-hard-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "What are the histological grades of tumors for which the peptide HPKPEVLGSSADGALLVSLDGLR was found?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "In which sheet and column of the provided Excel files can we find the peptide sequences and the associated sample IDs?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What are the sample IDs associated with the peptide 'HPKPEVLGSSADGALLVSLDGLR'?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "In which sheet and column of the provided Excel files can we find the tumor sample information including histological grade?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "For the sample IDs found in subtask-2, what are the histological grades?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1FewShot/biomedical-hard-4/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-4-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.7129602432251
+      },
+      {
+        "task_id": "biomedical-hard-4-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What samples are found with the peptide HPKPEVLGSSADGALLVSLDGLR?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Search for the peptide sequence 'HPKPEVLGSSADGALLVSLDGLR' in each Excel file and sheet to find the table that contains it. Then, extract the sample IDs associated with that peptide.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx",
+                "1-s2.0-S0092867420301070-mmc2.xlsx",
+                "1-s2.0-S0092867420301070-mmc3.xlsx",
+                "1-s2.0-S0092867420301070-mmc4.xlsx",
+                "1-s2.0-S0092867420301070-mmc5.xlsx",
+                "1-s2.0-S0092867420301070-mmc6.xlsx",
+                "1-s2.0-S0092867420301070-mmc7.xlsx"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1FewShot/biomedical-hard-4-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 81.15606880187988
+      },
+      {
+        "task_id": "biomedical-hard-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 146.9726164340973
+      }
+    ],
+    "runtime": 77.98110771179199
+  },
+  {
+    "task_id": "biomedical-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-5-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.51326417922974
+      },
+      {
+        "task_id": "biomedical-hard-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.99092483520508
+      },
+      {
+        "task_id": "biomedical-hard-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.01837229728699
+      },
+      {
+        "task_id": "biomedical-hard-5-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.25049567222595
+      },
+      {
+        "task_id": "biomedical-hard-5-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.716739654541016
+      }
+    ],
+    "runtime": 43.77641797065735
+  },
+  {
+    "task_id": "biomedical-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.12474298477173
+      },
+      {
+        "task_id": "biomedical-easy-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.09035801887512
+      },
+      {
+        "task_id": "biomedical-easy-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.03598117828369
+      },
+      {
+        "task_id": "biomedical-easy-6-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.20379972457886
+      }
+    ],
+    "runtime": 40.25762486457825
+  },
+  {
+    "task_id": "biomedical-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-7-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 96.95557284355164
+      },
+      {
+        "task_id": "biomedical-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.04514193534851
+      },
+      {
+        "task_id": "biomedical-hard-7-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.569093704223633
+      }
+    ],
+    "runtime": 37.58161664009094
+  },
+  {
+    "task_id": "biomedical-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.52114748954773
+      },
+      {
+        "task_id": "biomedical-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.64429807662964
+      },
+      {
+        "task_id": "biomedical-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "What proteins sites are hyperactivated in the endometrioid samples which are CNV-high?",
+          "data_sources": [
+            "hyperactivated.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the unique hyperactivated proteins in the endometrioid CNV-high samples?",
+              "data_sources": [
+                "hyperactivated.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1FewShot/biomedical-hard-8-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 138.28260684013367
+      },
+      {
+        "task_id": "biomedical-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.26252102851868
+      }
+    ],
+    "runtime": 56.19826579093933
+  },
+  {
+    "task_id": "biomedical-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-9-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.11434769630432
+      },
+      {
+        "task_id": "biomedical-easy-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.34268641471863
+      },
+      {
+        "task_id": "biomedical-easy-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.08423614501953
+      },
+      {
+        "task_id": "biomedical-easy-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.64843964576721
+      },
+      {
+        "task_id": "biomedical-easy-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.57762289047241
+      },
+      {
+        "task_id": "biomedical-easy-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.50906252861023
+      }
+    ],
+    "runtime": 42.39192032814026
+  }
+]

@@ -1,0 +1,620 @@
+[
+  {
+    "task_id": "biomedical-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 98.42090511322021
+      },
+      {
+        "task_id": "biomedical-hard-1-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which cases id correspond to tumor samples in the study?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the sheet in the Excel file that contains sample metadata (including sample type and study inclusion status).",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "In the identified sheet, find the column names for: Case ID (or Sample ID), Sample Type, and Study inclusion status (if available).",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Filter the samples to include only tumor samples that are in the study (if study inclusion status is available, otherwise assume all are in the study) and extract the list of case IDs.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/biomedical-hard-1-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 75.18693661689758
+      },
+      {
+        "task_id": "biomedical-hard-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.08346128463745
+      },
+      {
+        "task_id": "biomedical-hard-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 97.81890869140625
+      },
+      {
+        "task_id": "biomedical-hard-1-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 103.57607173919678
+      }
+    ],
+    "runtime": 81.04051232337952
+  },
+  {
+    "task_id": "biomedical-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-2-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 95.52918744087219
+      },
+      {
+        "task_id": "biomedical-easy-2-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.88667154312134
+      },
+      {
+        "task_id": "biomedical-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.178810119628906
+      },
+      {
+        "task_id": "biomedical-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.88313317298889
+      }
+    ],
+    "runtime": 68.65779328346252
+  },
+  {
+    "task_id": "biomedical-hard-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the age of the patient with the lowest APP-Z score?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "In the file '1-s2.0-S0092867420301070-mmc7.xlsx', sheet 'sheet2', identify the column for APP-Z score and the patient identifier. Also, check if there is a column for age.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "If age is not found in subtask-1, then in the file '1-s2.0-S0092867420301070-mmc1.xlsx', find a sheet that contains patient age and a patient identifier that can be linked to the identifier in mmc7.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Join the data from mmc7 (with APP-Z) and the data with age (from either mmc7 or mmc1) on the patient identifier.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "1-s2.0-S0092867420301070-mmc1.xlsx (if needed)"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Find the row with the minimum APP-Z score and extract the age.",
+          "data_sources": [
+            "Joined table from subtask-3"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/biomedical-hard-3/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.27193760871887
+      },
+      {
+        "task_id": "biomedical-hard-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.505287647247314
+      },
+      {
+        "task_id": "biomedical-hard-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 79.41605997085571
+      },
+      {
+        "task_id": "biomedical-hard-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.65307950973511
+      }
+    ],
+    "runtime": 112.61149191856384
+  },
+  {
+    "task_id": "biomedical-hard-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-4-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 89.83603596687317
+      },
+      {
+        "task_id": "biomedical-hard-4-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 70.62511825561523
+      },
+      {
+        "task_id": "biomedical-hard-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 80.97165608406067
+      }
+    ],
+    "runtime": 94.18351817131042
+  },
+  {
+    "task_id": "biomedical-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-5-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 83.74965405464172
+      },
+      {
+        "task_id": "biomedical-hard-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.518986225128174
+      },
+      {
+        "task_id": "biomedical-hard-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.8398494720459
+      },
+      {
+        "task_id": "biomedical-hard-5-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.39496088027954
+      },
+      {
+        "task_id": "biomedical-hard-5-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.36047959327698
+      }
+    ],
+    "runtime": 50.89820837974548
+  },
+  {
+    "task_id": "biomedical-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.624330282211304
+      },
+      {
+        "task_id": "biomedical-easy-6-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Keep only samples from case in the study. How many cases are included in the study?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the sheet in the Excel file that contains the sample data (with columns for case identifier and FIGO_stage).",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "In the identified sheet, check for a column indicating whether the case is in the study. If found, filter the data to keep only those in the study. Then, extract the case identifier column.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Count the distinct cases in the filtered data.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/biomedical-easy-6-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 45.54765701293945
+      },
+      {
+        "task_id": "biomedical-easy-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.81735968589783
+      },
+      {
+        "task_id": "biomedical-easy-6-4",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the most common 'FIGO' stage in samples from patients above 70?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify which sheet contains patient age and FIGO stage data",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ],
+              "answer": "Relevant sheet: 'UCEC_CPTAC3_meta_table_V2.1'"
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract age and FIGO stage columns, handling missing values and data type inconsistencies",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ],
+              "answer": "Processed 0 rows. Age column: 'path_stage_primary_tumor-pt', FIGO column: 'histologic_grade_figo'"
+            },
+            {
+              "id": "subtask-3",
+              "query": "Filter patients >70 years and find the most frequent FIGO stage",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc1.xlsx"
+              ],
+              "answer": "Most common FIGO stage: 'No data' (count: 0)"
+            }
+          ],
+          "answer": "No data"
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load Excel and identify relevant sheet\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc1.xlsx'\nxls = pd.ExcelFile(file_path)\nsheets = xls.sheet_names\n\n# Find sheet with age and FIGO columns\ntarget_sheet = None\nfor sheet in sheets:\n    df_preview = pd.read_excel(xls, sheet_name=sheet, nrows=5)\n    cols = [str(c).lower() for c in df_preview.columns]\n    if 'age' in cols and ('figo' in cols or 'figo_stage' in cols):\n        target_sheet = sheet\n        break\n\nif not target_sheet:\n    raise ValueError(\"No sheet found with both 'age' and 'FIGO' columns\")\n\n# Load full data\ndf = pd.read_excel(xls, sheet_name=target_sheet)\n\n# Clean data\n## Standardize column names (case-insensitive)\ndf.columns = df.columns.str.lower()\nage_col = [c for c in df.columns if 'age' in c][0]\nfigo_col = [c for c in df.columns if 'figo' in c][0]\n\n## Convert age to numeric, handle missing values\ndf[age_col] = pd.to_numeric(df[age_col], errors='coerce')\ndf = df.dropna(subset=[age_col])\n\n## Clean FIGO stage: convert to string and standardize\ndf[figo_col] = df[figo_col].astype(str).str.strip().str.upper()\n\n# Filter patients >70\ndf_over70 = df[df[age_col] > 70]\n\n# Find most common FIGO stage\nif not df_over70.empty:\n    figo_counts = df_over70[figo_col].value_counts()\n    most_common = figo_counts.idxmax()\n    count = figo_counts.max()\nelse:\n    most_common = \"No data\"\n    count = 0\n\n# Output results\nresults = {\n    \"subtask-1\": f\"Relevant sheet: '{target_sheet}'\",\n    \"subtask-2\": f\"Processed {len(df)} rows. Age column: '{age_col}', FIGO column: '{figo_col}'\",\n    \"subtask-3\": f\"Most common FIGO stage: '{most_common}' (count: {count})\",\n    \"main-task\": most_common\n}\n\nprint(json.dumps(results, indent=4))",
+        "runtime": 48.598387479782104
+      }
+    ],
+    "runtime": 40.1937837600708
+  },
+  {
+    "task_id": "biomedical-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-7-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 67.978590965271
+      },
+      {
+        "task_id": "biomedical-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.186874866485596
+      },
+      {
+        "task_id": "biomedical-hard-7-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.44119381904602
+      }
+    ],
+    "runtime": 47.522358655929565
+  },
+  {
+    "task_id": "biomedical-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which protein sites are found to be hyperactivated in CNV-high endometroid samples and are targeted by FDA-approved drugs?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the samples that are CNV-high and of endometrioid histology from the sample annotation table (Table S1).",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "From the hyperactivated.csv, get the hyperactivated proteins for the samples identified in subtask-1.",
+          "data_sources": [
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Identify which of these proteins are targeted by FDA-approved drugs from the drug-target table (Table S6).",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc6.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/biomedical-hard-8/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.02749514579773
+      },
+      {
+        "task_id": "biomedical-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.520973920822144
+      },
+      {
+        "task_id": "biomedical-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 254.54514908790588
+      },
+      {
+        "task_id": "biomedical-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.24396514892578
+      }
+    ],
+    "runtime": 48.4719762802124
+  },
+  {
+    "task_id": "biomedical-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "biomedical-easy-9-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.89229130744934
+      },
+      {
+        "task_id": "biomedical-easy-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.37782597541809
+      },
+      {
+        "task_id": "biomedical-easy-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.98200178146362
+      },
+      {
+        "task_id": "biomedical-easy-9-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the difference between the average false discovery rate (FDR) in CBX3 genes and the average FDR for the rest of the genes?, please answer the following question: What is the mean FDR value for CBX3?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc3.xlsx"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the sheet in the Excel file that contains gene names and FDR values.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc3.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "In the identified sheet, find the column names for gene and FDR.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc3.xlsx"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Extract the FDR values for the gene 'CBX3' and compute the mean.",
+              "data_sources": [
+                "1-s2.0-S0092867420301070-mmc3.xlsx"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/biomedical-easy-9-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 31.570188760757446
+      },
+      {
+        "task_id": "biomedical-easy-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 71.13072872161865
+      },
+      {
+        "task_id": "biomedical-easy-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.38724088668823
+      }
+    ],
+    "runtime": 48.110257148742676
+  }
+]

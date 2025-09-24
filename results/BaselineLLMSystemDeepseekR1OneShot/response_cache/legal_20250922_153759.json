@@ -1,0 +1,2235 @@
+[
+  {
+    "task_id": "legal-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 117.23968601226807
+      },
+      {
+        "task_id": "legal-hard-1-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "df = pd.read_csv(file_path, skiprows=1, header=0)   # This will skip the first row and use the next as header.",
+        "runtime": 193.5863676071167
+      },
+      {
+        "task_id": "legal-hard-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.99856376647949
+      },
+      {
+        "task_id": "legal-hard-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.514118909835815
+      },
+      {
+        "task_id": "legal-hard-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 1097.7691497802734
+      },
+      {
+        "task_id": "legal-hard-1-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 279.3090534210205
+      },
+      {
+        "task_id": "legal-hard-1-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 244.71971583366394
+      },
+      {
+        "task_id": "legal-hard-1-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 184.4943618774414
+      }
+    ],
+    "runtime": 435.75447034835815
+  },
+  {
+    "task_id": "legal-hard-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-2-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 77.78640365600586
+      },
+      {
+        "task_id": "legal-hard-2-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the expected format of the '# of Reports' column after data cleaning?",
+          "data_sources": [
+            "2024_CSN_Data_Contributors.csv",
+            "2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+            "2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv",
+            "2024_CSN_State_Fraud_Reports_and_Losses.csv",
+            "2024_CSN_State_Identity_Theft_Reports.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify common patterns in the '# of Reports' column across different files",
+              "data_sources": [
+                "2024_CSN_Data_Contributors.csv",
+                "2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv",
+                "2024_CSN_Metropolitan_Areas_Identity_Theft_Reports.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Determine necessary cleaning steps for the '# of Reports' values",
+              "data_sources": [
+                "2024_CSN_State_Fraud_Reports_and_Losses.csv",
+                "2024_CSN_State_Identity_Theft_Reports.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-hard-2-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 88.05519509315491
+      },
+      {
+        "task_id": "legal-hard-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import pandas as pd\nimport json\n\n# Read the state identity theft reports file\nfile_path = 'csn-data-book-2024-csv/CSVs/2024_CSN_State_Identity_Theft_Reports.csv'\ndf = pd.read_csv(file_path)\n\n# Check the initial shape\nprint(f\"Initial shape: {df.shape}\")\n\n# Clean the data:\n# 1. Remove rows with all NaN (if any)\ndf_cleaned = df.dropna(how='all')\n\n# 2. Clean the '# of Reports' column: remove commas and convert to integer, but note: the column might be string\n# First, check if the column is string and has commas\nif df_cleaned['# of Reports'].dtype == object:\n    df_cleaned['# of Reports'] = df_cleaned['# of Reports'].str.replace(',', '').astype(int)\n\n# Now, what is the shape?\nrows, cols = df_cleaned.shape\nprint(f\"Cleaned shape: rows={rows}, columns={cols}\")\n\n# The number of rows is `rows`",
+        "runtime": 359.37839579582214
+      },
+      {
+        "task_id": "legal-hard-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 178.77919220924377
+      },
+      {
+        "task_id": "legal-hard-2-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.02618908882141
+      },
+      {
+        "task_id": "legal-hard-2-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 205.8826084136963
+      },
+      {
+        "task_id": "legal-hard-2-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 178.7969994544983
+      },
+      {
+        "task_id": "legal-hard-2-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 270.27118825912476
+      },
+      {
+        "task_id": "legal-hard-2-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 228.792733669281
+      }
+    ],
+    "runtime": 379.1459550857544
+  },
+  {
+    "task_id": "legal-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.55601453781128
+      },
+      {
+        "task_id": "legal-easy-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.44067645072937
+      },
+      {
+        "task_id": "legal-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 182.62570238113403
+      },
+      {
+        "task_id": "legal-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.3146014213562
+      },
+      {
+        "task_id": "legal-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.15419292449951
+      },
+      {
+        "task_id": "legal-easy-3-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.465293884277344
+      }
+    ],
+    "runtime": 50.36787438392639
+  },
+  {
+    "task_id": "legal-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-4-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.0119948387146
+      },
+      {
+        "task_id": "legal-easy-4-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.47549819946289
+      },
+      {
+        "task_id": "legal-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.309263467788696
+      },
+      {
+        "task_id": "legal-easy-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.61560368537903
+      },
+      {
+        "task_id": "legal-easy-4-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.32851552963257
+      }
+    ],
+    "runtime": 97.88299536705017
+  },
+  {
+    "task_id": "legal-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-5-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the total number of money befrauded when summed over all payment methods. Give an integer number in millions of dollars., please answer the following question:\n What file is needed to answer the question about the total number of money befrauded when summed over all payment methods? \n\n",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Payment_Method.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-easy-5-1/_intermediate/errors-0.txt"
+        },
+        "code": "` and",
+        "runtime": 157.94440841674805
+      },
+      {
+        "task_id": "legal-easy-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 27.14352583885193
+      },
+      {
+        "task_id": "legal-easy-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.69663619995117
+      },
+      {
+        "task_id": "legal-easy-5-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 65.29594683647156
+      },
+      {
+        "task_id": "legal-easy-5-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.96503925323486
+      }
+    ],
+    "runtime": 247.62165999412537
+  },
+  {
+    "task_id": "legal-hard-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.88866066932678
+      },
+      {
+        "task_id": "legal-hard-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.01329398155212
+      },
+      {
+        "task_id": "legal-hard-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.91321063041687
+      },
+      {
+        "task_id": "legal-hard-6-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.20531105995178
+      },
+      {
+        "task_id": "legal-hard-6-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.18774890899658
+      },
+      {
+        "task_id": "legal-hard-6-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.223586559295654
+      }
+    ],
+    "runtime": 41.32936692237854
+  },
+  {
+    "task_id": "legal-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-7-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 97.50695967674255
+      },
+      {
+        "task_id": "legal-hard-7-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which columns are present in the loaded dataset?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Top Three Identity Theft Reports by Year",
+            "Unnamed: 1",
+            "Unnamed: 2"
+          ]
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the dataset\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Top_Three_Identity_Theft_Reports_by_Year.csv'\ndf = pd.read_csv(file_path)\n\n# Extract column names\ncolumns = df.columns.tolist()\n\n# Prepare the answer\nanswer = {\n    \"main-task\": columns\n}\n\n# Print the answer in JSON format\nprint(json.dumps(answer, indent=4))",
+        "runtime": 66.75738191604614
+      },
+      {
+        "task_id": "legal-hard-7-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 89.04123854637146
+      },
+      {
+        "task_id": "legal-hard-7-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.56602096557617
+      },
+      {
+        "task_id": "legal-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.43441915512085
+      },
+      {
+        "task_id": "legal-hard-7-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.31502676010132
+      },
+      {
+        "task_id": "legal-hard-7-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.02533459663391
+      }
+    ],
+    "runtime": 44.630719900131226
+  },
+  {
+    "task_id": "legal-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the names of the input files necessary for this question?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/Florida.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-hard-8-1/_intermediate/errors-0.txt"
+        },
+        "code": "` and",
+        "runtime": 34.41185235977173
+      },
+      {
+        "task_id": "legal-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 77.05213117599487
+      },
+      {
+        "task_id": "legal-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import pandas as pd\n\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Metropolitan_Areas_Fraud_and_Other_Reports.csv'\ndf = pd.read_csv(file_path, header=1)\ncolumn_names = df.columns.tolist()",
+        "runtime": 66.73977208137512
+      },
+      {
+        "task_id": "legal-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.119542360305786
+      },
+      {
+        "task_id": "legal-hard-8-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.32694983482361
+      },
+      {
+        "task_id": "legal-hard-8-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.74961757659912
+      },
+      {
+        "task_id": "legal-hard-8-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.928239583969116
+      }
+    ],
+    "runtime": 37.910672426223755
+  },
+  {
+    "task_id": "legal-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-9-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load 2024_CSN_Report_Count.csv, what are the column names?",
+          "data_sources": [
+            "/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Fraud, Identity Theft and Other Reports by Year",
+            "Unnamed: 1"
+          ]
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load the CSV file\nfile_path = \"/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv\"\ndf = pd.read_csv(file_path)\n\n# Extract column names\ncolumn_names = df.columns.tolist()\n\n# Output the answer\nanswer = {\n    \"main-task\": column_names\n}\nprint(json.dumps(answer, indent=4))",
+        "runtime": 46.40234375
+      },
+      {
+        "task_id": "legal-easy-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.835328340530396
+      },
+      {
+        "task_id": "legal-easy-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.64654731750488
+      },
+      {
+        "task_id": "legal-easy-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 78.5064127445221
+      },
+      {
+        "task_id": "legal-easy-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.712576150894165
+      },
+      {
+        "task_id": "legal-easy-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.37868666648865
+      }
+    ],
+    "runtime": 55.80301833152771
+  },
+  {
+    "task_id": "legal-easy-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-10-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.618011474609375
+      },
+      {
+        "task_id": "legal-easy-10-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.52638363838196
+      },
+      {
+        "task_id": "legal-easy-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.9612672328949
+      },
+      {
+        "task_id": "legal-easy-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 102.61447286605835
+      },
+      {
+        "task_id": "legal-easy-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 79.76024270057678
+      },
+      {
+        "task_id": "legal-easy-10-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.010170459747314
+      }
+    ],
+    "runtime": 44.295045375823975
+  },
+  {
+    "task_id": "legal-easy-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-11-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load the file 2024_CSN_Number_of_Reports_by_Type.csv. What are the columns?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Reports by Type",
+            "Unnamed: 1",
+            "Unnamed: 2",
+            "Unnamed: 3"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# The absolute path to the file\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\n\n# Load the CSV file without any cleaning\ndf = pd.read_csv(file_path)\n\n# The columns of the DataFrame\ncolumns = df.columns.tolist()\n\n# Since the immediate question is only about the columns, we output that.\n# We are to output the answer for the main-task (which is this immediate question) in a JSON format.\nanswer = {\n    \"main-task\": columns\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 23.317561149597168
+      },
+      {
+        "task_id": "legal-easy-11-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 136.5161747932434
+      },
+      {
+        "task_id": "legal-easy-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.580530405044556
+      },
+      {
+        "task_id": "legal-easy-11-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.96562576293945
+      },
+      {
+        "task_id": "legal-easy-11-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.80109667778015
+      },
+      {
+        "task_id": "legal-easy-11-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.917009592056274
+      }
+    ],
+    "runtime": 30.169681072235107
+  },
+  {
+    "task_id": "legal-easy-12",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-12-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.58606958389282
+      },
+      {
+        "task_id": "legal-easy-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.99224376678467
+      },
+      {
+        "task_id": "legal-easy-12-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.64935040473938
+      },
+      {
+        "task_id": "legal-easy-12-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.60644340515137
+      },
+      {
+        "task_id": "legal-easy-12-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.94363784790039
+      },
+      {
+        "task_id": "legal-easy-12-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.61688756942749
+      },
+      {
+        "task_id": "legal-easy-12-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.497642517089844
+      }
+    ],
+    "runtime": 50.03193259239197
+  },
+  {
+    "task_id": "legal-easy-13",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-13-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 56.19524669647217
+      },
+      {
+        "task_id": "legal-easy-13-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 26.26248264312744
+      },
+      {
+        "task_id": "legal-easy-13-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 62.669456005096436
+      },
+      {
+        "task_id": "legal-easy-13-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.28645992279053
+      },
+      {
+        "task_id": "legal-easy-13-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.36166715621948
+      }
+    ],
+    "runtime": 23.48031258583069
+  },
+  {
+    "task_id": "legal-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-14-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.12359929084778
+      },
+      {
+        "task_id": "legal-hard-14-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.71096682548523
+      },
+      {
+        "task_id": "legal-hard-14-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.94299125671387
+      },
+      {
+        "task_id": "legal-hard-14-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.12338376045227
+      },
+      {
+        "task_id": "legal-hard-14-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.7890510559082
+      },
+      {
+        "task_id": "legal-hard-14-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.90325117111206
+      }
+    ],
+    "runtime": 52.34237885475159
+  },
+  {
+    "task_id": "legal-hard-15",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-15-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 63.14082622528076
+      },
+      {
+        "task_id": "legal-hard-15-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.46100068092346
+      },
+      {
+        "task_id": "legal-hard-15-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.344825983047485
+      },
+      {
+        "task_id": "legal-hard-15-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.31907296180725
+      },
+      {
+        "task_id": "legal-hard-15-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.281601428985596
+      }
+    ],
+    "runtime": 48.235246658325195
+  },
+  {
+    "task_id": "legal-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-16-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.97577881813049
+      },
+      {
+        "task_id": "legal-hard-16-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "df = pd.read_csv(file_path, header=1)\n# Then extract the column \"# of Reports\"\n# Convert the column to string, remove commas, and convert to integer, but only for rows that have a non-empty and numeric value.",
+        "runtime": 42.92104721069336
+      },
+      {
+        "task_id": "legal-hard-16-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "df = pd.read_csv(filepath, header=1)",
+        "runtime": 55.93515419960022
+      },
+      {
+        "task_id": "legal-hard-16-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.59463286399841
+      },
+      {
+        "task_id": "legal-hard-16-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 68.90771770477295
+      }
+    ],
+    "runtime": 53.39197397232056
+  },
+  {
+    "task_id": "legal-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-17-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Load 2024_CSN_Report_Count.csv. What are the column names?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Number of Fraud, Identity Theft and Other Reports by Year",
+            "Unnamed: 1"
+          ]
+        },
+        "code": "import pandas as pd\nimport json\n\n# Load the data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv'\ndf = pd.read_csv(file_path)\n\n# Get the column names\ncolumn_names = df.columns.tolist()\n\n# Print the answer in JSON format\nanswer = {\"main-task\": column_names}\nprint(json.dumps(answer, indent=4))",
+        "runtime": 42.424660444259644
+      },
+      {
+        "task_id": "legal-hard-17-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.40318703651428
+      },
+      {
+        "task_id": "legal-hard-17-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.72295141220093
+      },
+      {
+        "task_id": "legal-hard-17-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.95309662818909
+      },
+      {
+        "task_id": "legal-hard-17-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.587844133377075
+      },
+      {
+        "task_id": "legal-hard-17-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Estimate the hypothetical 2007 Auto Related count by multiplying that 2024 proportion by the 2007 total reports and rounding to the nearest integer. What is this estimate?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the proportion (as a decimal) of Auto Related reports in 2024?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Categories.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the total number of reports in 2007?",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Count.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-hard-17-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.436286211013794
+      }
+    ],
+    "runtime": 39.39834547042847
+  },
+  {
+    "task_id": "legal-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-18-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.55083394050598
+      },
+      {
+        "task_id": "legal-hard-18-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.87153220176697
+      },
+      {
+        "task_id": "legal-hard-18-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.858882904052734
+      },
+      {
+        "task_id": "legal-hard-18-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 28.69109320640564
+      },
+      {
+        "task_id": "legal-hard-18-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.759700298309326
+      },
+      {
+        "task_id": "legal-hard-18-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.18847703933716
+      }
+    ],
+    "runtime": 62.31923055648804
+  },
+  {
+    "task_id": "legal-easy-19",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-19-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.06454873085022
+      },
+      {
+        "task_id": "legal-easy-19-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.48636078834534
+      },
+      {
+        "task_id": "legal-easy-19-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the numeric value associated with the attribute \"Reports with $ Loss\"?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv"
+          ],
+          "subtasks": [],
+          "answer": 987520
+        },
+        "code": "import pandas as pd\nimport json\n\n# Define the file path\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Fraud_Reports_by_Amount_Lost.csv'\n\n# Read the CSV file\ndf = pd.read_csv(file_path, header=0)\n\n# We are looking for the row where the column \"Fraud Reports by Amount Lost\" is \"Reports with $ Loss\"\n# Extract that row\nrow = df[df['Fraud Reports by Amount Lost'] == 'Reports with $ Loss']\n\n# If we found at least one row\nif not row.empty:\n    # Get the value from the column \"Unnamed: 1\"\n    value_str = row['Unnamed: 1'].iloc[0]\n    # Clean the string: remove commas and any extra spaces, then convert to integer\n    # But note: the value might be a string with commas and possibly spaces? The example is \"987,520\"\n    value = int(value_str.replace(',', '').strip())\nelse:\n    value = None\n\n# We are to output the answer for the main task\n# Since we are only doing one task, we output:\nresult = {\n    \"main-task\": value\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 40.211037158966064
+      },
+      {
+        "task_id": "legal-easy-19-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.10572814941406
+      },
+      {
+        "task_id": "legal-easy-19-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.814685106277466
+      },
+      {
+        "task_id": "legal-easy-19-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.57624912261963
+      }
+    ],
+    "runtime": 39.89742088317871
+  },
+  {
+    "task_id": "legal-easy-20",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-20-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many columns are there in 2024_CSN_Number_of_Reports_by_Type.csv",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-easy-20-1/_intermediate/errors-0.txt"
+        },
+        "code": "import pandas as pd\n\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndf = pd.read_csv(file_path, header=None)  # We read without header to get all columns\n\n# Now, the number of columns is the number of columns in the DataFrame\nnum_columns = df.shape[1]\n\n# But note: the first row (index 0) is empty? In the snippet, the first row (row0) has 4 empty strings? \n# Actually, in the snippet, the first row (index0) has 4 empty strings? The table shows:\n#   index0: ,,, -> meaning 4 columns (the first is empty, then three more empty)\n\n# So the shape[1] should be 4.\n\n# Alternatively, we can also check the maximum number of columns in any row? But the CSV is consistent.\n\n# Therefore, we can output the number of columns.\n\n# However, note: the snippet shows that when read with header (using the first row) we get 4 columns. So without header, we should get the same.\n\n# Let's do: without header, we read the entire CSV and then count the columns in the first row? But the first row might be empty. We can take the maximum over all rows.\n\n# But the CSV is well-formed? We can do:\n\n# Read the CSV without header and then get the number of columns from the first row? Actually, the first row has 4 columns (all empty). The second row has 4 columns? The second row in the snippet (index1 in the original DataFrame) would be the first row in our new read (because we skip no rows). So row0 in the new read would be the original row0 (which is empty) and row1 would be the original row1 (which has the headers: \"Year\", ...).\n\n# So we can do:\n\n# Option 1: \n#   df = pd.read_csv(file_path, header=None)\n#   num_columns = df.shape[1]\n\n# This will give the number of columns.\n\n# But note: the CSV might have a trailing comma? The snippet shows the last row (index27) has one non-empty and then three empty. So that row has 4 columns.\n\n# Therefore, we can safely use the shape.\n\nNow, the overall task is to answer the question: \"How many columns are there in 2024_CSN_Number_of_Reports_by_Type.csv\"\n\nWe don't have any subtasks because the question is straightforward.\n\nSo the JSON plan:",
+        "runtime": 40.11759305000305
+      },
+      {
+        "task_id": "legal-easy-20-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many rows of data are there in 2024_CSN_Number_of_Reports_by_Type.csv",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-easy-20-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "import pandas as pd\n\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/legal/input/csn-data-book-2024-csv/CSVs/2024_CSN_Number_of_Reports_by_Type.csv'\ndf = pd.read_csv(file_path, header=None)  # Read without header to get all rows\nnum_rows = len(df)",
+        "runtime": 25.989917993545532
+      },
+      {
+        "task_id": "legal-easy-20-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.83186173439026
+      },
+      {
+        "task_id": "legal-easy-20-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.30181646347046
+      },
+      {
+        "task_id": "legal-easy-20-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.507702112197876
+      },
+      {
+        "task_id": "legal-easy-20-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.28514742851257
+      },
+      {
+        "task_id": "legal-easy-20-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.84443259239197
+      },
+      {
+        "task_id": "legal-easy-20-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.4453501701355
+      }
+    ],
+    "runtime": 43.32903814315796
+  },
+  {
+    "task_id": "legal-easy-21",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-21-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.1922082901001
+      },
+      {
+        "task_id": "legal-easy-21-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.95119118690491
+      },
+      {
+        "task_id": "legal-easy-21-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.94982552528381
+      },
+      {
+        "task_id": "legal-easy-21-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.79194140434265
+      },
+      {
+        "task_id": "legal-easy-21-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.72409224510193
+      },
+      {
+        "task_id": "legal-easy-21-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.210259437561035
+      }
+    ],
+    "runtime": 39.22259020805359
+  },
+  {
+    "task_id": "legal-hard-22",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the proportion (round to 4 decimal places) of all reports who reported identity theft with Bank Account (Theft Type) and New Accounts (Theft Subtype)?",
+      "data_sources": [
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Type.csv",
+        "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the total number of all reports?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Report_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the number of identity theft reports with Theft Type 'Bank Account' and Theft Subtype 'New Accounts'?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Identity_Theft_Reports_by_Type.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the proportion: (subtask-2 result) / (subtask-1 result) and round to 4 decimal places.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-hard-22/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-22-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.987958669662476
+      },
+      {
+        "task_id": "legal-hard-22-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.38310146331787
+      },
+      {
+        "task_id": "legal-hard-22-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.77309441566467
+      },
+      {
+        "task_id": "legal-hard-22-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.59067940711975
+      },
+      {
+        "task_id": "legal-hard-22-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.90563416481018
+      },
+      {
+        "task_id": "legal-hard-22-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.6090292930603
+      },
+      {
+        "task_id": "legal-easy-21-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.49935722351074
+      }
+    ],
+    "runtime": 36.14937376976013
+  },
+  {
+    "task_id": "legal-hard-23",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-23-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which files contain data about state report count of all types and populations?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ]
+        },
+        "code": "import json\n\nanswer = [\n    \"csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv\",\n    \"csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv\"\n]\n\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 37.637211561203
+      },
+      {
+        "task_id": "legal-hard-23-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many subtables are in '2024_CSN_State_Rankings_Identity_Theft_Reports.csv' and '2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv' respectively?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Identity_Theft_Reports.csv",
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Rankings_Fraud_and_Other_Reports.csv"
+          ],
+          "subtasks": [],
+          "answer": {
+            "Identity Theft Reports": 1,
+            "Fraud and Other Reports": 1
+          }
+        },
+        "code": "import json\n\n# We are not going to read the files because the structure is known and the question is about the number of subtables, which we determined is 1 per file.\n# But if we were to read, we might see that there is only one table per file.\n\n# However, to be safe, we can read the files and see if there are multiple tables by checking for multiple header rows? \n# But the note says that the territories are included in the same table.\n\n# Since the problem is simple, we can just return:\n\nanswer_identity = 1\nanswer_fraud = 1\n\n# Then print the answer in the required format.\n\nresult = {\n    \"main-task\": {\n        \"Identity Theft Reports\": answer_identity,\n        \"Fraud and Other Reports\": answer_fraud\n    }\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 47.7615008354187
+      },
+      {
+        "task_id": "legal-hard-23-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.16983461380005
+      },
+      {
+        "task_id": "legal-hard-23-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.4494366645813
+      },
+      {
+        "task_id": "legal-hard-23-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.42040038108826
+      },
+      {
+        "task_id": "legal-hard-23-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.34157133102417
+      },
+      {
+        "task_id": "legal-hard-23-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.1275577545166
+      }
+    ],
+    "runtime": 42.10773801803589
+  },
+  {
+    "task_id": "legal-hard-24",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-24-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.823843240737915
+      },
+      {
+        "task_id": "legal-hard-24-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.57886528968811
+      },
+      {
+        "task_id": "legal-hard-24-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.7802631855011
+      },
+      {
+        "task_id": "legal-hard-24-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.19931721687317
+      },
+      {
+        "task_id": "legal-hard-24-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.706114530563354
+      },
+      {
+        "task_id": "legal-hard-24-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.455591440200806
+      },
+      {
+        "task_id": "legal-hard-24-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.72052073478699
+      }
+    ],
+    "runtime": 50.84367322921753
+  },
+  {
+    "task_id": "legal-easy-25",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-25-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which branch of the U.S. Military had the largest \"Median Fraud Loss\" reported by its service members in 2024?, please answer the following question:\n Which file is needed to solve the question?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ],
+          "subtasks": [],
+          "answer": "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+        },
+        "code": "import json\n\nanswer = \"csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv\"\n\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 28.293859243392944
+      },
+      {
+        "task_id": "legal-easy-25-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import pandas as pd\n\ndf = pd.read_csv('path/to/file.csv', header=None)\nrows = df.values.tolist()",
+        "runtime": 37.5047173500061
+      },
+      {
+        "task_id": "legal-easy-25-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.70346474647522
+      },
+      {
+        "task_id": "legal-easy-25-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.9006130695343
+      },
+      {
+        "task_id": "legal-easy-25-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the name of the military branch with the highest median fraud loss?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Find the row index where the first column is 'Military Branch'.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract the branch data section (from the next row until an empty row in the first column) and create a DataFrame with the header from the 'Military Branch' row.",
+              "data_sources": [
+                "csn-data-book-2024-csv/CSVs/2024_CSN_Fraud, Identity Theft, and Other Reports by Military Consumers.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Clean the 'Median Fraud Loss' column by removing non-numeric characters and converting to float.",
+              "data_sources": []
+            },
+            {
+              "id": "subtask-4",
+              "query": "Find the branch with the maximum value in the 'Median Fraud Loss' column.",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1OneShot/legal-easy-25-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 37.9846293926239
+      }
+    ],
+    "runtime": 42.992053270339966
+  },
+  {
+    "task_id": "legal-easy-26",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-26-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which file is needed to analyze report categories?",
+          "data_sources": [
+            "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+          ],
+          "subtasks": [],
+          "answer": "csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv"
+        },
+        "code": "import json\n\n# Answer: The file needed is explicitly identified from the data sources.\nanswer = \"csn-data-book-2024-csv/CSVs/2024_CSN_State_Top_Ten_Report_Categories.csv\"\n\n# Output the result in JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 38.05690670013428
+      },
+      {
+        "task_id": "legal-easy-26-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.1659939289093
+      },
+      {
+        "task_id": "legal-easy-26-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.69208788871765
+      },
+      {
+        "task_id": "legal-easy-26-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.68185496330261
+      },
+      {
+        "task_id": "legal-easy-26-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.77782368659973
+      },
+      {
+        "task_id": "legal-easy-26-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.63227128982544
+      }
+    ],
+    "runtime": 44.003480672836304
+  },
+  {
+    "task_id": "legal-easy-27",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-easy-27-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.81311368942261
+      },
+      {
+        "task_id": "legal-easy-27-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.243908405303955
+      },
+      {
+        "task_id": "legal-easy-27-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.916778326034546
+      },
+      {
+        "task_id": "legal-easy-27-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.64731764793396
+      },
+      {
+        "task_id": "legal-easy-27-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.27713346481323
+      }
+    ],
+    "runtime": 55.25040411949158
+  },
+  {
+    "task_id": "legal-hard-28",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-28-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.20135760307312
+      },
+      {
+        "task_id": "legal-hard-28-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 43.104286193847656
+      },
+      {
+        "task_id": "legal-hard-28-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.75904655456543
+      },
+      {
+        "task_id": "legal-hard-28-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.739144802093506
+      },
+      {
+        "task_id": "legal-hard-28-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.51784944534302
+      },
+      {
+        "task_id": "legal-hard-28-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.97045874595642
+      },
+      {
+        "task_id": "legal-hard-28-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.65375518798828
+      }
+    ],
+    "runtime": 38.95046901702881
+  },
+  {
+    "task_id": "legal-hard-29",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-29-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import json\n\nfile_names = ['new_england_states.csv', 'csn-data-book-2024-csv/CSVs/2024_CSN_Data_Contributors.csv', ...]  # the entire list provided\n\n# We are going to count the files that are in the two state-specific directories\nfraud_dir = 'csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data/'\nidentity_dir = 'csn-data-book-2024-csv/CSVs/State MSA Identity Theft data/'\n\nstate_specific_files = [f for f in file_names if f.startswith(fraud_dir) or f.startswith(identity_dir)]\n\ncount = len(state_specific_files)\n\n# Then the answer is count.\n\n# But note: the problem might consider that each state has two files? But we are just counting the files.\n\n# Print the answer for the main task\nprint(json.dumps({\"main-task\": count}, indent=4))",
+        "runtime": 52.287585735321045
+      },
+      {
+        "task_id": "legal-hard-29-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.008461475372314
+      },
+      {
+        "task_id": "legal-hard-29-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.43610715866089
+      },
+      {
+        "task_id": "legal-hard-29-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.72867560386658
+      },
+      {
+        "task_id": "legal-hard-29-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.10168933868408
+      },
+      {
+        "task_id": "legal-hard-29-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.8968460559845
+      },
+      {
+        "task_id": "legal-hard-29-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.328813314437866
+      }
+    ],
+    "runtime": 51.49128723144531
+  },
+  {
+    "task_id": "legal-hard-30",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "legal-hard-30-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Does there exist a metropolitan area in which the number of reports of identity theft exceeded the number of reports of fraud in 2024? Answer with Yes or No. No explanation needed., please answer the following question:\n Which folders are processed to collect data on fraud and identity theft reports? \n\n",
+          "data_sources": [
+            "Provided list of file names"
+          ],
+          "subtasks": [],
+          "answer": [
+            "csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data",
+            "csn-data-book-2024-csv/CSVs/State MSA Identity Theft data"
+          ]
+        },
+        "code": "import json\n\n# The folders are directly identifiable from the file paths\nanswer = [\n    \"csn-data-book-2024-csv/CSVs/State MSA Fraud and Other data\",\n    \"csn-data-book-2024-csv/CSVs/State MSA Identity Theft data\"\n]\n\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 49.380988359451294
+      },
+      {
+        "task_id": "legal-hard-30-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.76971244812012
+      },
+      {
+        "task_id": "legal-hard-30-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.61075448989868
+      },
+      {
+        "task_id": "legal-hard-30-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.67474126815796
+      },
+      {
+        "task_id": "legal-hard-30-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 75.73820686340332
+      },
+      {
+        "task_id": "legal-hard-30-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.85345649719238
+      }
+    ],
+    "runtime": 59.91008114814758
+  }
+]

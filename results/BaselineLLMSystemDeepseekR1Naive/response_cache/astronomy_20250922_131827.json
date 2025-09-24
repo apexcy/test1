@@ -1,0 +1,896 @@
+[
+  {
+    "task_id": "astronomy-easy-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 66.60619831085205
+      },
+      {
+        "task_id": "astronomy-easy-1-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which files contains the observed Ap for March 10-12, 2025?",
+          "data_sources": [
+            "geomag_forecast/0311geomag_forecast.txt",
+            "geomag_forecast/0312geomag_forecast.txt",
+            "geomag_forecast/0313geomag_forecast.txt"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-1-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 72.70513844490051
+      },
+      {
+        "task_id": "astronomy-easy-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.10349798202515
+      },
+      {
+        "task_id": "astronomy-easy-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 83.04268288612366
+      },
+      {
+        "task_id": "astronomy-easy-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.08207106590271
+      }
+    ],
+    "runtime": 62.881633281707764
+  },
+  {
+    "task_id": "astronomy-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "query": "Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 vs July 2018.",
+      "data_sources": [
+        "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+        "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the peak atmospheric mass density in the March 2014 file?",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "What is the peak atmospheric mass density in the July 2018 file?",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "What is the ratio of the peak density in March 2014 to that in July 2018?",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-2/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-2-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Calculate the ratio of peak atmospheric mass density experienced by Swarm A satellite during March 2014 vs July 2018., please answer the following question:\n Identify the files containing the density data for 2014 and 2018 \n\n",
+          "data_sources": [
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+            "STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          ],
+          "subtasks": [],
+          "answer": {
+            "2014": "/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv",
+            "2018": "/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv"
+          }
+        },
+        "code": "import json\n\n# Provided data sources\ndata_files = [\n    '/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu016-20140314_to_20140317.csv',\n    '/orcd/home/002/gerarvit/Kramabench/data/astronomy/input/STORM-AI/warmup/v2/Sat_Density/swarma-wu545-20180718_to_20180721.csv'\n]\n\n# Identify files by year\nfile_2014 = [f for f in data_files if '2014' in f][0]\nfile_2018 = [f for f in data_files if '2018' in f][0]\n\n# Prepare answer\nanswer = {\n    \"2014\": file_2014,\n    \"2018\": file_2018\n}\n\n# Output result\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 59.2024130821228
+      },
+      {
+        "task_id": "astronomy-easy-2-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.72501349449158
+      },
+      {
+        "task_id": "astronomy-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 101.27242922782898
+      },
+      {
+        "task_id": "astronomy-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.20138430595398
+      }
+    ],
+    "runtime": 81.2373263835907
+  },
+  {
+    "task_id": "astronomy-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-3-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the initial state file in the warmup dataset?",
+          "data_sources": [
+            "STORM-AI/warmup/v2/wu001_to_wu715-initial_states.csv"
+          ],
+          "subtasks": [],
+          "answer": "wu001_to_wu715-initial_states.csv"
+        },
+        "code": "import json\n\n# The answer to the main task is the file name of the initial state file.\nanswer = \"wu001_to_wu715-initial_states.csv\"\n\n# We are to print the answers for each step. Since we have only the main task:\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 55.85631728172302
+      },
+      {
+        "task_id": "astronomy-easy-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.802629232406616
+      },
+      {
+        "task_id": "astronomy-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.73466086387634
+      },
+      {
+        "task_id": "astronomy-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.73652195930481
+      },
+      {
+        "task_id": "astronomy-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 119.88118648529053
+      },
+      {
+        "task_id": "astronomy-easy-3-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 73.46242117881775
+      }
+    ],
+    "runtime": 57.719077587127686
+  },
+  {
+    "task_id": "astronomy-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-4-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Determine the approximate period of solar activity cycles and identify the top five years of minimum and maximum activity between 1960 and 2020 using historical yearly mean sunspot numbers. To be considered as a maximum, a peak needs to have a prominence of 20 and distance of 5. Similar rules apply for the minimum., please answer the following question:\n What is the file the contains sunspot data for 1960-2020? \n\n",
+          "data_sources": [
+            "SILSO/SN_y_tot_V2.0.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-4-1/_intermediate/errors-0.txt"
+        },
+        "code": "import json\n\n # The answer is the file name provided in the data sources\n answer = \"SILSO/SN_y_tot_V2.0.csv\"\n\n # Print the answer in the required format\n print(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 48.29365372657776
+      },
+      {
+        "task_id": "astronomy-easy-4-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the mean sunspot number for the years between 1960 and 2020, inclusive?",
+          "data_sources": [
+            "SILSO/SN_y_tot_V2.0.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and clean the data: convert columns to proper types and handle missing values.",
+              "data_sources": [
+                "SILSO/SN_y_tot_V2.0.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Filter data for years 1960\u20132020 (inclusive).",
+              "data_sources": [
+                "SILSO/SN_y_tot_V2.0.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Calculate the mean sunspot number for the filtered years.",
+              "data_sources": [
+                "SILSO/SN_y_tot_V2.0.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-4-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 41.87293863296509
+      },
+      {
+        "task_id": "astronomy-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 45.827369928359985
+      },
+      {
+        "task_id": "astronomy-easy-4-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.67680311203003
+      },
+      {
+        "task_id": "astronomy-easy-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.702702045440674
+      }
+    ],
+    "runtime": 42.28672122955322
+  },
+  {
+    "task_id": "astronomy-easy-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-5-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import json\n\n   # The answer is directly from the provided data file names\n   answer = \"TLE/48445.tle\"\n\n   # Print the answer in the required JSON format\n   print(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 45.283501625061035
+      },
+      {
+        "task_id": "astronomy-easy-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 76.6535713672638
+      },
+      {
+        "task_id": "astronomy-easy-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.02410078048706
+      },
+      {
+        "task_id": "astronomy-easy-5-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 60.57263159751892
+      }
+    ],
+    "runtime": 80.92657351493835
+  },
+  {
+    "task_id": "astronomy-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-easy-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 130.53942155838013
+      },
+      {
+        "task_id": "astronomy-easy-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.41268539428711
+      },
+      {
+        "task_id": "astronomy-easy-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 97.96417880058289
+      },
+      {
+        "task_id": "astronomy-easy-6-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the start and end epoch timestamps chosen from the filtered records for analysis?",
+          "data_sources": [
+            "space-track/58214_storm.csv",
+            "space-track/58214_quiet.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-quiet",
+              "query": "What are the start and end epoch timestamps for the quiet period (May 1-4, 2024) from the file 58214_quiet.csv?",
+              "data_sources": [
+                "space-track/58214_quiet.csv"
+              ]
+            },
+            {
+              "id": "subtask-storm",
+              "query": "What are the start and end epoch timestamps for the storm period (May 10-13, 2024) from the file 58214_storm.csv?",
+              "data_sources": [
+                "space-track/58214_storm.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-6-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 67.98084712028503
+      },
+      {
+        "task_id": "astronomy-easy-6-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the semi-major axis (in km) of the satellite at the beginning and end of the chosen storm and quiet periods?",
+          "data_sources": [
+            "space-track/58214_storm.csv",
+            "space-track/58214_quiet.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "For the quiet period (May 1-4, 2024), what is the semi-major axis at the beginning and end?",
+              "data_sources": [
+                "space-track/58214_quiet.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "For the storm period (May 10-13, 2024), what is the semi-major axis at the beginning and end?",
+              "data_sources": [
+                "space-track/58214_storm.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-easy-6-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 49.423992395401
+      },
+      {
+        "task_id": "astronomy-easy-6-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.27314591407776
+      }
+    ],
+    "runtime": 57.03724980354309
+  },
+  {
+    "task_id": "astronomy-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-7-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Train a density prediction model using OMNI2 variables (f10.7_index, Kp_index, Dst_index_nT) and GOES variables (xrsb_flux_observed, xrsa_flux_observed) to forecast Swarm Alpha's atmospheric density 4 hours ahead. Specifically, use a 16-hour context window to project the input time series forward using a VAR(1) model, then fit a linear regression model to predict the next 4 hours of density. Use data from wu334 (OMNI/GOES: 2016-10-22 to 2016-10-23; Density: 2016-10-23 to 2016-10-24) for training, and wu335 (OMNI/GOES: 2016-10-25 to 2016-10-26; Density: 2016-10-29) for evaluation. Assume that all windows contain valid data. Note that the data for training VAR lies at the end of the OMNI2 and GOES input window, and the corresponding Swarm Alpha density data begins immediately afterward; i.e., they only overlap at a single timestamp where OMNI/GOES ends and Density begins. Report the RMSE between the predicted and observed density values over the 4-hour forecast window., please answer the following question:\n What are the files containing relevant OMNI2 and GOES variables used to forecast Swarm Alpha's atmospheric density? \n\n",
+          "data_sources": [
+            "STORM-AI/warmup/v2/OMNI2/omni2-wu334-20160824_to_20161023.csv",
+            "STORM-AI/warmup/v2/OMNI2/omni2-wu335-20160827_to_20161026.csv",
+            "STORM-AI/warmup/v2/GOES/goes-wu334-20160824_to_20161023.csv",
+            "STORM-AI/warmup/v2/GOES/goes-wu335-20160827_to_20161026.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "STORM-AI/warmup/v2/OMNI2/omni2-wu334-20160824_to_20161023.csv",
+            "STORM-AI/warmup/v2/OMNI2/omni2-wu335-20160827_to_20161026.csv",
+            "STORM-AI/warmup/v2/GOES/goes-wu334-20160824_to_20161023.csv",
+            "STORM-AI/warmup/v2/GOES/goes-wu335-20160827_to_20161026.csv"
+          ]
+        },
+        "code": "import json\n\nanswer = {\n    \"main-task\": [\n        \"STORM-AI/warmup/v2/OMNI2/omni2-wu334-20160824_to_20161023.csv\",\n        \"STORM-AI/warmup/v2/OMNI2/omni2-wu335-20160827_to_20161026.csv\",\n        \"STORM-AI/warmup/v2/GOES/goes-wu334-20160824_to_20161023.csv\",\n        \"STORM-AI/warmup/v2/GOES/goes-wu335-20160827_to_20161026.csv\"\n    ]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 168.86788320541382
+      },
+      {
+        "task_id": "astronomy-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.1457953453064
+      },
+      {
+        "task_id": "astronomy-hard-7-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Train a density prediction model using OMNI2 variables (f10.7_index, Kp_index, Dst_index_nT) and GOES variables (xrsb_flux_observed, xrsa_flux_observed) to forecast Swarm Alpha's atmospheric density 4 hours ahead. Specifically, use a 16-hour context window to project the input time series forward using a VAR(1) model, then fit a linear regression model to predict the next 4 hours of density. Use data from wu334 (OMNI/GOES: 2016-10-22 to 2016-10-23; Density: 2016-10-23 to 2016-10-24) for training, and wu335 (OMNI/GOES: 2016-10-25 to 2016-10-26; Density: 2016-10-29) for evaluation. Assume that all windows contain valid data. Note that the data for training VAR lies at the end of the OMNI2 and GOES input window, and the corresponding Swarm Alpha density data begins immediately afterward; i.e., they only overlap at a single timestamp where OMNI/GOES ends and Density begins. Report the RMSE between the predicted and observed density values over the 4-hour forecast window., please answer the following question:\n What are the required columns from the GOES data? \n\n",
+          "data_sources": [],
+          "subtasks": [],
+          "answer": [
+            "xrsb_flux_observed",
+            "xrsa_flux_observed"
+          ]
+        },
+        "code": "import json\n\n# The required columns from the GOES data are given in the problem statement.\nanswer = [\"xrsb_flux_observed\", \"xrsa_flux_observed\"]\n\n# Since there are no subtasks, we only print the main task answer.\nresult = {\n    \"main-task\": answer\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 31.989062786102295
+      },
+      {
+        "task_id": "astronomy-hard-7-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.64593863487244
+      },
+      {
+        "task_id": "astronomy-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 138.65302300453186
+      },
+      {
+        "task_id": "astronomy-hard-7-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 111.15282201766968
+      },
+      {
+        "task_id": "astronomy-hard-7-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 85.90412592887878
+      }
+    ],
+    "runtime": 51.66242456436157
+  },
+  {
+    "task_id": "astronomy-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-8-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.82371258735657
+      },
+      {
+        "task_id": "astronomy-hard-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.3302903175354
+      },
+      {
+        "task_id": "astronomy-hard-8-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 58.88771915435791
+      },
+      {
+        "task_id": "astronomy-hard-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 106.23522353172302
+      },
+      {
+        "task_id": "astronomy-hard-8-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.56784677505493
+      },
+      {
+        "task_id": "astronomy-hard-8-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.461061000823975
+      },
+      {
+        "task_id": "astronomy-hard-8-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.07892632484436
+      },
+      {
+        "task_id": "astronomy-hard-8-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 111.30071139335632
+      }
+    ],
+    "runtime": 51.704031467437744
+  },
+  {
+    "task_id": "astronomy-hard-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-9-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.93731212615967
+      },
+      {
+        "task_id": "astronomy-hard-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.45826077461243
+      },
+      {
+        "task_id": "astronomy-hard-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.260342597961426
+      },
+      {
+        "task_id": "astronomy-hard-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.59319496154785
+      },
+      {
+        "task_id": "astronomy-hard-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 76.42227387428284
+      },
+      {
+        "task_id": "astronomy-hard-9-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 92.03878378868103
+      },
+      {
+        "task_id": "astronomy-hard-9-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.93408966064453
+      }
+    ],
+    "runtime": 76.0242018699646
+  },
+  {
+    "task_id": "astronomy-hard-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-10-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 169.2332046031952
+      },
+      {
+        "task_id": "astronomy-hard-10-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.40475082397461
+      },
+      {
+        "task_id": "astronomy-hard-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.25021171569824
+      },
+      {
+        "task_id": "astronomy-hard-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.84812617301941
+      },
+      {
+        "task_id": "astronomy-hard-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.36946511268616
+      },
+      {
+        "task_id": "astronomy-hard-10-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 55.66391062736511
+      },
+      {
+        "task_id": "astronomy-hard-10-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.117902517318726
+      }
+    ],
+    "runtime": 115.8296070098877
+  },
+  {
+    "task_id": "astronomy-hard-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-11-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 72.04110193252563
+      },
+      {
+        "task_id": "astronomy-hard-11-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the timezones  is the timezone associated with the index created from the OMNI-2 dataframe?",
+          "data_sources": [
+            "omni2_low_res/omni2_2024.dat",
+            "omni2_low_res/omni2_2023.dat"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/astronomy-hard-11-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 42.75072693824768
+      },
+      {
+        "task_id": "astronomy-hard-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 79.14277720451355
+      },
+      {
+        "task_id": "astronomy-hard-11-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.52394962310791
+      },
+      {
+        "task_id": "astronomy-hard-11-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 54.29950523376465
+      }
+    ],
+    "runtime": 47.56212615966797
+  },
+  {
+    "task_id": "astronomy-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "astronomy-hard-12-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 114.24756622314453
+      },
+      {
+        "task_id": "astronomy-hard-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 184.83334732055664
+      },
+      {
+        "task_id": "astronomy-hard-12-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.02965688705444
+      },
+      {
+        "task_id": "astronomy-hard-12-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 61.575230836868286
+      }
+    ],
+    "runtime": 48.468268156051636
+  }
+]

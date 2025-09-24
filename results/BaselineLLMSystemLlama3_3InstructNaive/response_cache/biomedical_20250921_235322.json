@@ -1,0 +1,584 @@
+[
+  {
+    "task_id": "biomedical-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the correlation between the abundance of the protein PLK1 and the abundance of CHEK2-S163 in tumor samples? Exclude samples not in the study and with missing values. Round the result to 4 decimal places.",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from the given files and handle missing values.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter out samples not in the study.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the correlation between PLK1 and CHEK2-S163.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-1/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nfrom pathlib import Path\n\n# Define the data sources\ndata_sources = [\n    '1-s2.0-S0092867420301070-mmc1.xlsx',\n    '1-s2.0-S0092867420301070-mmc2.xlsx',\n    '1-s2.0-S0092867420301070-mmc3.xlsx',\n    '1-s2.0-S0092867420301070-mmc4.xlsx',\n    '1-s2.0-S0092867420301070-mmc5.xlsx',\n    '1-s2.0-S0092867420301070-mmc6.xlsx',\n    '1-s2.0-S0092867420301070-mmc7.xlsx',\n    'hyperactivated.csv'\n]\n\n# Load the data from the given files and handle missing values\ndef load_data(data_sources):\n    data = []\n    for file in data_sources:\n        if file.endswith('.xlsx'):\n            df = pd.read_excel(file)\n        else:\n            df = pd.read_csv(file)\n        data.append(df)\n    return data\n\ndata = load_data(data_sources)\n\n# Filter out samples not in the study\ndef filter_samples(data):\n    filtered_data = []\n    for df in data:\n        # Assuming there's a column named 'study' to filter samples\n        filtered_df = df[df['study'] == 'in_study']\n        filtered_data.append(filtered_df)\n    return filtered_data\n\nfiltered_data = filter_samples(data)\n\n# Calculate the correlation between PLK1 and CHEK2-S163\ndef calculate_correlation(filtered_data):\n    correlations = []\n    for df in filtered_data:\n        # Assuming PLK1 and CHEK2-S163 are columns in the dataframe\n        correlation = df['PLK1'].corr(df['CHEK2-S163'])\n        correlations.append(correlation)\n    return correlations\n\ncorrelations = calculate_correlation(filtered_data)\n\n# Round the result to 4 decimal places\nrounded_correlations = [round(correlation, 4) for correlation in correlations]\n\n# Print the answers\nprint(json.dumps({\n    \"subtask-1\": \"Data loaded successfully\",\n    \"subtask-2\": \"Samples filtered successfully\",\n    \"subtask-3\": \"Correlation calculated successfully\",\n    \"main-task\": rounded_correlations\n}, indent=4))",
+    "runtime": 45.837090730667114
+  },
+  {
+    "task_id": "biomedical-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average age of patients with serous tumor samples analyzed in the study?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data files that contain information about patient age and tumor type",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the patient age and tumor type data from the relevant files",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data to include only patients with serous tumor samples",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate the average age of the patients with serous tumor samples",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-easy-2/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data files\nfile_paths = [\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc1.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc2.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc3.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc4.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc5.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc6.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc7.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/hyperactivated.csv'\n]\n\n# Initialize empty lists to store the data\npatient_ages = []\ntumor_types = []\n\n# Iterate over the file paths\nfor file_path in file_paths:\n    # Check if the file is an Excel file\n    if file_path.endswith('.xlsx'):\n        # Load the Excel file\n        df = pd.read_excel(file_path)\n    # Check if the file is a CSV file\n    elif file_path.endswith('.csv'):\n        # Load the CSV file\n        df = pd.read_csv(file_path)\n    \n    # Check if the DataFrame contains the required columns\n    if 'age' in df.columns and 'tumor_type' in df.columns:\n        # Extract the patient age and tumor type data\n        patient_ages.extend(df['age'].tolist())\n        tumor_types.extend(df['tumor_type'].tolist())\n\n# Filter the data to include only patients with serous tumor samples\nserous_tumor_ages = [age for age, tumor_type in zip(patient_ages, tumor_types) if tumor_type == 'serous']\n\n# Calculate the average age of the patients with serous tumor samples\naverage_age = sum(serous_tumor_ages) / len(serous_tumor_ages)\n\n# Print the answer\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Relevant data files identified\",\n        \"subtask-2\": \"Patient age and tumor type data extracted\",\n        \"subtask-3\": \"Data filtered to include only patients with serous tumor samples\",\n        \"subtask-4\": \"Average age calculated\",\n        \"main-task\": average_age\n    },\n    indent=4\n))",
+    "runtime": 73.55403757095337
+  },
+  {
+    "task_id": "biomedical-hard-3",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the age of the patient with the lowest APP-Z score?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Which file contains the APP-Z score and age of the patients?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "How to handle missing values and inconsistent data types in the files?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "How to find the patient with the lowest APP-Z score and their age?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-3/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data from the files\nfiles = [\n    '1-s2.0-S0092867420301070-mmc1.xlsx',\n    '1-s2.0-S0092867420301070-mmc2.xlsx',\n    '1-s2.0-S0092867420301070-mmc3.xlsx',\n    '1-s2.0-S0092867420301070-mmc4.xlsx',\n    '1-s2.0-S0092867420301070-mmc5.xlsx',\n    '1-s2.0-S0092867420301070-mmc6.xlsx',\n    '1-s2.0-S0092867420301070-mmc7.xlsx',\n    'hyperactivated.csv'\n]\n\ndata = []\nfor file in files:\n    if file.endswith('.xlsx'):\n        df = pd.read_excel(file)\n    else:\n        df = pd.read_csv(file)\n    data.append(df)\n\n# Find the file that contains the APP-Z score and age of the patients\napp_z_score_file = None\nfor i, df in enumerate(data):\n    if 'APP-Z' in df.columns and 'age' in df.columns:\n        app_z_score_file = files[i]\n        break\n\nif app_z_score_file is None:\n    print(\"No file contains both APP-Z score and age of the patients.\")\nelse:\n    # Handle missing values and inconsistent data types in the file\n    df = data[files.index(app_z_score_file)]\n    df = df.dropna()  # Remove rows with missing values\n    df['APP-Z'] = pd.to_numeric(df['APP-Z'], errors='coerce')  # Convert APP-Z to numeric\n    df['age'] = pd.to_numeric(df['age'], errors='coerce')  # Convert age to numeric\n\n    # Find the patient with the lowest APP-Z score and their age\n    min_app_z_score = df['APP-Z'].min()\n    min_app_z_score_age = df.loc[df['APP-Z'] == min_app_z_score, 'age'].values[0]\n\n    # Print the answer\n    print(json.dumps({\n        \"subtask-1\": app_z_score_file,\n        \"subtask-2\": \"Handled missing values and inconsistent data types\",\n        \"main-task\": min_app_z_score_age\n    }, indent=4))",
+    "runtime": 32.80494928359985
+  },
+  {
+    "task_id": "biomedical-hard-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "What are the histological grades of tumors for which the peptide HPKPEVLGSSADGALLVSLDGLR was found?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data files that contain information about peptides and histological grades",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the peptide sequences and corresponding histological grades from the relevant data files",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the extracted data to find the histological grades of tumors for which the peptide HPKPEVLGSSADGALLVSLDGLR was found",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-4/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data files\ndata_files = [\n    '1-s2.0-S0092867420301070-mmc1.xlsx',\n    '1-s2.0-S0092867420301070-mmc2.xlsx',\n    '1-s2.0-S0092867420301070-mmc3.xlsx',\n    '1-s2.0-S0092867420301070-mmc4.xlsx',\n    '1-s2.0-S0092867420301070-mmc5.xlsx',\n    '1-s2.0-S0092867420301070-mmc6.xlsx',\n    '1-s2.0-S0092867420301070-mmc7.xlsx',\n    'hyperactivated.csv'\n]\n\n# Initialize an empty list to store the extracted data\nextracted_data = []\n\n# Iterate over the data files\nfor file in data_files:\n    # Check if the file is an Excel file\n    if file.endswith('.xlsx'):\n        # Load the Excel file\n        df = pd.read_excel(file)\n    # Check if the file is a CSV file\n    elif file.endswith('.csv'):\n        # Load the CSV file\n        df = pd.read_csv(file)\n    \n    # Extract the peptide sequences and corresponding histological grades\n    peptide_sequences = df['Peptide Sequence']\n    histological_grades = df['Histological Grade']\n    \n    # Iterate over the peptide sequences and histological grades\n    for peptide, grade in zip(peptide_sequences, histological_grades):\n        # Check if the peptide sequence matches the target peptide\n        if peptide == 'HPKPEVLGSSADGALLVSLDGLR':\n            # Append the histological grade to the extracted data list\n            extracted_data.append(grade)\n\n# Filter the extracted data to find the unique histological grades\nunique_grades = list(set(extracted_data))\n\n# Print the answer\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Relevant data files identified\",\n        \"subtask-2\": \"Peptide sequences and histological grades extracted\",\n        \"subtask-3\": \"Histological grades filtered\",\n        \"main-task\": unique_grades\n    },\n    indent=4\n))",
+    "runtime": 28.37808871269226
+  },
+  {
+    "task_id": "biomedical-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the median number of variants per Mbp for the serous tumor samples in the study? Round the result to 4 decimal places.",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the relevant data files that contain information about serous tumor samples.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract the number of variants per Mbp for the serous tumor samples from the relevant data files.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Calculate the median number of variants per Mbp for the serous tumor samples.",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-5/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data files\nfile_paths = [\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc1.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc2.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc3.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc4.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc5.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc6.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc7.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/hyperactivated.csv'\n]\n\n# Initialize an empty list to store the data\ndata = []\n\n# Iterate over the file paths and load the data\nfor file_path in file_paths:\n    if file_path.endswith('.xlsx'):\n        df = pd.read_excel(file_path)\n    elif file_path.endswith('.csv'):\n        df = pd.read_csv(file_path)\n    \n    # Assuming the relevant column is 'variants_per_mbp' and 'tumor_type'\n    if 'variants_per_mbp' in df.columns and 'tumor_type' in df.columns:\n        serous_tumor_data = df[df['tumor_type'] == 'serous']\n        data.extend(serous_tumor_data['variants_per_mbp'].tolist())\n\n# Calculate the median number of variants per Mbp\nmedian_variants_per_mbp = pd.Series(data).median()\n\n# Round the result to 4 decimal places\nmedian_variants_per_mbp = round(median_variants_per_mbp, 4)\n\n# Print the answer\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Relevant data files identified\",\n        \"subtask-2\": \"Number of variants per Mbp extracted\",\n        \"subtask-3\": \"Median number of variants per Mbp calculated\",\n        \"main-task\": median_variants_per_mbp\n    }, indent=4\n))",
+    "runtime": 55.31892013549805
+  },
+  {
+    "task_id": "biomedical-easy-6",
+    "model_output": {
+      "id": "main-task",
+      "query": "What the most common histology grade (i.e., FIGO_stage) of the samples taken amongst patients in the study that are above 70?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Which data file contains the patient age information?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Which data file contains the histology grade (i.e., FIGO_stage) information?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "How to merge the patient age information and histology grade information?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-easy-6/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data files\nfile_paths = [\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc1.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc2.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc3.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc4.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc5.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc6.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc7.xlsx',\n    '/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/hyperactivated.csv'\n]\n\n# Initialize variables to store the results\nage_file = None\nhistology_file = None\nmerged_data = None\n\n# Subtask 1: Find the file containing patient age information\nfor file_path in file_paths:\n    if file_path.endswith('.csv'):\n        df = pd.read_csv(file_path)\n    else:\n        df = pd.read_excel(file_path)\n    if 'age' in df.columns:\n        age_file = file_path\n        break\n\n# Subtask 2: Find the file containing histology grade information\nfor file_path in file_paths:\n    if file_path.endswith('.csv'):\n        df = pd.read_csv(file_path)\n    else:\n        df = pd.read_excel(file_path)\n    if 'FIGO_stage' in df.columns:\n        histology_file = file_path\n        break\n\n# Subtask 3: Merge the patient age information and histology grade information\nif age_file and histology_file:\n    if age_file.endswith('.csv'):\n        age_df = pd.read_csv(age_file)\n    else:\n        age_df = pd.read_excel(age_file)\n    if histology_file.endswith('.csv'):\n        histology_df = pd.read_csv(histology_file)\n    else:\n        histology_df = pd.read_excel(histology_file)\n    merged_data = pd.merge(age_df, histology_df, on='patient_id')\n\n# Main task: Find the most common histology grade amongst patients above 70\nif merged_data is not None:\n    above_70 = merged_data[merged_data['age'] > 70]\n    most_common_histology = above_70['FIGO_stage'].mode().values[0]\n    print(json.dumps({\n        \"subtask-1\": age_file,\n        \"subtask-2\": histology_file,\n        \"subtask-3\": \"Merged data\",\n        \"main-task\": most_common_histology\n    }, indent=4))\nelse:\n    print(\"No merged data available\")",
+    "runtime": 63.31078481674194
+  },
+  {
+    "task_id": "biomedical-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "query": "How many are the significant genes by acetylproteomics?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What are the significant genes in each file?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "How to combine the significant genes from each file?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-7/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load data from files\nfiles = [\n    '1-s2.0-S0092867420301070-mmc1.xlsx',\n    '1-s2.0-S0092867420301070-mmc2.xlsx',\n    '1-s2.0-S0092867420301070-mmc3.xlsx',\n    '1-s2.0-S0092867420301070-mmc4.xlsx',\n    '1-s2.0-S0092867420301070-mmc5.xlsx',\n    '1-s2.0-S0092867420301070-mmc6.xlsx',\n    '1-s2.0-S0092867420301070-mmc7.xlsx',\n    'hyperactivated.csv'\n]\n\n# Initialize a list to store significant genes from each file\nsignificant_genes = []\n\n# Subtask 1: What are the significant genes in each file?\nfor file in files:\n    if file.endswith('.xlsx'):\n        df = pd.read_excel(file)\n    else:\n        df = pd.read_csv(file)\n    \n    # Assuming significant genes are in a column named 'Gene'\n    genes = df['Gene'].tolist()\n    significant_genes.extend(genes)\n\n# Subtask 2: How to combine the significant genes from each file?\ncombined_genes = list(set(significant_genes))  # Remove duplicates\n\n# Main task: How many are the significant genes by acetylproteomics?\nanswer = len(combined_genes)\n\nprint(json.dumps(\n    {\n        \"subtask-1\": \"Significant genes extracted from each file\",\n        \"subtask-2\": \"Combined significant genes from all files\",\n        \"main-task\": answer\n    },\n    indent=4\n))",
+    "runtime": 31.39596676826477
+  },
+  {
+    "task_id": "biomedical-hard-8",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which protein sites are found to be hyperactivated in CNV-high endometroid samples and are targeted by FDA-approved drugs?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What are the protein sites found to be hyperactivated in CNV-high endometroid samples?",
+          "data_sources": [
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Which protein sites are targeted by FDA-approved drugs?",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-hard-8/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the data from the hyperactivated.csv file\nhyperactivated_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/hyperactivated.csv')\n\n# Load the data from the mmc files\nmmc_data = []\nfor i in range(1, 8):\n    file_name = f'/orcd/home/002/gerarvit/Kramabench/data/biomedical/input/1-s2.0-S0092867420301070-mmc{i}.xlsx'\n    mmc_data.append(pd.read_excel(file_name))\n\n# Answer to subtask-1: What are the protein sites found to be hyperactivated in CNV-high endometroid samples?\nsubtask_1_answer = hyperactivated_data['Protein Site'].tolist()\n\n# Answer to subtask-2: Which protein sites are targeted by FDA-approved drugs?\nsubtask_2_answer = []\nfor data in mmc_data:\n    subtask_2_answer.extend(data['Protein Site'].tolist())\n\n# Answer to main-task: Which protein sites are found to be hyperactivated in CNV-high endometroid samples and are targeted by FDA-approved drugs?\nmain_task_answer = list(set(subtask_1_answer) & set(subtask_2_answer))\n\nprint(json.dumps(\n    {\n        \"subtask-1\": subtask_1_answer, \n        \"subtask-2\": subtask_2_answer, \n        \"main-task\": main_task_answer\n    }, indent=4)\n)",
+    "runtime": 43.69264626502991
+  },
+  {
+    "task_id": "biomedical-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the difference between the average false discovery rate (FDR) in CBX3 genes and the average FDR for the rest of the genes?",
+      "data_sources": [
+        "1-s2.0-S0092867420301070-mmc1.xlsx",
+        "1-s2.0-S0092867420301070-mmc2.xlsx",
+        "1-s2.0-S0092867420301070-mmc3.xlsx",
+        "1-s2.0-S0092867420301070-mmc4.xlsx",
+        "1-s2.0-S0092867420301070-mmc5.xlsx",
+        "1-s2.0-S0092867420301070-mmc6.xlsx",
+        "1-s2.0-S0092867420301070-mmc7.xlsx",
+        "hyperactivated.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the data from the given files",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Identify the columns for gene names and FDR values",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Filter the data for CBX3 genes and calculate the average FDR",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Filter the data for the rest of the genes and calculate the average FDR",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Calculate the difference between the average FDR in CBX3 genes and the average FDR for the rest of the genes",
+          "data_sources": [
+            "1-s2.0-S0092867420301070-mmc1.xlsx",
+            "1-s2.0-S0092867420301070-mmc2.xlsx",
+            "1-s2.0-S0092867420301070-mmc3.xlsx",
+            "1-s2.0-S0092867420301070-mmc4.xlsx",
+            "1-s2.0-S0092867420301070-mmc5.xlsx",
+            "1-s2.0-S0092867420301070-mmc6.xlsx",
+            "1-s2.0-S0092867420301070-mmc7.xlsx",
+            "hyperactivated.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemLlama3_3InstructNaive/biomedical-easy-9/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "runtime": 32.34653067588806
+  }
+]

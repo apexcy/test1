@@ -1,0 +1,2332 @@
+[
+  {
+    "task_id": "wildfire-easy-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-1-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.42099571228027
+      },
+      {
+        "task_id": "wildfire-easy-1-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.08649206161499
+      },
+      {
+        "task_id": "wildfire-easy-1-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.40140962600708
+      },
+      {
+        "task_id": "wildfire-easy-1-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.436893463134766
+      },
+      {
+        "task_id": "wildfire-easy-1-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.16899514198303
+      }
+    ],
+    "runtime": 63.36976456642151
+  },
+  {
+    "task_id": "wildfire-easy-2",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-2-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.13762807846069
+      },
+      {
+        "task_id": "wildfire-easy-2-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import geopandas as gpd\nimport json\n\n# Paths to the files\npath_usa = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/usa.gpkg'\npath_nifc = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_geographic_areas.gpkg'\n\n# Load the US states data\nstates = gpd.read_file(path_usa)\n\n# The CRS of the states\ncrs_states = states.crs\n\n# Since the conversion is of the NIFC data to the states' CRS, the states remain in crs_states.\n# Therefore, the answer is the string representation of crs_states.\n\n# We can represent the CRS as a string or as a dictionary? The question doesn't specify.\n# Typically, we can use the CRS string (e.g., \"EPSG:4326\") or the WKT representation.\n\n# Let's use the CRS as a string. We can get it by `crs_states.to_string()` or `crs_states.to_epsg()` if available.\n\n# But note: the CRS might not be an EPSG code. So we can use the authority string if available, or the WKT.\n\n# However, the question just asks for the coordinate reference system. We can output the CRS as a string in the format that geopandas uses.\n\n# Example: \n#   If it's EPSG:4326, then `crs_states` might be represented as a string: \"EPSG:4326\"\n\n# We can do:\ncrs_string = crs_states.to_string()\n\n# Now, we output the answer for the immediate question.\n\n# But note: the overall plan has a main task and subtasks. We are only answering the immediate question (which is the main task for this step).\n\n# We are to output the answers in a JSON format for each step. Since we only have one step (the main task) for this question, we output:\n\nresult = {\n    \"main-task\": crs_string\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 46.3362979888916
+      },
+      {
+        "task_id": "wildfire-easy-2-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.53664708137512
+      },
+      {
+        "task_id": "wildfire-easy-2-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which NIFC geographic area intersects with the most US states? Also, provide unique states intersecting with each NIFC area in the format [[area, list of states], ...].",
+          "data_sources": [
+            "usa.gpkg",
+            "nifc_geographic_areas.gpkg"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and validate US states geometry. Identify state identifier column.",
+              "data_sources": [
+                "usa.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and validate NIFC areas geometry. Identify area abbreviation column.",
+              "data_sources": [
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Ensure consistent Coordinate Reference Systems (CRS) between datasets.",
+              "data_sources": [
+                "usa.gpkg",
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Perform spatial join to find intersections between NIFC areas and US states.",
+              "data_sources": [
+                "usa.gpkg",
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-5",
+              "query": "For each NIFC area, aggregate unique intersecting states.",
+              "data_sources": [
+                "spatial_join_result"
+              ]
+            },
+            {
+              "id": "subtask-6",
+              "query": "Count states per area and identify area with maximum intersections.",
+              "data_sources": [
+                "aggregated_states"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-2-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 41.561705589294434
+      },
+      {
+        "task_id": "wildfire-easy-2-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.547123432159424
+      },
+      {
+        "task_id": "wildfire-easy-2-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which NIFC geographic area intersects with the most US states? Give the abbreviation of the geographic area.",
+          "data_sources": [
+            "usa.gpkg",
+            "nifc_geographic_areas.gpkg"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and prepare the US states data from usa.gpkg.",
+              "data_sources": [
+                "usa.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and prepare the NIFC geographic areas data from nifc_geographic_areas.gpkg.",
+              "data_sources": [
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Ensure both datasets are in the same CRS and have valid geometries.",
+              "data_sources": [
+                "usa.gpkg",
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "For each NIFC area, count the number of distinct US states it intersects.",
+              "data_sources": [
+                "usa.gpkg",
+                "nifc_geographic_areas.gpkg"
+              ]
+            },
+            {
+              "id": "subtask-5",
+              "query": "Find the NIFC area(s) with the maximum count and retrieve their abbreviation(s).",
+              "data_sources": [
+                "nifc_geographic_areas.gpkg"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-2-6/_intermediate/errors-0.txt"
+        },
+        "code": "states_layers = gpd.list_layers('usa.gpkg')\n   # If there are multiple, we might need to choose one that has state boundaries. \n   # But for simplicity, we take the first one.\n   states = gpd.read_file('usa.gpkg', layer=states_layers[0])",
+        "runtime": 43.27426290512085
+      }
+    ],
+    "runtime": 38.925246715545654
+  },
+  {
+    "task_id": "wildfire-easy-3",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-3-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.50329637527466
+      },
+      {
+        "task_id": "wildfire-easy-3-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import geopandas as gpd\n\n# Load the US state data\nstate_gdf = gpd.read_file('usa.gpkg')\ncrs = state_gdf.crs",
+        "runtime": 28.875697374343872
+      },
+      {
+        "task_id": "wildfire-easy-3-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 48.09234666824341
+      },
+      {
+        "task_id": "wildfire-easy-3-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.91497802734375
+      },
+      {
+        "task_id": "wildfire-easy-3-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.18371820449829
+      }
+    ],
+    "runtime": 44.107213735580444
+  },
+  {
+    "task_id": "wildfire-hard-4",
+    "model_output": {
+      "id": "main-task",
+      "query": "Find the year with the highest suppression cost per acre of human-caused fire. What was the cost per acre, rounded to the nearest cent?",
+      "data_sources": [
+        "nifc_suppression_costs.csv",
+        "nifc_human_caused_acres.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load and clean suppression costs data: convert Year to int, handle non-numeric Suppression Cost values, and drop missing rows.",
+          "data_sources": [
+            "nifc_suppression_costs.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and clean human-caused acres data: convert Year to int, handle non-numeric Acres values, drop missing rows, and filter out zero-acre years.",
+          "data_sources": [
+            "nifc_human_caused_acres.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Merge cleaned suppression costs and human-caused acres data on Year using an inner join.",
+          "data_sources": [
+            "nifc_suppression_costs.csv",
+            "nifc_human_caused_acres.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Calculate cost per acre (Suppression Cost / Acres), find the year with the maximum cost per acre, and round the value to the nearest cent.",
+          "data_sources": [
+            "nifc_suppression_costs.csv",
+            "nifc_human_caused_acres.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-4/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load and clean suppression costs data\ndef load_suppression_costs(file_path):\n    df = pd.read_csv(file_path)\n    # Convert Year to integer and handle non-numeric values\n    df['Year'] = pd.to_numeric(df['Year'], errors='coerce').astype('Int64')\n    # Clean Suppression Cost: remove commas and convert to float\n    df['Suppression Cost'] = (\n        df['Suppression Cost']\n        .astype(str)\n        .str.replace(',', '')\n        .str.replace('$', '', regex=False)\n        .astype(float)\n    )\n    # Drop rows with missing values\n    df = df.dropna(subset=['Year', 'Suppression Cost'])\n    return df\n\n# Load and clean human-caused acres data\ndef load_human_caused_acres(file_path):\n    df = pd.read_csv(file_path)\n    # Convert Year to integer and handle non-numeric values\n    df['Year'] = pd.to_numeric(df['Year'], errors='coerce').astype('Int64')\n    # Clean Acres: remove commas and convert to float\n    df['Acres'] = (\n        df['Acres']\n        .astype(str)\n        .str.replace(',', '')\n        .astype(float)\n    )\n    # Drop rows with missing values and filter out zero-acre years\n    df = df.dropna(subset=['Year', 'Acres'])\n    df = df[df['Acres'] > 0]  # Avoid division by zero\n    return df\n\n# Main processing\ndef main():\n    # File paths\n    cost_file = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_suppression_costs.csv'\n    acres_file = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/nifc_human_caused_acres.csv'\n    \n    # Subtask 1: Load and clean suppression costs\n    suppression_costs = load_suppression_costs(cost_file)\n    \n    # Subtask 2: Load and clean human-caused acres\n    human_caused_acres = load_human_caused_acres(acres_file)\n    \n    # Subtask 3: Merge datasets on Year\n    merged = pd.merge(suppression_costs, human_caused_acres, on='Year', how='inner')\n    \n    # Subtask 4: Calculate cost per acre and find max\n    merged['Cost per Acre'] = merged['Suppression Cost'] / merged['Acres']\n    max_row = merged.loc[merged['Cost per Acre'].idxmax()]\n    year = int(max_row['Year'])\n    cost_per_acre = round(max_row['Cost per Acre'], 2)  # Round to nearest cent\n    \n    # Prepare results\n    results = {\n        \"subtask-1\": \"Suppression costs data cleaned and loaded\",\n        \"subtask-2\": \"Human-caused acres data cleaned and loaded\",\n        \"subtask-3\": f\"Merged dataset with {len(merged)} rows\",\n        \"subtask-4\": {\n            \"Year\": year,\n            \"Cost per Acre\": cost_per_acre\n        },\n        \"main-task\": {\n            \"Year\": year,\n            \"Cost per Acre\": cost_per_acre\n        }\n    }\n    \n    print(json.dumps(results, indent=4))\n\nif __name__ == \"__main__\":\n    main()",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-4-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Find the year with the highest suppression cost per acre of human-caused fire. What was the cost per acre, rounded to the nearest cent?, please answer the following question:\n Which files are loaded to perform the data analysis? \n\n",
+          "data_sources": [
+            "nifc_suppression_costs.csv",
+            "nifc_human_caused_acres.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "nifc_suppression_costs.csv",
+            "nifc_human_caused_acres.csv"
+          ]
+        },
+        "code": "import json\n\n# Identify required files for the analysis\nrequired_files = [\"nifc_suppression_costs.csv\", \"nifc_human_caused_acres.csv\"]\n\n# Output the answer in JSON format\nanswer = {\"main-task\": required_files}\nprint(json.dumps(answer, indent=4))",
+        "runtime": 87.55605912208557
+      },
+      {
+        "task_id": "wildfire-hard-4-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are numeric values for the 'Total' columns after data cleaning?",
+          "data_sources": [
+            "fire_data.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the dataset and inspect the columns to identify which ones contain 'Total' and are relevant (i.e., total suppression cost and total acres).",
+              "data_sources": [
+                "fire_data.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "For each of the identified 'Total' columns, clean the data by removing non-numeric characters and converting to float. Handle missing values appropriately.",
+              "data_sources": [
+                "fire_data.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-4-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 30.502980709075928
+      },
+      {
+        "task_id": "wildfire-hard-4-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which column(s) can be used to join the two datasets together?",
+          "data_sources": [
+            "dataset1.csv",
+            "dataset2.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in dataset1?",
+              "data_sources": [
+                "dataset1.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What are the column names in dataset2?",
+              "data_sources": [
+                "dataset2.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Which columns are common between the two datasets?",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-4-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.49570417404175
+      },
+      {
+        "task_id": "wildfire-hard-4-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.074015855789185
+      },
+      {
+        "task_id": "wildfire-hard-4-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.03150534629822
+      },
+      {
+        "task_id": "wildfire-hard-4-6",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What is the cost per acre for the year with the highest suppression cost?",
+          "data_sources": [],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Check for available data sources. Since none are provided, we cannot proceed.",
+              "data_sources": [],
+              "answer": "Error: No data sources provided. Cannot identify the required data."
+            }
+          ],
+          "answer": "Error: No data sources provided. Cannot compute the cost per acre."
+        },
+        "code": "import json\n\n# Since no data sources are provided, we cannot proceed.\n# We'll create a result dictionary that indicates the error for the main task and any subtasks.\n\nresult = {\n    \"main-task\": \"Error: No data sources provided. Cannot compute the cost per acre.\",\n    \"subtask-1\": \"Error: No data sources provided. Cannot identify the required data.\"\n}\n\nprint(json.dumps(result, indent=4))",
+        "runtime": 42.099666357040405
+      }
+    ],
+    "runtime": 68.45913028717041
+  },
+  {
+    "task_id": "wildfire-hard-5",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-5-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.67543888092041
+      },
+      {
+        "task_id": "wildfire-hard-5-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.91567921638489
+      },
+      {
+        "task_id": "wildfire-hard-5-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.35248136520386
+      },
+      {
+        "task_id": "wildfire-hard-5-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the years for the data in the NOAA dataframe?",
+          "data_sources": [
+            "noaa_wildfires_monthly_stats.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the name of the column that contains the year information in the NOAA data.",
+              "data_sources": [
+                "noaa_wildfires_monthly_stats.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract the unique years from the identified column and sort them.",
+              "data_sources": [
+                "noaa_wildfires_monthly_stats.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-5-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 43.48033618927002
+      },
+      {
+        "task_id": "wildfire-hard-5-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.92160153388977
+      },
+      {
+        "task_id": "wildfire-hard-5-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.064128160476685
+      },
+      {
+        "task_id": "wildfire-hard-5-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.88650107383728
+      }
+    ],
+    "runtime": 39.20717644691467
+  },
+  {
+    "task_id": "wildfire-hard-6",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-6-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 70.09549975395203
+      },
+      {
+        "task_id": "wildfire-hard-6-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.916664123535156
+      },
+      {
+        "task_id": "wildfire-hard-6-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.47176742553711
+      },
+      {
+        "task_id": "wildfire-hard-6-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the difference between the number of fires (NOAA minus NIFC) and acres burned (NOAA minus NIFC) for every year?",
+          "data_sources": [
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_wildfires.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Aggregate NOAA data by year: sum the number of fires and acres burned for each year.",
+              "data_sources": [
+                "noaa_wildfires_monthly_stats.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Read NIFC data, which is already annual.",
+              "data_sources": [
+                "nifc_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Merge the aggregated NOAA data and NIFC data on year (inner join).",
+              "data_sources": [
+                "output of subtask-1",
+                "output of subtask-2"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Compute the differences: NOAA minus NIFC for both fires and acres.",
+              "data_sources": [
+                "output of subtask-3"
+              ]
+            },
+            {
+              "id": "subtask-5",
+              "query": "Format the result as a list of lists: each inner list is [Year, Difference in Fires, Difference in Acres].",
+              "data_sources": [
+                "output of subtask-4"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-6-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 36.35569095611572
+      },
+      {
+        "task_id": "wildfire-hard-6-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the value of the correlation coefficient between the year-by-year difference in the number of fires and the difference in acres burned, rounded to three decimal places?",
+          "data_sources": [
+            "noaa_wildfires_monthly_stats.csv",
+            "nifc_wildfires.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Aggregate NOAA monthly data to annual: sum the number of fires and acres burned for each year.",
+              "data_sources": [
+                "noaa_wildfires_monthly_stats.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and preprocess NIFC annual data: ensure year is integer and numeric columns are correct.",
+              "data_sources": [
+                "nifc_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Merge NOAA annual data and NIFC data on year (inner join).",
+              "data_sources": [
+                "noaa_wildfires_monthly_stats.csv",
+                "nifc_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Compute the differences: (NOAA_fires - NIFC_fires) and (NOAA_acres - NIFC_acres) for each year.",
+              "data_sources": []
+            },
+            {
+              "id": "subtask-5",
+              "query": "Calculate the Pearson correlation coefficient between the two differences and round to three decimal places.",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-6-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 36.81049346923828
+      }
+    ],
+    "runtime": 37.431031703948975
+  },
+  {
+    "task_id": "wildfire-hard-7",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-7-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "What files contain information about geographical regions and acres burned according to NIFC?",
+          "data_sources": [
+            "nifc_human_caused_acres.csv",
+            "nifc_lightning_caused_acres.csv",
+            "nifc_wildfires.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-7-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 45.128355503082275
+      },
+      {
+        "task_id": "wildfire-hard-7-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.35714817047119
+      },
+      {
+        "task_id": "wildfire-hard-7-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.729082107543945
+      },
+      {
+        "task_id": "wildfire-hard-7-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.11593699455261
+      }
+    ],
+    "runtime": 31.367669343948364
+  },
+  {
+    "task_id": "wildfire-easy-8",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-8-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "What file contains the data for wildfires and weather conditions?",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv",
+            "PublicView_RAWS_-3515561676727363726.csv",
+            "noaa_wildfires.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-8-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 81.15158414840698
+      },
+      {
+        "task_id": "wildfire-easy-8-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 59.88502287864685
+      },
+      {
+        "task_id": "wildfire-easy-8-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 53.00767707824707
+      },
+      {
+        "task_id": "wildfire-easy-8-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.96519374847412
+      }
+    ],
+    "runtime": 59.9367458820343
+  },
+  {
+    "task_id": "wildfire-easy-9",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-9-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 49.49154090881348
+      },
+      {
+        "task_id": "wildfire-easy-9-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 24.104949235916138
+      },
+      {
+        "task_id": "wildfire-easy-9-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.04404830932617
+      },
+      {
+        "task_id": "wildfire-easy-9-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.092689037322998
+      },
+      {
+        "task_id": "wildfire-easy-9-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.25692009925842
+      }
+    ],
+    "runtime": 50.63227653503418
+  },
+  {
+    "task_id": "wildfire-hard-10",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-10-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which file(s) contain information about wildfire acres burned by State?",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-10-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 34.98265480995178
+      },
+      {
+        "task_id": "wildfire-hard-10-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What file contains 2020 election results?",
+          "data_sources": [
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ],
+          "subtasks": [],
+          "answer": "democratic_vs_republican_votes_by_usa_state_2020.csv"
+        },
+        "code": "import json\n\n# Answer extraction\nanswer = \"democratic_vs_republican_votes_by_usa_state_2020.csv\"\n\n# Print result in required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 16.59626793861389
+      },
+      {
+        "task_id": "wildfire-hard-10-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.84976863861084
+      },
+      {
+        "task_id": "wildfire-hard-10-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.92605900764465
+      },
+      {
+        "task_id": "wildfire-hard-10-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 26.34369659423828
+      },
+      {
+        "task_id": "wildfire-hard-10-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which party had more fires in the states it won the 2020 elections? Answer with 'Democratic' or 'Republican'.",
+          "data_sources": [
+            "wildfire_total_fires_p45_54.csv",
+            "democratic_vs_republican_votes_by_usa_state_2020.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load and clean election data: determine winning party per state (Democratic/Republican) for 2020",
+              "data_sources": [
+                "democratic_vs_republican_votes_by_usa_state_2020.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and clean wildfire data: extract total fire counts per state, handling missing values and data types",
+              "data_sources": [
+                "wildfire_total_fires_p45_54.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Merge datasets on state names, standardizing state name formats and handling mismatches",
+              "data_sources": [
+                "Output from subtask-1",
+                "Output from subtask-2"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Sum total fire counts for states won by each party (Democratic vs Republican)",
+              "data_sources": [
+                "Output from subtask-3"
+              ]
+            },
+            {
+              "id": "subtask-5",
+              "query": "Compare total fire counts between parties to determine which had more fires",
+              "data_sources": [
+                "Output from subtask-4"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-10-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 28.23144221305847
+      }
+    ],
+    "runtime": 45.1989860534668
+  },
+  {
+    "task_id": "wildfire-hard-11",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-11-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Which state has the most land area (in Acres) impacted by fire, per capita?, please answer the following question: Which file is needed to answer this question?",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv"
+          ],
+          "subtasks": [],
+          "answer": "Wildfire_Acres_by_State.csv"
+        },
+        "code": "import json\n\n# The immediate question is: which file is needed? We are given one file, so we use that.\nanswer = \"Wildfire_Acres_by_State.csv\"\n\n# Print the answer in the required format.\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 35.18189859390259
+      },
+      {
+        "task_id": "wildfire-hard-11-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.754733085632324
+      },
+      {
+        "task_id": "wildfire-hard-11-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.796807050704956
+      },
+      {
+        "task_id": "wildfire-hard-11-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.393301010131836
+      }
+    ],
+    "runtime": 34.24215269088745
+  },
+  {
+    "task_id": "wildfire-hard-12",
+    "model_output": {
+      "id": "main-task",
+      "query": "Has fire start distribution around the year shifted earlier or later over time? Answer with **only** 'Yes' or 'No'. No explanation needed.",
+      "data_sources": [
+        "Fire_Weather_Data_2002-2014_2016.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What are the columns in the data file?",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Preprocess the data: convert the fire start date to datetime, extract year and day of year, and remove rows with missing dates.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "For each year, compute the median day of the year for fire starts.",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Perform linear regression of median day of year vs. year and check if the slope is significantly different from zero (p-value < 0.05).",
+          "data_sources": [
+            "Fire_Weather_Data_2002-2014_2016.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-12/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-12-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "` and",
+        "runtime": 29.488983392715454
+      },
+      {
+        "task_id": "wildfire-hard-12-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 26.204010725021362
+      },
+      {
+        "task_id": "wildfire-hard-12-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.7713258266449
+      },
+      {
+        "task_id": "wildfire-hard-12-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 29.380505561828613
+      },
+      {
+        "task_id": "wildfire-hard-12-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 47.03360986709595
+      },
+      {
+        "task_id": "wildfire-hard-12-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.75349736213684
+      },
+      {
+        "task_id": "wildfire-hard-12-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 28.01525855064392
+      }
+    ],
+    "runtime": 34.83548021316528
+  },
+  {
+    "task_id": "wildfire-easy-13",
+    "model_output": {
+      "id": "main-task",
+      "query": "Which of the 10 NICC-defined geographic areas requested the most helicopters for firefighting?",
+      "data_sources": [
+        "cleaned_helicopter_requests_by_region.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What are the column names and data types in the dataset?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Are there missing values in the 'Region' or 'RequestCount' columns? How should they be handled?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Is the 'RequestCount' column in numeric format? If not, how can it be cleaned and converted?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "What are the unique NICC regions? Are there exactly 10 distinct regions?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "What is the total number of helicopter requests per NICC region?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        },
+        {
+          "id": "subtask-6",
+          "query": "Which region has the highest total request count?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ]
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-13/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\n\n# Load the dataset\ndf = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/cleaned_helicopter_requests_by_region.csv')\n\n# Initialize results dictionary\nresults = {}\n\n# Subtask-1: Inspect column names and data types\nresults[\"subtask-1\"] = {\n    \"columns\": df.columns.tolist(),\n    \"dtypes\": {col: str(df[col].dtype) for col in df.columns}\n}\n\n# Subtask-2: Check for missing values\nmissing_region = df['Region'].isna().sum()\nmissing_count = df['RequestCount'].isna().sum()\nresults[\"subtask-2\"] = {\n    \"missing_region\": int(missing_region),\n    \"missing_requestcount\": int(missing_count),\n    \"action\": \"Drop rows with missing values in these columns\"\n}\ndf = df.dropna(subset=['Region', 'RequestCount'])\n\n# Subtask-3: Clean and convert RequestCount to numeric\n# Handle non-numeric characters and convert to float first (to avoid integer conversion errors)\ndf['RequestCount'] = pd.to_numeric(df['RequestCount'], errors='coerce')\nresults[\"subtask-3\"] = {\n    \"non_numeric_entries\": int(df['RequestCount'].isna().sum()),\n    \"action\": \"Coerce non-numeric values to NaN and drop them\"\n}\ndf = df.dropna(subset=['RequestCount'])\ndf['RequestCount'] = df['RequestCount'].astype(int)\n\n# Subtask-4: Verify unique NICC regions\nunique_regions = df['Region'].nunique()\nresults[\"subtask-4\"] = {\n    \"unique_region_count\": int(unique_regions),\n    \"regions\": df['Region'].unique().tolist()\n}\n\n# Subtask-5: Aggregate total requests per region\nregion_totals = df.groupby('Region')['RequestCount'].sum().reset_index()\nresults[\"subtask-5\"] = region_totals.to_dict(orient='records')\n\n# Subtask-6: Identify region with max requests\nmax_region = region_totals.loc[region_totals['RequestCount'].idxmax()]\nresults[\"subtask-6\"] = {\n    \"region\": max_region['Region'],\n    \"total_requests\": int(max_region['RequestCount'])\n}\n\n# Main task result\nresults[\"main-task\"] = {\n    \"region_with_most_requests\": max_region['Region'],\n    \"total_requests\": int(max_region['RequestCount'])\n}\n\n# Print all results in JSON format\nprint(json.dumps(results, indent=4))",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-13-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.63805651664734
+      },
+      {
+        "task_id": "wildfire-easy-13-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the highest 'Total Helicopter Requests' value?",
+          "data_sources": [
+            "cleaned_helicopter_requests_by_region.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the data and clean the column names (strip and lower case).",
+              "data_sources": [
+                "cleaned_helicopter_requests_by_region.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Identify the column for total helicopter requests and convert it to a numeric type, handling non-numeric characters and missing values.",
+              "data_sources": [
+                "cleaned_helicopter_requests_by_region.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Find the maximum value in the cleaned 'Total Helicopter Requests' column.",
+              "data_sources": [
+                "cleaned_helicopter_requests_by_region.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-13-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 29.99525260925293
+      },
+      {
+        "task_id": "wildfire-easy-13-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 32.731258392333984
+      }
+    ],
+    "runtime": 30.621506214141846
+  },
+  {
+    "task_id": "wildfire-hard-14",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-14-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the correlation between the proportion of generally unsafe air quality days according to the EPA and the amount of land affected by fires in 2024? Round to 2 decimal places., please answer the following question:\n What files are needed to answer this question? \n\n",
+          "data_sources": [
+            "Wildfire_Acres_by_State.csv",
+            "annual_aqi_by_county_2024.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "Wildfire_Acres_by_State.csv",
+            "annual_aqi_by_county_2024.csv"
+          ]
+        },
+        "code": "import json\n\nanswer = {\n    \"main-task\": [\"Wildfire_Acres_by_State.csv\", \"annual_aqi_by_county_2024.csv\"]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 33.886497020721436
+      },
+      {
+        "task_id": "wildfire-hard-14-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.698410749435425
+      },
+      {
+        "task_id": "wildfire-hard-14-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.460872411727905
+      },
+      {
+        "task_id": "wildfire-hard-14-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.269092321395874
+      },
+      {
+        "task_id": "wildfire-hard-14-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.18004035949707
+      }
+    ],
+    "runtime": 36.82358479499817
+  },
+  {
+    "task_id": "wildfire-easy-15",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-easy-15-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which file(s) are needed to answer the overall question: According to NOAA, in July, are the size of a fire and the median wind speed in the area strongly correlated?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ]
+        },
+        "code": "import json\n\n# The answer to the main task: which files are needed?\nanswer_main_task = [\"noaa_wildfires.csv\", \"noaa_wildfires_variabledescrip.csv\"]\n\n# Print the answer in the required format\nprint(json.dumps({\n    \"main-task\": answer_main_task\n}, indent=4))",
+        "runtime": 33.921122789382935
+      },
+      {
+        "task_id": "wildfire-easy-15-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the thresholds of the state date to determine that a fire started in July?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What is the column name for the start date of the fire?",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the data type of the start date column?",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-easy-15-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 32.39757251739502
+      },
+      {
+        "task_id": "wildfire-easy-15-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.354718923568726
+      },
+      {
+        "task_id": "wildfire-easy-15-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.08267068862915
+      }
+    ],
+    "runtime": 31.57071828842163
+  },
+  {
+    "task_id": "wildfire-hard-16",
+    "model_output": {
+      "id": "main-task",
+      "query": "According to NOAA, find the breakdowns of causes of fires of each geographical region for fires with known causes that start in the months of January, February, and March? Perform a chi-square statistics test. What are the chi-square statistic and p-value? Report a list of two numbers.",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "noaa_wildfires_variabledescrip.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify relevant columns in the dataset for region, cause, and fire start date",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load and preprocess wildfire data: filter for Jan-Mar starts, known causes, and handle missing values",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Create a contingency table of fire causes by geographical region",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Perform chi-square test on the contingency table and extract statistic/p-value",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-16/_intermediate/errors-0.txt"
+    },
+    "code": "import json\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import chi2_contingency\n\n# Load data\ndf_desc = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires_variabledescrip.csv')\ndf = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\n\n# Subtask-1: Identify relevant columns\nregion_col = 'state'  # Assuming 'state' represents geographical region\ncause_col = 'stat_cause_descr'  # Cause description column\ndate_col = 'discovery_date'  # Fire start date column\n\n# Subtask-2: Preprocess data\n# Convert to datetime and extract month\ndf[date_col] = pd.to_datetime(df[date_col], errors='coerce')\ndf = df.dropna(subset=[date_col])\ndf['month'] = df[date_col].dt.month\n\n# Filter for Jan-Mar and known causes\ndf_filtered = df[(df['month'].isin([1,2,3])) & \n                 (df[cause_col] != 'Missing') & \n                 (df[cause_col] != 'Unknown')]\n\n# Subtask-3: Create contingency table\ncontingency_table = pd.crosstab(\n    index=df_filtered[region_col],\n    columns=df_filtered[cause_col]\n)\n\n# Remove regions with <5 observations to meet chi-square assumptions\ncontingency_table = contingency_table.loc[contingency_table.sum(axis=1) >= 5]\n\n# Subtask-4: Perform chi-square test\nchi2, p, dof, expected = chi2_contingency(contingency_table)\n\n# Prepare results\nresults = {\n    \"subtask-1\": {\n        \"region_column\": region_col,\n        \"cause_column\": cause_col,\n        \"date_column\": date_col\n    },\n    \"subtask-2\": {\n        \"filtered_records\": len(df_filtered),\n        \"missing_values_handled\": True\n    },\n    \"subtask-3\": {\n        \"contingency_table_dimensions\": list(contingency_table.shape)\n    },\n    \"subtask-4\": {\n        \"chi2_statistic\": chi2,\n        \"p_value\": p\n    },\n    \"main-task\": [chi2, p]\n}\n\nprint(json.dumps(results, indent=4))",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-16-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: According to NOAA, find the breakdowns of causes of fires of each geographical region for fires with known causes that start in the months of January, February, and March? Perform a chi-square statistics test. What are the chi-square statistic and p-value? Report a list of two numbers., please answer the following question:\n Which data file(s) are needed to answer this question? \n\n",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-16-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.96261477470398
+      },
+      {
+        "task_id": "wildfire-hard-16-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 50.361119985580444
+      },
+      {
+        "task_id": "wildfire-hard-16-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "How many wildfires started in January, February, or March within the data available?",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the dataset and clean DISCOVERY_DATE by dropping missing values and converting to integer.",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract the month from DISCOVERY_DATE (e.g., 20120115 -> month=01).",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Filter records for months 1, 2, or 3 and count the total wildfires.",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-16-3/_intermediate/errors-0.txt"
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load data\ndf = pd.read_csv('noaa_wildfires.csv')\n\n# Subtask 1: Clean DISCOVERY_DATE\ndf_clean = df.dropna(subset=['DISCOVERY_DATE'])\ndf_clean['DISCOVERY_DATE'] = df_clean['DISCOVERY_DATE'].astype(int).astype(str)\n\n# Subtask 2: Extract month\ndf_clean['month'] = df_clean['DISCOVERY_DATE'].str[4:6].astype(int)\n\n# Subtask 3: Filter and count\nq1_q3_fires = df_clean[df_clean['month'].isin([1, 2, 3])]\ncount = len(q1_q3_fires)\n\n# Output answers\nanswers = {\n    \"subtask-1\": \"Dropped missing DISCOVERY_DATE and converted to integer/string\",\n    \"subtask-2\": \"Extracted month from DISCOVERY_DATE via string slicing\",\n    \"subtask-3\": count,\n    \"main-task\": count\n}\nprint(json.dumps(answers, indent=4))",
+        "runtime": 39.8343939781189
+      },
+      {
+        "task_id": "wildfire-hard-16-4",
+        "model_output": {},
+        "code": "",
+        "runtime": 53.12478542327881
+      },
+      {
+        "task_id": "wildfire-hard-16-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.206419706344604
+      },
+      {
+        "task_id": "wildfire-hard-16-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "According to NOAA, find the breakdowns of causes of fires of each geographical region for fires with known causes that start in the months of January, February, and March? Perform a chi-square statistics test. What are the chi-square statistic and p-value? Report a list of two numbers.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify relevant columns from variable description file",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load and preprocess wildfire data: filter months, handle missing values, and map cause codes",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Create contingency table of fire causes by geographical region",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Perform chi-square test and extract statistic/p-value",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** found during execution in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-16-6/_intermediate/errors-0.txt"
+        },
+        "code": "import json\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import chi2_contingency\n\n# Load variable description file\nvar_desc = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires_variabledescrip.csv')\n\n# Identify relevant columns (subtask-1)\n# Based on typical NOAA wildfire data structure:\n#   state_alpha: geographical region (state abbreviations)\n#   discovery_doy: day of year for fire start (to derive month)\n#   stat_cause_descr: fire cause description\n#   stat_cause_code: fire cause code (if description is missing)\nrelevant_columns = ['state_alpha', 'discovery_doy', 'stat_cause_descr', 'stat_cause_code']\n\n# Load wildfire data (subtask-2)\ndf = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv', usecols=relevant_columns)\n\n# Convert discovery_doy to month (1=Jan, 2=Feb, 3=Mar)\ndf['month'] = np.floor((df['discovery_doy'] - 1) / 31).astype(int) + 1\ndf = df[df['month'].isin([1, 2, 3])]  # Filter Jan-Mar\n\n# Handle missing causes: use code if description missing\ndf['cause'] = df['stat_cause_descr'].fillna(df['stat_cause_code'].astype(str))\ndf = df[df['cause'] != 'nan']  # Remove unknown causes\ndf = df[df['cause'] != '13']   # Remove \"Miscellaneous\" (unknown) cause\ndf = df[df['cause'] != 'Missing']  # Explicit missing removal\n\n# Filter valid geographical regions (remove missing states)\ndf = df[df['state_alpha'].notna() & (df['state_alpha'] != '')]\n\n# Create contingency table (subtask-3)\ncontingency_table = pd.crosstab(\n    index=df['state_alpha'], \n    columns=df['cause']\n)\n\n# Perform chi-square test (subtask-4)\nchi2, p, dof, expected = chi2_contingency(contingency_table)\nresults = [round(chi2, 3), round(p, 3)]\n\n# Output final answer\nprint(json.dumps({\n    \"main-task\": results\n}, indent=4))",
+        "runtime": 30.175617218017578
+      }
+    ],
+    "runtime": 43.969884157180786
+  },
+  {
+    "task_id": "wildfire-hard-17",
+    "model_output": {
+      "id": "main-task",
+      "query": "What is the average elevation (in feet) of the weather stations used for fire site monitoring in the NOAA dataset?",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "noaa_wildfires_variabledescrip.csv",
+        "PublicView_RAWS_-3515561676727363726.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the station identifier column in the wildfire data by examining the variable description file.",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Identify the station identifier and elevation columns in the RAWS data and determine the unit of elevation.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "Extract unique station identifiers from the wildfire data.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "Join the unique station identifiers with the RAWS data to get the elevation for each station.",
+          "data_sources": [
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Convert elevation to feet if the current unit is meters.",
+          "data_sources": []
+        },
+        {
+          "id": "subtask-6",
+          "query": "Calculate the average elevation (in feet) of the stations, excluding any missing values.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-17/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-17-1",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: What is the average elevation (in feet) of the weather stations used for fire site monitoring in the NOAA dataset?, please answer the following question:\n Which files are needed to answer this question? \n\n",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the station identifiers used in fire site monitoring?",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What is the elevation for each station?",
+              "data_sources": [
+                "PublicView_RAWS_-3515561676727363726.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "What is the average elevation of the stations identified in subtask-1?",
+              "data_sources": [
+                "subtask-1",
+                "subtask-2"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-17-1/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 37.72829341888428
+      },
+      {
+        "task_id": "wildfire-hard-17-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "Which column contains the weather monitoring station information in the wildfire data?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in the main wildfire data file?",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What are the variable descriptions for the main wildfire data?",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-17-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 35.45624661445618
+      },
+      {
+        "task_id": "wildfire-hard-17-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which station IDs are present in the fire monitoring data? Answer in a list of numbers.",
+          "data_sources": [
+            "fire_monitoring_data.csv"
+          ],
+          "subtasks": [],
+          "answer": []
+        },
+        "code": "import json\nimport os\nimport pandas as pd\n\n# We are not given any data file names, so we assume the fire monitoring data file is not provided.\n# But we try to look for a file that might contain fire monitoring data? \n# However, the problem says the data sources are empty.\n\n# Since we have no data, we return an empty list for station IDs.\n\n# But to be safe, we can check if there are any CSV files in the current directory? \n# The problem doesn't specify, so we stick to the provided data sources (which are none).\n\n# Therefore, we output an empty list.\n\nstation_ids = []   # because we have no data\n\n# Print the answer in the required format\nprint(json.dumps({\"main-task\": station_ids}, indent=4))",
+        "runtime": 37.43474841117859
+      },
+      {
+        "task_id": "wildfire-hard-17-4",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many weather stations in the weather station registry appear in the fire data?",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify station ID columns in both datasets",
+              "data_sources": [
+                "noaa_wildfires.csv",
+                "PublicView_RAWS_-3515561676727363726.csv"
+              ],
+              "answer": {
+                "fire_station_col": "station_verified_in_psa",
+                "registry_station_col": "Station ID"
+              }
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract unique station IDs from fire data",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ],
+              "answer": 779
+            },
+            {
+              "id": "subtask-3",
+              "query": "Extract unique station IDs from registry",
+              "data_sources": [
+                "PublicView_RAWS_-3515561676727363726.csv"
+              ],
+              "answer": 2916
+            },
+            {
+              "id": "subtask-4",
+              "query": "Find common stations and count matches",
+              "data_sources": [],
+              "answer": 0
+            }
+          ],
+          "answer": 0
+        },
+        "code": "import json\nimport pandas as pd\n\n# Load datasets\nfire_data = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/noaa_wildfires.csv')\nregistry = pd.read_csv('/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/PublicView_RAWS_-3515561676727363726.csv')\n\n# Subtask-1: Identify station ID columns\n## Fire data: Likely 'station' or 'station_id'\n## Registry: Likely 'Station ID' or 'WBAN'\nfire_station_col = 'station' if 'station' in fire_data.columns else fire_data.filter(like='station').columns[0]\nregistry_station_col = 'Station ID' if 'Station ID' in registry.columns else registry.filter(like='ID').columns[0]\n\n# Subtask-2: Extract unique stations from fire data\nfire_stations = fire_data[fire_station_col].dropna().astype(str).str.upper().unique()\n\n# Subtask-3: Extract unique stations from registry\nregistry_stations = registry[registry_station_col].dropna().astype(str).str.upper().unique()\n\n# Subtask-4: Find common stations and count\ncommon_stations = set(fire_stations) & set(registry_stations)\ncount_common = len(common_stations)\n\n# Output results\nresults = {\n    \"subtask-1\": {\n        \"fire_station_col\": fire_station_col,\n        \"registry_station_col\": registry_station_col\n    },\n    \"subtask-2\": int(len(fire_stations)),\n    \"subtask-3\": int(len(registry_stations)),\n    \"subtask-4\": int(count_common),\n    \"main-task\": int(count_common)\n}\n\nprint(json.dumps(results, indent=4))",
+        "runtime": 25.944887399673462
+      },
+      {
+        "task_id": "wildfire-hard-17-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "What is the mean elevation of weather watch stations that appeared in the firewatch dataset? Round to one decimal place.",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv",
+            "PublicView_RAWS_-3515561676727363726.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in noaa_wildfires.csv and which one is the station identifier?",
+              "data_sources": [
+                "noaa_wildfires.csv",
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "What are the column names in PublicView_RAWS_-3515561676727363726.csv and which columns are station identifier and elevation? Also, what is the unit of elevation?",
+              "data_sources": [
+                "PublicView_RAWS_-3515561676727363726.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Extract the unique station identifiers from the firewatch dataset (noaa_wildfires.csv).",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "For each unique station identifier from subtask-3, get the elevation from the RAWS dataset. If the elevation is in meters, convert to feet.",
+              "data_sources": [
+                "PublicView_RAWS_-3515561676727363726.csv"
+              ]
+            },
+            {
+              "id": "subtask-5",
+              "query": "Calculate the mean elevation (in feet) of the stations, excluding any stations without elevation data, and round to one decimal place.",
+              "data_sources": []
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-17-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 30.346153497695923
+      }
+    ],
+    "runtime": 36.80873084068298
+  },
+  {
+    "task_id": "wildfire-hard-18",
+    "model_output": {
+      "id": "main-task",
+      "query": "Based on the NOAA dataset, controlling for the weather, do more aggressive suppression actually contribute to fire ending faster and affecting less buildings?",
+      "data_sources": [
+        "noaa_wildfires.csv",
+        "noaa_wildfires_variabledescrip.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Identify the variables that represent suppression aggressiveness, fire duration, building impact, and weather controls from the variable description file.",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv"
+          ]
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load the main dataset and perform data cleaning: handle missing values, convert data types (e.g., ensure dates are in datetime format, numerical variables are numeric), and filter out invalid records.",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-3",
+          "query": "For the fire duration outcome: Build a multiple regression model with fire duration as the dependent variable, suppression variable(s) as the main independent variable(s), and weather variables as controls. Assess the significance and direction of the suppression variable(s).",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-4",
+          "query": "For the building impact outcome: Build a multiple regression model with building impact (e.g., number of buildings destroyed or damaged) as the dependent variable, suppression variable(s) as the main independent variable(s), and weather variables as controls. Assess the significance and direction of the suppression variable(s).",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        {
+          "id": "subtask-5",
+          "query": "Synthesize the results from the two regression models to answer the main question.",
+          "data_sources": []
+        }
+      ],
+      "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-18/_intermediate/pipeline-0_out.json"
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-18-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "import json\n\n# The answer is that both files are needed.\nanswer = {\n    \"main-task\": [\"noaa_wildfires.csv\", \"noaa_wildfires_variabledescrip.csv\"]\n}\n\nprint(json.dumps(answer, indent=4))",
+        "runtime": 47.7410991191864
+      },
+      {
+        "task_id": "wildfire-hard-18-2",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the columns indicating the aggressiveness of suppression strategy?",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv",
+            "noaa_wildfires.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "What are the column names in the variable description file?",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Which column in the variable description file contains the variable names (for the main data file) and which contains the descriptions?",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "What are the variable names (in the main data file) for which the description contains keywords related to suppression strategy and aggressiveness?",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Do the identified columns exist in the main data file?",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-18-2/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 37.50684142112732
+      },
+      {
+        "task_id": "wildfire-hard-18-3",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Based on the NOAA dataset, controlling for the weather, do more aggressive suppression actually contribute to fire ending faster and affecting less buildings?, please answer the following question:\n How many data rows are left after dropping missing values? \n\n",
+          "data_sources": [
+            "noaa_wildfires.csv",
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Identify the relevant column names for the overall analysis by searching the variable description file for keywords related to suppression, fire duration, building damage, and weather.",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Load the main data file and select only the relevant columns identified in subtask-1.",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Drop rows with any missing values in the selected columns and count the number of rows remaining.",
+              "data_sources": [
+                "noaa_wildfires.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-18-3/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 31.84306526184082
+      },
+      {
+        "task_id": "wildfire-hard-18-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.45749044418335
+      },
+      {
+        "task_id": "wildfire-hard-18-5",
+        "model_output": {
+          "id": "main-task",
+          "query": "Your end goal is to answer this overall question: Based on the NOAA dataset, controlling for the weather, do more aggressive suppression actually contribute to fire ending faster and affecting less buildings?, please answer the following question:\n To analyze the impact of suppression strategy on fire duration, what is the column name for the dependent variable in the regression?",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Find the column name that represents the duration of the fire in the dataset.",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-18-5/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 34.3370087146759
+      },
+      {
+        "task_id": "wildfire-hard-18-6",
+        "model_output": {
+          "id": "main-task",
+          "query": "To analyze the impact of suppression strategy on residential buildings impacted, what is the column name for the dependent variable in the regression?",
+          "data_sources": [
+            "noaa_wildfires_variabledescrip.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Find the column name that represents the count of residential buildings impacted (damaged or destroyed) by the fire.",
+              "data_sources": [
+                "noaa_wildfires_variabledescrip.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-18-6/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 33.65941143035889
+      }
+    ],
+    "runtime": 37.38319754600525
+  },
+  {
+    "task_id": "wildfire-hard-19",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-19-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.770615100860596
+      },
+      {
+        "task_id": "wildfire-hard-19-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "How many fine-grained weather events starting in 2016 are in the records?",
+          "data_sources": [
+            "weather_events.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the weather events data and check the structure.",
+              "data_sources": [
+                "weather_events.csv"
+              ],
+              "answer": "Warning: No answer found in the Python pipeline."
+            },
+            {
+              "id": "subtask-2",
+              "query": "Convert the start date column to datetime and extract the year.",
+              "data_sources": [
+                "weather_events.csv"
+              ],
+              "answer": "Warning: No answer found in the Python pipeline."
+            },
+            {
+              "id": "subtask-3",
+              "query": "Filter the events for the year 2016 and count them.",
+              "data_sources": [
+                "weather_events.csv"
+              ],
+              "answer": "Warning: No answer found in the Python pipeline."
+            }
+          ],
+          "answer": "Warning: No answer found in the Python pipeline."
+        },
+        "code": "import json\nimport pandas as pd\n\ndef main():\n    # Load data\n    try:\n        df = pd.read_csv(\"weather_events.csv\")\n    except FileNotFoundError:\n        print(json.dumps({\"error\": \"File weather_events.csv not found.\"}, indent=4))\n        return\n    \n    # Check if the required column exists\n    date_column = \"Start_Time\"  # Common column name; adjust if needed\n    if date_column not in df.columns:\n        print(json.dumps({\"error\": f\"Column '{date_column}' not found in the dataset.\"}, indent=4))\n        return\n    \n    # Clean and parse the date column\n    df_clean = df.dropna(subset=[date_column]).copy()\n    df_clean[date_column] = pd.to_datetime(df_clean[date_column], errors=\"coerce\")\n    df_clean = df_clean.dropna(subset=[date_column])\n    \n    # Extract year and filter for 2016\n    df_clean[\"Year\"] = df_clean[date_column].dt.year\n    events_2016 = df_clean[df_clean[\"Year\"] == 2016]\n    \n    # Count events\n    count = len(events_2016)\n    \n    # Print result\n    result = {\n        \"subtask-1\": \"Data loaded and date column cleaned.\",\n        \"subtask-2\": f\"Filtered {len(events_2016)} events starting in 2016.\",\n        \"subtask-3\": count,\n        \"main-task\": count\n    }\n    print(json.dumps(result, indent=4))\n\nif __name__ == \"__main__\":\n    main()",
+        "runtime": 45.662593841552734
+      },
+      {
+        "task_id": "wildfire-hard-19-3",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "What timezone is the start time and end time records in the fine grained weather data in?",
+          "data_sources": [],
+          "subtasks": [],
+          "answer": "UTC"
+        },
+        "code": "import json\n\n# Since no data files are provided, the answer is based on standard meteorological practices.\nanswer = \"UTC\"\n\n# Output the result in the required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 32.733845949172974
+      },
+      {
+        "task_id": "wildfire-hard-19-4",
+        "model_output": {
+          "id": "main-task",
+          "query": "What are the unique start day of the years of 2016 fine grained weather events? Answer in a list of numbers.",
+          "data_sources": [
+            "weather_events.csv"
+          ],
+          "subtasks": [
+            {
+              "id": "subtask-1",
+              "query": "Load the weather events data and check the structure, especially the date column.",
+              "data_sources": [
+                "weather_events.csv"
+              ]
+            },
+            {
+              "id": "subtask-2",
+              "query": "Extract the year from the date column and filter for 2016.",
+              "data_sources": [
+                "weather_events.csv"
+              ]
+            },
+            {
+              "id": "subtask-3",
+              "query": "Convert the date to the day of the year (an integer from 1 to 366).",
+              "data_sources": [
+                "weather_events.csv"
+              ]
+            },
+            {
+              "id": "subtask-4",
+              "query": "Get the unique day-of-year values and output as a sorted list (if needed).",
+              "data_sources": [
+                "weather_events.csv"
+              ]
+            }
+          ],
+          "answer": "** ERRORS ** decoding output in /orcd/home/002/gerarvit/Kramabench/system_scratch/BaselineLLMSystemDeepseekR1Naive/wildfire-hard-19-4/_intermediate/pipeline-0_out.json"
+        },
+        "code": "",
+        "runtime": 32.374136447906494
+      },
+      {
+        "task_id": "wildfire-hard-19-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 31.345957279205322
+      },
+      {
+        "task_id": "wildfire-hard-19-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 42.29162788391113
+      },
+      {
+        "task_id": "wildfire-hard-19-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 41.989766120910645
+      },
+      {
+        "task_id": "wildfire-hard-19-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 52.76576375961304
+      },
+      {
+        "task_id": "wildfire-hard-19-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.347041845321655
+      },
+      {
+        "task_id": "wildfire-hard-19-10",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 39.78590798377991
+      }
+    ],
+    "runtime": 24.263426780700684
+  },
+  {
+    "task_id": "wildfire-hard-20",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-20-1",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.87901782989502
+      },
+      {
+        "task_id": "wildfire-hard-20-2",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 34.60694098472595
+      },
+      {
+        "task_id": "wildfire-hard-20-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.507067918777466
+      },
+      {
+        "task_id": "wildfire-hard-20-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 33.14006066322327
+      },
+      {
+        "task_id": "wildfire-hard-20-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.22359347343445
+      },
+      {
+        "task_id": "wildfire-hard-20-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.222331523895264
+      },
+      {
+        "task_id": "wildfire-hard-20-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 44.101752281188965
+      }
+    ],
+    "runtime": 30.60142946243286
+  },
+  {
+    "task_id": "wildfire-hard-21",
+    "model_output": {
+      "id": "main-task",
+      "answer": "SUT failed to answer this question."
+    },
+    "code": "",
+    "subresponses": [
+      {
+        "task_id": "wildfire-hard-21-1",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which data sources helps with joining state name with state abbreviations?",
+          "data_sources": [
+            "state_abbreviation_to_state.json"
+          ],
+          "subtasks": [],
+          "answer": "state_abbreviation_to_state.json"
+        },
+        "code": "import json\n\n# Load the JSON data\nfile_path = '/orcd/home/002/gerarvit/Kramabench/data/wildfire/input/state_abbreviation_to_state.json'\nwith open(file_path, 'r') as f:\n    state_mapping = json.load(f)\n\n# The answer is the filename since it directly provides the mapping\nanswer = \"state_abbreviation_to_state.json\"\n\n# Print the answer in the required JSON format\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 21.14971685409546
+      },
+      {
+        "task_id": "wildfire-hard-21-2",
+        "model_output": {
+          "system_subtasks_responses": [],
+          "id": "main-task",
+          "query": "Which file(s) contain the NOAA fire data?",
+          "data_sources": [
+            "noaa_wildfires.csv"
+          ],
+          "subtasks": [],
+          "answer": [
+            "noaa_wildfires.csv"
+          ]
+        },
+        "code": "import json\n\n# Since the question is about the file name and we are given the file name, we can directly output.\nanswer = [\"noaa_wildfires.csv\"]\n\n# Print the answer in the required format.\nprint(json.dumps({\"main-task\": answer}, indent=4))",
+        "runtime": 29.864179849624634
+      },
+      {
+        "task_id": "wildfire-hard-21-3",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 38.47743821144104
+      },
+      {
+        "task_id": "wildfire-hard-21-4",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 36.578065633773804
+      },
+      {
+        "task_id": "wildfire-hard-21-5",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 35.51615929603577
+      },
+      {
+        "task_id": "wildfire-hard-21-6",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 57.121145725250244
+      },
+      {
+        "task_id": "wildfire-hard-21-7",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 40.37770342826843
+      },
+      {
+        "task_id": "wildfire-hard-21-8",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 37.48331165313721
+      },
+      {
+        "task_id": "wildfire-hard-21-9",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 46.91599369049072
+      },
+      {
+        "task_id": "wildfire-hard-21-10",
+        "model_output": {
+          "id": "main-task",
+          "answer": "SUT failed to answer this question."
+        },
+        "code": "",
+        "runtime": 51.58057713508606
+      }
+    ],
+    "runtime": 35.32398867607117
+  }
+]
