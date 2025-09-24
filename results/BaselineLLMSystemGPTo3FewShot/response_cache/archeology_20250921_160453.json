@@ -1,0 +1,904 @@
+[
+  {
+    "task_id": "archeology-hard-1",
+    "model_output": {
+      "id": "main-task",
+      "answer": "Pipeline not successful after 5 tries."
+    },
+    "code": "",
+    "runtime": 389.8757600784302
+  },
+  {
+    "task_id": "archeology-hard-2",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "Across the years, what was the percent of years the wet-dry index was increasing? Give your answer in percentage, round your answer to 2 decimal places.",
+      "data_sources": [
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Locate the sheet and columns that contain yearly wet-dry index values in climateMeasurements.xlsx (make sure the year column and the index column are in the proper numeric format, handle duplicates / missing data).",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ],
+          "answer": {
+            "workbook": "climateMeasurements.xlsx",
+            "sheet": "Sheet1",
+            "year_column": "Unnamed: 2",
+            "index_column": "Unnamed: 5",
+            "n_years": 11
+          }
+        },
+        {
+          "id": "subtask-2",
+          "query": "Using the cleaned year\u2013index series, compute the percentage of years (excluding the very first year) for which the wet-dry index is strictly higher than the previous year.  Round the result to 2 decimal places.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ],
+          "answer": 100.0
+        }
+      ],
+      "answer": "100.00%"
+    },
+    "code": "\"\"\"\nSuper-robust search-and-compute script\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\nGoal      :  \u201cAcross the years, what percent of years was the wet-dry\n             index increasing?\u201d\n\nApproach  :\n    1.  Scan both supplied Excel workbooks.\n    2.  For every sheet we try several header-row assumptions\n        (row 0, 1, 2 and \u2018no header\u2019).\n    3.  We first *try* to recognise suitable columns by name\n        (tokens such as \u2018wetdry\u2019, \u2018pdsi\u2019, \u2018year\u2019, \u2026).\n        If that fails we fall back to a purely numeric heuristic:\n            \u2022 one numeric column with mostly integer values \u2192 years\n            \u2022 another numeric column with decimals / variation  \u2192 index\n    4.  Once a plausible (year-col, index-col) pair with \u2265 5 valid\n        year\u2013index rows is found, we:\n            \u2022 aggregate duplicates (mean per year)\n            \u2022 compute the percentage of years where the index increased.\n\"\"\"\n\nfrom pathlib import Path\nfrom typing import List, Tuple, Optional\nimport json\nimport numpy as np\nimport pandas as pd\n\n###############################################################################\n# 1.   Helper functions\n###############################################################################\nYEAR_TOKENS = {\n    \"year\", \"yr\", \"years\", \"date\", \"time\",\n    \"cal\", \"chron\", \"age\", \"ka\", \"bp\"\n}\n\nINDEX_TOKENS = {\n    # explicit index names\n    \"wetdry\", \"wet_dry\", \"wet-dry\", \"wdi\",\n    \"pdsi\", \"scpdsi\",\n    # the generic token \u201cindex\u201d will be treated specially\n}\n\n\ndef _is_year_like(col: str) -> bool:\n    col_std = col.lower().replace(\" \", \"\").replace(\"_\", \"\")\n    return any(tok in col_std for tok in YEAR_TOKENS)\n\n\ndef _is_index_like(col: str) -> bool:\n    col_std = col.lower().replace(\" \", \"\")\n    if any(tok in col_std for tok in INDEX_TOKENS):\n        return True\n    # contains \u201cindex\u201d **and** either \u201cwet\u201d or \u201cdry\u201d\n    return (\"index\" in col_std) and (\"wet\" in col_std or \"dry\" in col_std)\n\n\ndef _numeric_fraction(series: pd.Series) -> float:\n    \"\"\"fraction of entries that can be cast to a number\"\"\"\n    return pd.to_numeric(series, errors=\"coerce\").notna().mean()\n\n\ndef _looks_like_year_series(series: pd.Series) -> bool:\n    \"\"\"Heuristic: integers (or close) and a decent spread of values.\"\"\"\n    ser = pd.to_numeric(series, errors=\"coerce\").dropna()\n    if len(ser) < 5:\n        return False\n    # mostly integers?\n    if ((ser - ser.round()).abs() > 1e-6).mean() > 0.1:\n        return False\n    # reasonable range  (-10000 \u2026 +5000)\n    return (ser.min() > -15000) and (ser.max() < 5000)\n\n\ndef _pick_numeric_columns(df: pd.DataFrame) -> List[str]:\n    \"\"\"columns with \u2265 50 % numeric entries\"\"\"\n    return [\n        c\n        for c in df.columns\n        if _numeric_fraction(df[c]) >= 0.5\n    ]\n\n\n###############################################################################\n# 2.   Locate a usable (year col, wet-dry index col) pair in a workbook\n###############################################################################\ndef locate_time_series(excel_path: Path) -> Tuple[str, str, str, pd.DataFrame]:\n    \"\"\"\n    Return (sheet_name, year_col, index_col, full_df)\n    or raise ValueError if not found.\n    \"\"\"\n    xl = pd.ExcelFile(excel_path)\n    header_options = [0, 1, 2, None]          # try several header rows\n\n    for sheet_name in xl.sheet_names:\n        for hdr in header_options:\n            try:\n                df_preview = pd.read_excel(excel_path, sheet_name=sheet_name,\n                                           nrows=30, header=hdr)\n            except ValueError:\n                continue\n\n            # -----------------------------------------------------------------\n            # (A)  Try **name-based** detection first\n            # -----------------------------------------------------------------\n            year_cols_named  = [c for c in df_preview.columns if _is_year_like(str(c))]\n            index_cols_named = [c for c in df_preview.columns if _is_index_like(str(c))]\n\n            # sanity: distinct columns only\n            named_pairs = [\n                (y, i) for y in year_cols_named for i in index_cols_named if y != i\n            ]\n\n            # -----------------------------------------------------------------\n            # (B)  Fallback: purely numeric / heuristic detection\n            # -----------------------------------------------------------------\n            if not named_pairs:\n                numeric_cols = _pick_numeric_columns(df_preview)\n                # candidate years = integer-ish cols; index = the \u2018other\u2019 one\n                year_candidate_cols = [\n                    c for c in numeric_cols if _looks_like_year_series(df_preview[c])\n                ]\n                index_candidate_cols = [c for c in numeric_cols if c not in year_candidate_cols]\n                named_pairs = [\n                    (y, i) for y in year_candidate_cols for i in index_candidate_cols\n                ]\n\n            # -----------------------------------------------------------------\n            # Validate each (year, index) pair\n            # -----------------------------------------------------------------\n            for y_col, i_col in named_pairs:\n                try:\n                    df_full = pd.read_excel(excel_path, sheet_name=sheet_name,\n                                            header=hdr)\n                except Exception:\n                    continue\n\n                sub = df_full[[y_col, i_col]].copy()\n                sub[y_col] = pd.to_numeric(sub[y_col], errors=\"coerce\")\n                sub[i_col] = pd.to_numeric(sub[i_col], errors=\"coerce\")\n                sub = sub.dropna()\n                if len(sub) >= 5:\n                    return sheet_name, y_col, i_col, df_full\n\n    raise ValueError(f\"No usable series in {excel_path.name}\")\n\n\n###############################################################################\n# 3.   Search the provided workbooks\n###############################################################################\nWORKBOOKS = [\n    Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/climateMeasurements.xlsx\"),\n    Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/radiocarbon_database_regional.xlsx\"),\n]\n\nseries_info: Optional[Tuple[Path, str, str, str, pd.DataFrame]] = None\nfor wb in WORKBOOKS:\n    try:\n        sheet, year_col, idx_col, df_raw = locate_time_series(wb)\n        series_info = (wb, sheet, year_col, idx_col, df_raw)\n        break\n    except ValueError:\n        continue\n\nif series_info is None:\n    raise RuntimeError(\"No wet-dry index series found in the supplied files.\")\n\nwb_path, sheet, year_col, idx_col, df = series_info\n\n###############################################################################\n# 4.   Clean and aggregate\n###############################################################################\ndf[year_col] = pd.to_numeric(df[year_col], errors=\"coerce\")\ndf[idx_col]  = pd.to_numeric(df[idx_col],  errors=\"coerce\")\ndf = df.dropna(subset=[year_col, idx_col])\n\n# mean per year in case of duplicates\ndf = df.groupby(year_col, as_index=False)[idx_col].mean().sort_values(year_col)\n\n###############################################################################\n# 5.   Compute percentage of years with an index increase\n###############################################################################\ndf[\"diff\"] = df[idx_col].diff()\ntotal_steps = int(df[\"diff\"].notna().sum())          # N-1\nyears_incr  = int((df[\"diff\"] > 0).sum())\n\npercent_incr = round(years_incr / total_steps * 100, 2) if total_steps else float(\"nan\")\n\n###############################################################################\n# 6.   Output\n###############################################################################\nanswers = {\n    \"subtask-1\": {\n        \"workbook\": wb_path.name,\n        \"sheet\": sheet,\n        \"year_column\": str(year_col),\n        \"index_column\": str(idx_col),\n        \"n_years\": int(len(df)),\n    },\n    \"subtask-2\": percent_incr,\n    \"main-task\": f\"{percent_incr:.2f}%\",\n}\n\nprint(json.dumps(answers, indent=4))",
+    "runtime": 194.36883640289307
+  },
+  {
+    "task_id": "archeology-easy-3",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "What is the average rank of cities in Greece? Assume that if there is an 'or', the average of the two numbers. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "roman_cities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "How many rows in roman_cities.csv correspond to cities whose Country is Greece (case\u2013insensitive, after trimming white-space)?",
+          "data_sources": [
+            "roman_cities.csv"
+          ],
+          "answer": 135
+        },
+        {
+          "id": "subtask-2",
+          "query": "For those Greek cities, convert every value in the 'Barrington Atlas Rank' column into a numeric value (if the cell contains 'x or y', use the average (x+y)/2). After conversion, what is the average of these numeric ranks, rounded to 4 decimal places?",
+          "data_sources": [
+            "roman_cities.csv"
+          ],
+          "answer": 3.1333
+        }
+      ],
+      "answer": 3.1333
+    },
+    "code": "import pandas as pd\nimport numpy as np\nimport re, json, math\n\n# ---------------------------------------------------------\n# Helper: parse a single Barrington Atlas Rank value\ndef parse_rank(value):\n    \"\"\"\n    Convert a 'Barrington Atlas Rank' cell into a float.\n    Examples:\n        '3'         -> 3.0\n        '4 or 5'    -> 4.5\n        ' 2 OR 4 '  -> 3.0\n        np.nan/''   -> np.nan\n    \"\"\"\n    if value is None or (isinstance(value, float) and math.isnan(value)):\n        return np.nan\n    s = str(value).strip()\n    if s == '':\n        return np.nan\n    \n    # look for the pattern 'number or number'\n    m = re.split(r'\\s+or\\s+', s, flags=re.IGNORECASE)\n    if len(m) == 2:\n        # extract the first numeric token in each part\n        nums = []\n        for part in m:\n            num_match = re.search(r'(\\d+(\\.\\d+)?)', part)\n            if num_match:\n                nums.append(float(num_match.group(1)))\n        if len(nums) == 2:\n            return sum(nums)/2\n        # fall through if something went wrong\n    \n    # otherwise, grab the first number we can find\n    num_match = re.search(r'(\\d+(\\.\\d+)?)', s)\n    if num_match:\n        return float(num_match.group(1))\n    \n    return np.nan\n# ---------------------------------------------------------\n\n# 1) Load the data\nfile_path = '/home/gridsan/elai/Kramabench/data/archeology/input/roman_cities.csv'\ndf = pd.read_csv(file_path, dtype=str, keep_default_na=False)   # read everything as string initially\n\n# 2) Standardise 'Country' and filter Greek rows\ndf['Country_std'] = df['Country'].str.strip().str.lower()\ngre_df = df[df['Country_std'] == 'greece'].copy()\n\nnum_greek_rows = len(gre_df)          # answer to subtask-1\n\n# 3) Clean / parse the rank column\ngre_df['Rank_num'] = gre_df['Barrington Atlas Rank'].apply(parse_rank)\n\n# 4) Compute the average, ignoring NaNs\naverage_rank = gre_df['Rank_num'].dropna().mean()\naverage_rank_rounded = round(average_rank, 4) if not np.isnan(average_rank) else None\n\n# -----------------------------------------------------------------\n# Print answers in the requested JSON keyed by id\nprint(json.dumps({\n    \"subtask-1\": int(num_greek_rows),\n    \"subtask-2\": average_rank_rounded,\n    \"main-task\": average_rank_rounded\n}, indent=4))",
+    "runtime": 34.63162088394165
+  },
+  {
+    "task_id": "archeology-easy-4",
+    "model_output": {
+      "id": "main-task",
+      "answer": "Pipeline not successful after 5 tries."
+    },
+    "code": "",
+    "runtime": 190.00112867355347
+  },
+  {
+    "task_id": "archeology-hard-5",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "In the Maltese dataset, find the year of the most northern Neolithic sample, breaking ties by considering the later year. What is the maximum aluminum value recorded in the climate dataset in the closest year to that year? If there are multiple closest years, take the max aluminum value measured across all of them. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "radiocarbon_database_regional.xlsx",
+        "climateMeasurements.xlsx"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Filter the radiocarbon database to keep only rows that belong to Malta and whose cultural period is Neolithic (handle the possibility that the period column is missing or spelled differently). Return the cleaned subset.",
+          "data_sources": [
+            "radiocarbon_database_regional.xlsx"
+          ],
+          "answer": "14 Maltese-Neolithic rows retained"
+        },
+        {
+          "id": "subtask-2",
+          "query": "Within the Maltese-Neolithic subset, find the sample(s) with the highest latitude (i.e., the most northern). If several samples share the exact same latitude, choose the one whose year (radiocarbon or archaeological date) is later (numerically larger, i.e., closer to the present). Return that single year as an integer.",
+          "data_sources": [
+            "radiocarbon_database_regional.xlsx"
+          ],
+          "answer": 6412
+        },
+        {
+          "id": "subtask-3",
+          "query": "Determine which row(s) in the climate dataset have a \u2018year\u2019 that is closest (minimum absolute difference) to the year obtained in subtask-2. If more than one year ties for closest, keep all of them. Return the list of those year values.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ],
+          "answer": []
+        },
+        {
+          "id": "subtask-4",
+          "query": "From the climate dataset, take all rows whose year appears in the list obtained in subtask-3. Extract the aluminum (Al/Aluminium/Aluminum) concentration column (handle inconsistent column names and non-numeric entries) and return the maximum value. Round this value to 4 decimal places.",
+          "data_sources": [
+            "climateMeasurements.xlsx"
+          ],
+          "answer": null
+        }
+      ],
+      "answer": null
+    },
+    "code": "import json\nimport pandas as pd\nimport numpy as np\nfrom pathlib import Path\n\n# ------------------------------------------------------------------\n# helper functions\n# ------------------------------------------------------------------\ndef read_excel_safely(path):\n    \"\"\"\n    Read an excel file with pandas while concatenating every sheet\n    (some files store data on several sheets).  Everything is read as\n    string first to avoid dtype problems.\n    \"\"\"\n    xls = pd.ExcelFile(path)\n    dfs = [xls.parse(sheet, dtype=str) for sheet in xls.sheet_names]\n    return pd.concat(dfs, ignore_index=True)\n\n\ndef to_numeric(series):\n    \"\"\"Convert a pandas Series to numeric, coercing errors to NaN.\"\"\"\n    return pd.to_numeric(series, errors='coerce')\n\n\ndef build_malta_mask(df):\n    \"\"\"\n    Return a boolean mask that is True for rows that contain the word\n    'malta' in **any** column (case\u2010insensitive).  This fallback is used\n    when a dedicated `country` column is missing.\n    \"\"\"\n    # quick vectorised test \u2013 works because `str.contains` on a DF executes per column\n    return df.apply(\n        lambda col: col.str.contains(\"malta\", case=False, na=False)\n        if col.dtype == object\n        else False,\n        axis=0,\n    ).any(axis=1)\n\n\n# ------------------------------------------------------------------\n# subtask-1 : Maltese & Neolithic rows\n# ------------------------------------------------------------------\nradiocarbon_path = Path(\n    \"/home/gridsan/elai/Kramabench/data/archeology/input/radiocarbon_database_regional.xlsx\"\n)\nrc_df_raw = read_excel_safely(radiocarbon_path)\n\n# standardise column names (lower-case, stripped spaces)\nrc_df_raw.columns = rc_df_raw.columns.str.strip().str.lower()\n\n# ------------------   Maltese rows   ------------------\ncountry_cols = [c for c in rc_df_raw.columns if \"country\" in c]\nif country_cols:  # typical case\n    country_col = country_cols[0]\n    malta_mask = rc_df_raw[country_col].str.contains(\"malta\", case=False, na=False)\nelse:  # fall-back: look for the word 'malta' anywhere\n    malta_mask = build_malta_mask(rc_df_raw)\n\n# ------------------   Neolithic rows   ----------------\nperiod_cols = [c for c in rc_df_raw.columns if (\"period\" in c) or (\"culture\" in c)]\nperiod_col = period_cols[0] if period_cols else None\nif period_col:\n    neolithic_mask = rc_df_raw[period_col].str.contains(\"neolithic\", case=False, na=False)\nelse:\n    # if no explicit period column exists, accept all rows (cannot refine)\n    neolithic_mask = True\n\nmaltese_neolithic_df = rc_df_raw[malta_mask & neolithic_mask].copy()\n\nif maltese_neolithic_df.empty:\n    raise ValueError(\"No Maltese Neolithic rows found.  Cannot proceed.\")\n\n# ------------------------------------------------------------------\n# subtask-2 : most northern + later year\n# ------------------------------------------------------------------\nlat_candidates = [c for c in maltese_neolithic_df.columns if \"lat\" in c]\nif not lat_candidates:\n    raise ValueError(\"Latitude column not found in radiocarbon dataset.\")\nlat_col = lat_candidates[0]\n\nlatitudes = to_numeric(maltese_neolithic_df[lat_col])\nif latitudes.isna().all():\n    raise ValueError(\"All latitude values are NaN \u2013 cannot determine northernmost sample.\")\n\nmax_lat = latitudes.max()\nnorthern_df = maltese_neolithic_df[latitudes == max_lat].copy()\n\n# year / date column\nyear_col = None\nfor c in northern_df.columns:\n    if any(keyword in c for keyword in [\"year\", \"date\"]):\n        year_col = c\n        break\nif year_col is None:\n    start_cols = [c for c in northern_df.columns if \"start\" in c]\n    if not start_cols:\n        raise ValueError(\"No usable year/date column found in radiocarbon dataset.\")\n    year_col = start_cols[0]\n\nyears_numeric = to_numeric(northern_df[year_col])\nsample_year = years_numeric.max()  # later (numerically larger) year\n\nif np.isnan(sample_year):\n    raise ValueError(\"Sample year could not be determined (NaN).\")\n\n# ------------------------------------------------------------------\n# subtask-3 : closest climate year(s)\n# ------------------------------------------------------------------\nclimate_path = Path(\n    \"/home/gridsan/elai/Kramabench/data/archeology/input/climateMeasurements.xlsx\"\n)\nclimate_df_raw = read_excel_safely(climate_path)\nclimate_df_raw.columns = climate_df_raw.columns.str.strip().str.lower()\n\nclim_year_cols = [c for c in climate_df_raw.columns if (\"year\" in c) or (\"date\" in c)]\nif not clim_year_cols:\n    raise ValueError(\"No year/date column found in climate dataset.\")\nclim_year_col = clim_year_cols[0]\n\nclimate_years = to_numeric(climate_df_raw[clim_year_col])\nabs_diff = (climate_years - sample_year).abs()\nmin_diff = abs_diff.min()\n\nclosest_year_mask = abs_diff == min_diff\nclosest_years = (\n    climate_years[closest_year_mask].dropna().unique().astype(int).tolist()\n)\n\n# ------------------------------------------------------------------\n# subtask-4 : aluminium max in closest year(s)\n# ------------------------------------------------------------------\nal_cols = [\n    c\n    for c in climate_df_raw.columns\n    if (\"al\" in c) and (\"bial\" not in c) and (\"salt\" not in c)\n]\nif not al_cols:\n    raise ValueError(\"Aluminium column not found in climate dataset.\")\nal_col = al_cols[0]\n\nal_values = to_numeric(climate_df_raw.loc[closest_year_mask, al_col])\nmax_al = round(al_values.max(), 4)\n\n# ------------------------------------------------------------------\n# build answers dictionary\n# ------------------------------------------------------------------\nanswers = {\n    \"subtask-1\": f\"{len(maltese_neolithic_df)} Maltese-Neolithic rows retained\",\n    \"subtask-2\": int(sample_year),\n    \"subtask-3\": closest_years,\n    \"subtask-4\": max_al,\n    \"main-task\": max_al,\n}\n\nprint(json.dumps(answers, indent=4))",
+    "runtime": 113.92169260978699
+  },
+  {
+    "task_id": "archeology-easy-6",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "What city contained in both the southern and western hemispheres has the highest population?",
+      "data_sources": [
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load the file and coerce the columns `lat`, `lng`, and `population` to numeric, keeping only the rows where all three are valid numbers.",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 44384
+        },
+        {
+          "id": "subtask-2",
+          "query": "From the cleaned data, how many cities have latitude < 0 (i.e. are in the Southern Hemisphere)?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 6395
+        },
+        {
+          "id": "subtask-3",
+          "query": "From the cleaned data, how many cities have longitude < 0 (i.e. are in the Western Hemisphere)?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 16356
+        },
+        {
+          "id": "subtask-4",
+          "query": "From the cleaned data, how many cities are simultaneously in both the Southern and Western Hemispheres and have a non-missing population value?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 4084
+        },
+        {
+          "id": "subtask-5",
+          "query": "Among the cities identified in subtask-4, which one has the highest population and what is that population?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": {
+            "city": "Sao Paulo",
+            "country": "Brazil",
+            "population": 23086000
+          }
+        }
+      ],
+      "answer": "Sao Paulo"
+    },
+    "code": "import pandas as pd\nimport json\nfrom pathlib import Path\n\n# ------------------------------------------------------------------\n# helper: load and coerce numeric columns\n# ------------------------------------------------------------------\nfile_path = Path('/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv')\ndf = pd.read_csv(file_path)\n\n# subtask-1  --------------------------------------------------------\n# force numeric columns; invalid parsing becomes NaN\nfor col in ['lat', 'lng', 'population']:\n    df[col] = pd.to_numeric(df[col], errors='coerce')\n\n# keep only rows where all three columns are valid numbers\nclean_df = df.dropna(subset=['lat', 'lng', 'population'])\nanswer_1 = len(clean_df)\n\n# subtask-2  --------------------------------------------------------\nsouthern = clean_df[clean_df['lat'] < 0]\nanswer_2 = len(southern)\n\n# subtask-3  --------------------------------------------------------\nwestern = clean_df[clean_df['lng'] < 0]\nanswer_3 = len(western)\n\n# subtask-4  --------------------------------------------------------\nsouth_west = clean_df[(clean_df['lat'] < 0) & (clean_df['lng'] < 0)]\nanswer_4 = len(south_west)\n\n# subtask-5  --------------------------------------------------------\nmax_row = south_west.loc[south_west['population'].idxmax()]\nanswer_5 = {\n    \"city\":       max_row['city_ascii'] if pd.notna(max_row['city_ascii']) else max_row['city'],\n    \"country\":    max_row['country'],\n    \"population\": int(max_row['population'])\n}\n\n# main-task answer is the city name\nmain_answer = answer_5[\"city\"]\n\n# ------------------------------------------------------------------\n# print answers\n# ------------------------------------------------------------------\nprint(json.dumps(\n    {\n        \"subtask-1\": answer_1,\n        \"subtask-2\": answer_2,\n        \"subtask-3\": answer_3,\n        \"subtask-4\": answer_4,\n        \"subtask-5\": answer_5,\n        \"main-task\": main_answer\n    },\n    indent=4\n))",
+    "runtime": 35.98251819610596
+  },
+  {
+    "task_id": "archeology-hard-7",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "How many modern cities with a population of over 100k are within 0.1 degrees of ancient Roman-era cities?",
+      "data_sources": [
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Extract all ancient Roman-era cities that have valid numeric latitude and longitude values.",
+          "data_sources": [
+            "roman_cities.csv"
+          ],
+          "answer": 1388
+        },
+        {
+          "id": "subtask-2",
+          "query": "Extract all modern cities with population > 100 000 that have valid numeric latitude and longitude values.",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 5873
+        },
+        {
+          "id": "subtask-3",
+          "query": "Identify which of the modern cities from subtask-2 lie within 0.1\u00b0 (both latitude and longitude) of any ancient city from subtask-1 and return the unique list of those modern cities.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ],
+          "answer": [
+            "Cairo",
+            "Istanbul",
+            "London",
+            "Paris",
+            "Ankara",
+            "Alexandria",
+            "Barcelona",
+            "Izmir",
+            "Amman",
+            "Algiers",
+            "Athens",
+            "Budapest",
+            "Rome",
+            "Lisbon",
+            "Antalya",
+            "Konya",
+            "Vienna",
+            "Aleppo",
+            "Mersin",
+            "Damascus",
+            "Sofia",
+            "Kayseri",
+            "Belgrade",
+            "Milan",
+            "Samsun",
+            "Tripoli",
+            "Sevilla",
+            "Cologne",
+            "Tunis",
+            "Shubra al Khaymah",
+            "Denizli",
+            "Jerusalem",
+            "Skopje",
+            "Gaza",
+            "Rabat",
+            "The Hague",
+            "Beirut",
+            "Ljubljana",
+            "Gibraltar",
+            "Pristina",
+            "Podgorica",
+            "Naples",
+            "Malaga",
+            "Tangier",
+            "Cankaya",
+            "Turin",
+            "Sale",
+            "Marseille",
+            "Thessaloniki",
+            "Valencia",
+            "Homs",
+            "Latakia",
+            "Zaragoza",
+            "Palermo",
+            "Selcuklu",
+            "Benghazi",
+            "Halwan",
+            "Genoa",
+            "Irbid",
+            "Al Mahallah al Kubra",
+            "Palma",
+            "Lyon",
+            "Leicester",
+            "Toulouse",
+            "Kagithane",
+            "Piraeus",
+            "Esenler",
+            "Constantine",
+            "Kenitra",
+            "Asyut",
+            "Bologna",
+            "Plovdiv",
+            "Florence",
+            "Hatay",
+            "Sivas",
+            "Kocaeli",
+            "Konak",
+            "Manisa",
+            "Varna",
+            "Nice",
+            "Pamukkale",
+            "Meram",
+            "Alicante",
+            "Tarsus",
+            "Az Zaqaziq",
+            "Al Fayyum",
+            "Gungoren",
+            "Cluj-Napoca",
+            "Bari",
+            "Nantes",
+            "Temara",
+            "Cordoba",
+            "Aksaray",
+            "Alanya",
+            "Catania",
+            "Augsburg",
+            "Strasbourg",
+            "Batna",
+            "Setif",
+            "Constanta",
+            "Wiesbaden",
+            "Sfax",
+            "Aswan",
+            "Westminster",
+            "Bordeaux",
+            "Osmaniye",
+            "Damanhur",
+            "Annaba",
+            "Isparta",
+            "Verona",
+            "Rishon LeZiyyon",
+            "Petah Tiqwa",
+            "Duzce",
+            "Limassol",
+            "Elche",
+            "Granada",
+            "Messina",
+            "Badalona",
+            "Manavgat",
+            "Sousse",
+            "Rennes",
+            "Ashdod",
+            "Mallawi",
+            "Islington",
+            "Mainz",
+            "Cartagena",
+            "Norwich",
+            "Geneva",
+            "Jerez de la Frontera",
+            "Padova",
+            "Irakleio",
+            "Pamplona",
+            "Sidon",
+            "Borj Hammoud",
+            "Qina",
+            "Trieste",
+            "Bene Beraq",
+            "Timayy al Imdid",
+            "Luxor",
+            "Cosenza",
+            "Al Khums",
+            "Taranto",
+            "Brescia",
+            "Suhaj",
+            "Parma",
+            "Tebessa",
+            "Rijeka",
+            "Karaman",
+            "Aydin",
+            "Braga",
+            "Reims",
+            "Modena",
+            "Nis",
+            "Amadora",
+            "Reggio di Calabria",
+            "York",
+            "Canakkale",
+            "Nijmegen",
+            "Edirne",
+            "Split",
+            "Almada",
+            "Bejaia",
+            "Bodrum",
+            "Tyre",
+            "Banha",
+            "Akhisar",
+            "Reggio Emilia",
+            "Sahab",
+            "Al Marj",
+            "Patra",
+            "Talas",
+            "Grenoble",
+            "Skikda",
+            "Perugia",
+            "Leverkusen",
+            "Golcuk",
+            "Kebili",
+            "Villeurbanne",
+            "Zemun",
+            "Dijon",
+            "Salihli",
+            "Seixal",
+            "Angers",
+            "Ravenna",
+            "Fethiye",
+            "Nablus",
+            "Salzburg",
+            "Ar Ramtha",
+            "Cagliari",
+            "El Minie",
+            "Kafr ash Shaykh",
+            "Edremit",
+            "Bandirma",
+            "Peristeri",
+            "Clermont-Ferrand",
+            "Nimes",
+            "Rimini",
+            "Odivelas",
+            "Gloucester",
+            "Amasya",
+            "Szombathely",
+            "Salamanca",
+            "Volos",
+            "Dar`a",
+            "Larisa",
+            "Aix-en-Provence",
+            "Bizerte",
+            "Qabr as Sitt",
+            "Coimbra",
+            "Elbistan",
+            "Nizip",
+            "Lausanne",
+            "Lleida",
+            "Pecs",
+            "Tours",
+            "Tottenham",
+            "Dos Hermanas",
+            "Tarragona",
+            "Stara Zagora",
+            "Salerno",
+            "Sukrah",
+            "Ashqelon",
+            "Aaley",
+            "Rehovot",
+            "Idfu",
+            "Jijel",
+            "Jaramana",
+            "Limoges",
+            "Lincoln",
+            "Annecy",
+            "Sinnuris",
+            "Al Hajar al Aswad",
+            "Larache",
+            "Latina",
+            "Exeter",
+            "Giugliano in Campania",
+            "Colchester",
+            "Duma",
+            "Montreuil",
+            "Serik",
+            "Algeciras",
+            "Setubal",
+            "Bergamo",
+            "Cadiz",
+            "Guelma",
+            "Fier",
+            "Saint-Denis",
+            "Samandag",
+            "Metz",
+            "Siracusa",
+            "Perpignan",
+            "Kallithea",
+            "Orleans",
+            "Besancon",
+            "Chelmsford",
+            "Silifke",
+            "Bet Shemesh",
+            "Trento",
+            "Karatepe",
+            "Forli",
+            "Rouen",
+            "Durres",
+            "Ariana",
+            "Kusadasi",
+            "Walthamstow",
+            "Jendouba",
+            "Ioannina",
+            "Khenchela",
+            "Vicenza",
+            "Shkoder",
+            "Jaen",
+            "Qalyub",
+            "Terni",
+            "Trier",
+            "Gafsa",
+            "Basingstoke",
+            "Caen",
+            "Msaken",
+            "Kasserine",
+            "Beja",
+            "Acharnes",
+            "Khemis Sahel",
+            "Delft",
+            "Kefar Sava",
+            "Akhmim",
+            "Girona",
+            "Alasehir",
+            "Novara",
+            "Gillingham",
+            "Bergama",
+            "Piacenza",
+            "Klagenfurt",
+            "Sabratah",
+            "Ancona"
+          ]
+        }
+      ],
+      "answer": 294
+    },
+    "code": "import pandas as pd\nimport numpy as np\nimport json\nfrom pathlib import Path\n\n# ------------------------------------------------------------------\n# Helper paths (update to the real absolute paths given by the task)\nroman_fp  = Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/roman_cities.csv\")\nworld_fp  = Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv\")\n\n# ------------------------------------------------------------------\n# subtask-1: load & clean ancient Roman-era coordinates\nroman = pd.read_csv(roman_fp, low_memory=False)\n\n# Coerce to numeric \u2013 invalid parsing \u21d2 NaN\nroman[\"lat\"] = pd.to_numeric(roman[\"Latitude (Y)\"], errors=\"coerce\")\nroman[\"lon\"] = pd.to_numeric(roman[\"Longitude (X)\"], errors=\"coerce\")\n\nroman_valid = roman.dropna(subset=[\"lat\", \"lon\"]).copy()\nn_ancient_valid = len(roman_valid)\n\n# ------------------------------------------------------------------\n# subtask-2: load & clean modern cities, keep pop > 100 000\nworld = pd.read_csv(world_fp, low_memory=False)\n\nworld[\"lat\"] = pd.to_numeric(world[\"lat\"], errors=\"coerce\")\nworld[\"lon\"] = pd.to_numeric(world[\"lng\"], errors=\"coerce\")\nworld[\"population\"] = pd.to_numeric(world[\"population\"], errors=\"coerce\")\n\nmodern_big = world[(world[\"population\"] > 100_000) &\n                   world[\"lat\"].notna() &\n                   world[\"lon\"].notna()].copy()\nn_modern_big = len(modern_big)\n\n# ------------------------------------------------------------------\n# subtask-3: proximity join (|\u0394lat| \u2264 0.1  AND  |\u0394lon| \u2264 0.1)\nanc_lat = roman_valid[\"lat\"].to_numpy()\nanc_lon = roman_valid[\"lon\"].to_numpy()\n\nmod_lat = modern_big[\"lat\"].to_numpy()\nmod_lon = modern_big[\"lon\"].to_numpy()\n\n# Broadcasted absolute differences\ndlat = np.abs(mod_lat[:, None] - anc_lat[None, :])\ndlon = np.abs(mod_lon[:, None] - anc_lon[None, :])\n\n# Any ancient city within threshold?\nnear_mask = (dlat <= 0.1) & (dlon <= 0.1)\nmodern_near = modern_big.loc[near_mask.any(axis=1)]\n\nunique_modern_near = modern_near[\"city_ascii\"].dropna().unique().tolist()\nn_modern_near = len(unique_modern_near)\n\n# ------------------------------------------------------------------\n# Print answers\nprint(json.dumps(\n    {\n        \"subtask-1\": n_ancient_valid,\n        \"subtask-2\": n_modern_big,\n        \"subtask-3\": unique_modern_near,\n        \"main-task\": n_modern_near\n    },\n    indent=4, ensure_ascii=False\n))",
+    "runtime": 36.694984436035156
+  },
+  {
+    "task_id": "archeology-easy-8",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "How many unique sources were used in the Roman cities dataset?",
+      "data_sources": [
+        "roman_cities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Extract the list of unique bibliography sources that appear in the column `Select Bibliography` of roman_cities.csv (handle missing values and different delimiters/spaces).",
+          "data_sources": [
+            "roman_cities.csv"
+          ],
+          "answer": [
+            ".",
+            "1995",
+            "BNP",
+            "BNP.",
+            "Bagnall 1993",
+            "Bagnall 1993.",
+            "Bedon 2001",
+            "Bedon et al 1988",
+            "Beloch 1880",
+            "Beloch 1886",
+            "Benario 1981",
+            "Bispham 2007",
+            "Boatwright 2000",
+            "Boatwright 2000.",
+            "Bomgardner 2000",
+            "Bowman 2011",
+            "Broshi 1979",
+            "Broughton 1938",
+            "Brunt 1971",
+            "Burnham and Wacher 1990",
+            "Carreras Monfort 1995-1996",
+            "Carreras Monfort 1995-1996.",
+            "Cohen 1995",
+            "Cohen 2006",
+            "Cornell and Mathews 1982",
+            "Cornell and Mathews 1982.",
+            "DGRG",
+            "DGRG.",
+            "DGRG?",
+            "Golvin 1988",
+            "Golvin 1988.",
+            "Hansen 2006",
+            "Hansen and Nielsen 2004",
+            "Hansen and Nielsen 2004.",
+            "Hansen and Nielsen 2006",
+            "Hanson 2011",
+            "Heichelheim 1938.",
+            "Humphrey 1986",
+            "Johnson 1936",
+            "Jones 1937",
+            "Jones 1937.",
+            "Keay 1998",
+            "Keay 1998.",
+            "Lepelley 1979-1981",
+            "Lepelley 1979-1981.",
+            "MacMullen 2000",
+            "MacMullen 2000.",
+            "McEvedy 2011",
+            "McEvedy 2011.",
+            "Millett 1990: Table 4.4",
+            "Millett 1990: Table 6.5",
+            "Nelis-Cl\u00e9ment and Roddaz 2008",
+            "Nelis-Cl\u00e9ment and Roddaz 2008.",
+            "PEC",
+            "PECS",
+            "PECS.",
+            "PECS?.",
+            "Quinn and Sear 2006",
+            "Quinn and Wilson 2013",
+            "Quinn and Wilson 2013.",
+            "Rivet 1988",
+            "Rivet 1988.",
+            "Russell 1958",
+            "Russell 1958.",
+            "Salmon 1969",
+            "Salmon 1969.",
+            "Sear 2006",
+            "Sear 2006.",
+            "Sear 2006PECS.",
+            "Wacher 1995",
+            "Wacher 1995.",
+            "Wilkes 2003a",
+            "Wilkes 2003a.",
+            "Wilkes 2003b",
+            "Wilkes 2003b.",
+            "Wilson 2011",
+            "Wilson 2011.",
+            "Wilson 2013",
+            "Woloch 1983",
+            "Woloch 1983.",
+            "de Ligt 2012",
+            "de Ligt 2012."
+          ]
+        }
+      ],
+      "answer": 82
+    },
+    "code": "import json\nimport pandas as pd\nfrom pathlib import Path\nimport re\n\n# ------------------------------------------------------------------\n# Helper \u2013 robust splitter that copes with various white-spaces\n# and possible delimiter variants such as ';' or ','.\ndef split_sources(cell):\n    \"\"\"\n    Split a bibliography cell into individual source strings.\n\n    Parameters\n    ----------\n    cell : str | float | None\n\n    Returns\n    -------\n    list[str]\n    \"\"\"\n    if pd.isna(cell):\n        return []\n\n    # Treat any semicolon or comma as a separator, keep forward slashes or\n    # parentheses which may be part of a title (rare).\n    parts = re.split(r\"[;,]\", str(cell))\n    # Strip surrounding white-spaces and drop empty strings.\n    return [p.strip() for p in parts if p.strip()]\n\n\n# ------------------------------------------------------------------\n# Load the roman cities data\nFILE = Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/roman_cities.csv\")\ndf = pd.read_csv(FILE)\n\n# ------------------------------------------------------------------\n# Subtask-1 \u2013 build the set of unique bibliography entries\nunique_sources = set()\nfor cell in df.get(\"Select Bibliography\", []):\n    unique_sources.update(split_sources(cell))\n\n# ------------------------------------------------------------------\n# Main task \u2013 count them\nn_unique_sources = len(unique_sources)\n\n# ------------------------------------------------------------------\n# Print answers\nprint(\n    json.dumps(\n        {\n            \"subtask-1\": sorted(unique_sources),  # sending the list itself can help verification\n            \"main-task\": n_unique_sources\n        },\n        indent=4\n    )\n)",
+    "runtime": 12.698248386383057
+  },
+  {
+    "task_id": "archeology-hard-9",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "What is the correlation (to 6 decimal places) between the rank of ancient Roman cities and the population of their corresponding modern cities with a population of over one million? For rank, assume that if there is an 'or', the average of the two numbers. Assume that an ancient city is the same as a current city if the distance between the two is less than 0.1 degrees. If there are multiple ancient cities, take the last sample in the data. Round your answer to 6 decimal places.",
+      "data_sources": [
+        "roman_cities.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load roman_cities.csv and extract (1) longitude, (2) latitude, and (3) Barrington Atlas Rank converted to a numeric value (average if the field contains 'or'). Drop rows with missing coordinates or ranks.",
+          "data_sources": [
+            "roman_cities.csv"
+          ],
+          "answer": 1369
+        },
+        {
+          "id": "subtask-2",
+          "query": "Load worldcities.csv and keep only rows with population > 1 000 000. Keep the longitude, latitude, and population columns.",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 767
+        },
+        {
+          "id": "subtask-3",
+          "query": "Match every modern city (from subtask-2) to any ancient city (from subtask-1) whose great-circle degree distance is < 0.1. If several ancient rows match the same modern row, keep the last one occurring in roman_cities.csv.",
+          "data_sources": [
+            "roman_cities.csv",
+            "worldcities.csv"
+          ],
+          "answer": 30
+        },
+        {
+          "id": "subtask-4",
+          "query": "Using the matched pairs from subtask-3, compute the Pearson correlation coefficient between the ancient ranks and the modern populations and round it to 6 decimal places.",
+          "data_sources": [],
+          "answer": -0.210104
+        }
+      ],
+      "answer": -0.210104
+    },
+    "code": "import json\nimport pandas as pd\nimport numpy as np\nfrom pathlib import Path\n\n# ------------------------------------------------------------------\n# Helper to convert the rank column\ndef parse_rank(value):\n    \"\"\"\n    Convert '3' -> 3.0\n            '4 or 5' -> 4.5\n            '2 or 3 or 4' -> average of all numbers\n            invalid / empty -> np.nan\n    \"\"\"\n    if pd.isna(value):\n        return np.nan\n    nums = [float(n) for n in str(value).replace(',', ' ').replace(';', ' ').split()\n            if n.replace('.', '', 1).isdigit()]\n    if not nums:\n        return np.nan\n    return np.mean(nums)\n\n# ------------------------------------------------------------------\n# 1. Prepare ancient-city dataframe\nancient = pd.read_csv('/home/gridsan/elai/Kramabench/data/archeology/input/roman_cities.csv')\n\nancient['rank_num'] = ancient['Barrington Atlas Rank'].apply(parse_rank)\n# ensure numeric types\nancient['Longitude (X)'] = pd.to_numeric(ancient['Longitude (X)'], errors='coerce')\nancient['Latitude (Y)']  = pd.to_numeric(ancient['Latitude (Y)'], errors='coerce')\n\nancient_clean = ancient.dropna(subset=['rank_num', 'Longitude (X)', 'Latitude (Y)']).copy()\n\n# ------------------------------------------------------------------\n# 2. Prepare modern-city dataframe\nmodern = pd.read_csv('/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv')\nmodern['population'] = pd.to_numeric(modern['population'], errors='coerce')\nmodern_clean = modern[modern['population'] > 1_000_000].dropna(subset=['lat', 'lng', 'population']).copy()\n\n# ------------------------------------------------------------------\n# 3. Geographic matching\n# Pre-compute arrays for vectorised distance calculation\nancient_coords = ancient_clean[['Latitude (Y)', 'Longitude (X)']].to_numpy()\nmodern_coords  = modern_clean[['lat', 'lng']].to_numpy()\n\n# Function to compute pairwise distances in \u201cdegrees\u201d\ndef pairwise_distance(a, b):\n    # a.shape = (m,2), b.shape = (n,2) \u2794 return (m,n)\n    a_exp = a[:, None, :]\n    b_exp = b[None, :, :]\n    return np.sqrt(((a_exp - b_exp) ** 2).sum(-1))\n\ndist_matrix = pairwise_distance(ancient_coords, modern_coords)  # shape = (len(ancient), len(modern))\n\n# For every modern city, find all ancient indices within 0.1 degrees\nwithin_threshold = dist_matrix < 0.1  # boolean matrix\n\n# Build mapping: modern index \u2794 last matching ancient index\nmodern_to_ancient = {}\nfor ancient_idx, modern_mask in enumerate(within_threshold):\n    # indices of modern rows that match this ancient row\n    matched_modern_indices = np.where(modern_mask)[0]\n    for m_idx in matched_modern_indices:\n        # overwrite previous mapping to keep the \u201clast\u201d ancient idx (larger row index)\n        modern_to_ancient[m_idx] = ancient_idx\n\n# Collect matched pairs\nancient_ranks   = []\nmodern_pops     = []\nfor m_idx, a_idx in modern_to_ancient.items():\n    ancient_ranks.append(ancient_clean.iloc[a_idx]['rank_num'])\n    modern_pops.append(modern_clean.iloc[m_idx]['population'])\n\nancient_ranks = np.array(ancient_ranks, dtype=float)\nmodern_pops   = np.array(modern_pops, dtype=float)\n\n# ------------------------------------------------------------------\n# 4. Correlation\nif len(ancient_ranks) >= 2:\n    correlation = np.corrcoef(ancient_ranks, modern_pops)[0, 1]\n    correlation_rounded = round(float(correlation), 6)\nelse:\n    correlation_rounded = None  # Not enough data to compute a correlation\n\n# ------------------------------------------------------------------\n# Print answers for each step\nanswers = {\n    \"subtask-1\": len(ancient_clean),          # number of usable ancient rows\n    \"subtask-2\": len(modern_clean),           # number of modern cities >1 M\n    \"subtask-3\": len(ancient_ranks),          # number of matched pairs\n    \"subtask-4\": correlation_rounded,         # correlation value\n    \"main-task\": correlation_rounded          # final answer\n}\n\nprint(json.dumps(answers, indent=4))",
+    "runtime": 52.60290598869324
+  },
+  {
+    "task_id": "archeology-easy-10",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "Which country has the highest average population in its cities?",
+      "data_sources": [
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "What is the average city population for each country (after cleaning the data)?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": {
+            "Singapore": 5983000.0,
+            "China": 911694.4935815148,
+            "Kuwait": 736592.2,
+            "United Arab Emirates": 640793.1666666666,
+            "South Korea": 616318.85,
+            "Nigeria": 578965.625,
+            "Macau": 568700.0,
+            "Hong Kong": 551827.4090909091,
+            "Malaysia": 497981.8181818182,
+            "Bangladesh": 457927.56842105265
+          }
+        },
+        {
+          "id": "subtask-2",
+          "query": "Which country shows the maximum value among those average city-population figures?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": {
+            "country": "Singapore",
+            "average_population": 5983000.0
+          }
+        }
+      ],
+      "answer": {
+        "country": "Singapore",
+        "average_population": 5983000.0
+      }
+    },
+    "code": "import json\nimport pandas as pd\nfrom pathlib import Path\n\n# ------------------------------------------------------------------\n# Load the data\n# ------------------------------------------------------------------\nfile_path = Path(\"/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv\")\ndf = pd.read_csv(file_path)\n\n# ------------------------------------------------------------------\n# Data cleaning \u2013 make sure population is numeric, drop bad rows\n# ------------------------------------------------------------------\ndf[\"population\"] = pd.to_numeric(df[\"population\"], errors=\"coerce\")\ndf_clean = df.dropna(subset=[\"country\", \"population\"])\n\n# ------------------------------------------------------------------\n# Subtask-1: average population per country\n# ------------------------------------------------------------------\ncountry_avg_pop = (\n    df_clean.groupby(\"country\")[\"population\"]\n    .mean()\n    .sort_values(ascending=False)\n)\n\n# ------------------------------------------------------------------\n# Subtask-2 & Main task: identify the country with the highest average\n# ------------------------------------------------------------------\nhighest_avg_country = country_avg_pop.idxmax()\nhighest_avg_value = country_avg_pop.max()\n\n# ------------------------------------------------------------------\n# Print answers to each step\n# (For subtask-1, convert the Series to a dict; keep top 10 to stay concise.)\n# ------------------------------------------------------------------\nanswers = {\n    \"subtask-1\": {k: v for k, v in country_avg_pop.head(10).to_dict().items()},  # top-10 only\n    \"subtask-2\": {\"country\": highest_avg_country, \"average_population\": highest_avg_value},\n    \"main-task\": {\"country\": highest_avg_country, \"average_population\": highest_avg_value}\n}\n\nprint(json.dumps(answers, indent=4))",
+    "runtime": 25.28246521949768
+  },
+  {
+    "task_id": "archeology-easy-11",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "What is the average latitude of capital cities? If there're more than one capital in a country, only count the lat of the capital with the largest population. Round your answer to 4 decimal places.",
+      "data_sources": [
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "How many rows in worldcities.csv have a non-empty value in the \u201ccapital\u201d column (i.e., are labelled as a capital city)?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 11138
+        },
+        {
+          "id": "subtask-2",
+          "query": "After keeping only the capital city with the largest population for every country, how many capitals remain?",
+          "data_sources": [
+            "worldcities.csv"
+          ],
+          "answer": 238
+        }
+      ],
+      "answer": 17.1667
+    },
+    "code": "import json\nimport pandas as pd\nfrom pathlib import Path\n\n# load -----------------------------------------------------------------------\nfile_path = Path('/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv')\ndf = pd.read_csv(file_path, dtype=str)           # read everything as string first\n\n# ---------------------------------------------------------------------------\n# basic cleaning / type conversion\nfor col in ['lat', 'lng', 'population']:\n    df[col] = pd.to_numeric(df[col], errors='coerce')   # coerce invalid values to NaN\n\n# ---------------------------------------------------------------------------\n# subtask-1: count rows that are labelled as a capital -----------------------\ncapital_mask = df['capital'].notna() & (df['capital'].str.strip() != \"\")\nn_capital_rows = capital_mask.sum()\n\n# ---------------------------------------------------------------------------\n# subtask-2: pick the capital with the largest population for every country --\ncapitals_df = df[capital_mask].copy()\n\n# population can be NaN; treat NaN as 0 when ranking\ncapitals_df['pop_for_rank'] = capitals_df['population'].fillna(0)\n\n# idx of the capital with the largest population within each country\nidx_max_pop = capitals_df.groupby('country', as_index=False)['pop_for_rank'].idxmax()['pop_for_rank']\nlargest_capitals = capitals_df.loc[idx_max_pop].copy()\n\nn_final_capitals = len(largest_capitals)\n\n# ---------------------------------------------------------------------------\n# main-task: average latitude -----------------------------------------------\navg_lat = largest_capitals['lat'].mean()\navg_lat_rounded = round(avg_lat, 4)\n\n# ---------------------------------------------------------------------------\nprint(\n    json.dumps(\n        {\n            \"subtask-1\": int(n_capital_rows),\n            \"subtask-2\": int(n_final_capitals),\n            \"main-task\": avg_lat_rounded\n        },\n        indent=4\n    )\n)",
+    "runtime": 30.55426263809204
+  },
+  {
+    "task_id": "archeology-hard-12",
+    "model_output": {
+      "system_subtasks_responses": [],
+      "id": "main-task",
+      "query": "Count the number of human conflicts between 800 and 1400 AD, and attribute them as best you can to modern countries. Define a conflict as between two actors that lasts at least a year.",
+      "data_sources": [
+        "conflict_brecke.csv",
+        "worldcities.csv"
+      ],
+      "subtasks": [
+        {
+          "id": "subtask-1",
+          "query": "Load conflict_brecke.csv and coerce the StartYear and EndYear columns to numeric, handling non-numeric or missing values as NaNs.",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ],
+          "answer": "1147 rows loaded, numeric conversion applied."
+        },
+        {
+          "id": "subtask-2",
+          "query": "Filter the conflicts whose StartYear is \u2265 800 and EndYear \u2264 1400 (inclusive).",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ],
+          "answer": "1145 conflicts between 800-1400 AD."
+        },
+        {
+          "id": "subtask-3",
+          "query": "Keep only conflicts that last at least one full year (EndYear \u2212 StartYear \u2265 1).",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ],
+          "answer": "447 conflicts last at least one full year."
+        },
+        {
+          "id": "subtask-4",
+          "query": "Count the remaining conflicts after all filters.",
+          "data_sources": [
+            "conflict_brecke.csv"
+          ],
+          "answer": 447
+        },
+        {
+          "id": "subtask-5",
+          "query": "Map every retained conflict to one or more modern countries by scanning the Conflict string for country names appearing in worldcities.csv (plus a small hand-written synonym list for obvious medieval terms such as Byzantium\u2192Turkey, Magyars\u2192Hungary, etc.).",
+          "data_sources": [
+            "conflict_brecke.csv",
+            "worldcities.csv"
+          ],
+          "answer": "Mapped conflicts to modern countries using automatic + manual matching."
+        },
+        {
+          "id": "subtask-6",
+          "query": "Aggregate the number of mapped conflicts per modern country (each conflict can count for more than one country if multiple actors are recognised).",
+          "data_sources": [
+            "conflict_brecke.csv",
+            "worldcities.csv"
+          ],
+          "answer": {
+            "United Kingdom": 85,
+            "Germany": 66,
+            "France": 66,
+            "Turkey": 53,
+            "Russia": 49,
+            "Spain": 43,
+            "Italy": 42,
+            "Austria": 32,
+            "Denmark": 21,
+            "Hungary": 19,
+            "Lithuania": 19,
+            "Netherlands": 18,
+            "Bulgaria": 17,
+            "Poland": 15,
+            "Ukraine": 9,
+            "Sweden": 9,
+            "Czechia": 8,
+            "Norway": 7,
+            "Ireland": 6,
+            "Macedonia": 5,
+            "Portugal": 3,
+            "Switzerland": 3,
+            "Serbia": 2,
+            "Cyprus": 2,
+            "Estonia": 2,
+            "Tunisia": 1,
+            "Algeria": 1,
+            "Greece": 1,
+            "Finland": 1,
+            "Albania": 1
+          }
+        }
+      ],
+      "answer": {
+        "total_conflicts": 447,
+        "by_country": {
+          "United Kingdom": 85,
+          "Germany": 66,
+          "France": 66,
+          "Turkey": 53,
+          "Russia": 49,
+          "Spain": 43,
+          "Italy": 42,
+          "Austria": 32,
+          "Denmark": 21,
+          "Hungary": 19,
+          "Lithuania": 19,
+          "Netherlands": 18,
+          "Bulgaria": 17,
+          "Poland": 15,
+          "Ukraine": 9,
+          "Sweden": 9,
+          "Czechia": 8,
+          "Norway": 7,
+          "Ireland": 6,
+          "Macedonia": 5,
+          "Portugal": 3,
+          "Switzerland": 3,
+          "Serbia": 2,
+          "Cyprus": 2,
+          "Estonia": 2,
+          "Tunisia": 1,
+          "Algeria": 1,
+          "Greece": 1,
+          "Finland": 1,
+          "Albania": 1
+        }
+      }
+    },
+    "code": "import json\nimport re\nimport pandas as pd\nfrom collections import defaultdict\n\n# ------------------------------------------------------------------\n# helper ----------------------------------------------------------------\ndef safe_int(x):\n    try:\n        return int(float(x))\n    except (ValueError, TypeError):\n        return None\n\n# ------------------------------------------------------------------\n# subtask-1: load & clean ------------------------------------------\nconflict_path = '/home/gridsan/elai/Kramabench/data/archeology/input/conflict_brecke.csv'\ncities_path   = '/home/gridsan/elai/Kramabench/data/archeology/input/worldcities.csv'\n\nconf = pd.read_csv(conflict_path)\n\n# ensure numeric\nconf['StartYear'] = conf['StartYear'].apply(safe_int)\nconf['EndYear']   = conf['EndYear'].apply(safe_int)\n\n# ------------------------------------------------------------------\n# subtask-2: year window -------------------------------------------\nmask_period = (conf['StartYear'] >= 800) & (conf['EndYear'] <= 1400)\nconf_period = conf[mask_period].copy()\n\n# ------------------------------------------------------------------\n# subtask-3: duration ----------------------------------------------\nconf_period['duration'] = conf_period['EndYear'] - conf_period['StartYear']\nconf_long = conf_period[conf_period['duration'] >= 1].copy()\n\n# ------------------------------------------------------------------\n# subtask-4: count -------------------------------------------------\ntotal_conflicts = len(conf_long)\n\n# ------------------------------------------------------------------\n# subtask-5: map to modern countries -------------------------------\ncities = pd.read_csv(cities_path)\n\n# build set of modern country names (lower-case for matching)\ncountry_names = set(cities['country'].dropna().str.lower())\n\n# manual synonym dictionary for medieval entities\nmanual_map = {\n    'magyars': 'Hungary',\n    'hungary': 'Hungary',\n    'bavaria': 'Germany',\n    'franks': 'France',\n    'france': 'France',\n    'leon': 'Spain',\n    'castile': 'Spain',\n    'navarre': 'Spain',\n    'catalonia': 'Spain',\n    'england': 'United Kingdom',\n    'wessex': 'United Kingdom',\n    'danish': 'Denmark',\n    'denmark': 'Denmark',\n    'vikings': 'Denmark',      # default\n    'norwegian': 'Norway',\n    'norway': 'Norway',\n    'scots': 'United Kingdom',\n    'scotland': 'United Kingdom',\n    'germans': 'Germany',\n    'germany': 'Germany',\n    'bohemia': 'Czechia',\n    'byzantium': 'Turkey',\n    'serbia': 'Serbia',\n    'bulgaria': 'Bulgaria',\n    'fatamids': 'Egypt',\n    'muslims': 'Spain',        # very rough; could also be multiple\n    'rus': 'Russia',\n    'russia': 'Russia',\n    'kiev': 'Ukraine',\n    'ireland': 'Ireland',\n    'italy': 'Italy',\n    'lombards': 'Italy',\n    'netherlands': 'Netherlands',\n    'swabia': 'Germany',\n    'moravia': 'Czechia',\n    'austria': 'Austria',\n    'lorraine': 'France',\n    'saxony': 'Germany',\n    'thuringia': 'Germany',\n    'burgundy': 'France',\n    'arab': 'Saudi Arabia',\n    'aghlibids': 'Tunisia'\n}\n\n# regex pre-compile for speed\ntoken_split = re.compile(r'[-\\s\\[\\]\\(\\),]+')\n\ndef map_conflict_to_countries(conflict_str):\n    tokens = token_split.split(conflict_str.lower())\n    found = set()\n    for tok in tokens:\n        if tok in country_names:\n            # find original case country name to map to itself\n            country = next(c for c in country_names if c == tok)\n            found.add(country.title())\n        elif tok in manual_map:\n            found.add(manual_map[tok])\n    return found\n\nconf_long['countries'] = conf_long['Conflict'].fillna('').apply(map_conflict_to_countries)\n\n# ------------------------------------------------------------------\n# subtask-6: aggregate ---------------------------------------------\ncountry_conf_count = defaultdict(int)\nfor countries in conf_long['countries']:\n    for c in countries:\n        country_conf_count[c] += 1\n\n# convert defaultdict to normal dict & sort\ncountry_conf_count = dict(sorted(country_conf_count.items(), key=lambda x: -x[1]))\n\n# ------------------------------------------------------------------\n# print answers ----------------------------------------------------\nanswers = {\n    \"subtask-1\": f\"{len(conf)} rows loaded, numeric conversion applied.\",\n    \"subtask-2\": f\"{len(conf_period)} conflicts between 800-1400 AD.\",\n    \"subtask-3\": f\"{len(conf_long)} conflicts last at least one full year.\",\n    \"subtask-4\": total_conflicts,\n    \"subtask-5\": \"Mapped conflicts to modern countries using automatic + manual matching.\",\n    \"subtask-6\": country_conf_count,\n    \"main-task\": {\n        \"total_conflicts\": total_conflicts,\n        \"by_country\": country_conf_count\n    }\n}\n\nprint(json.dumps(answers, indent=4))",
+    "runtime": 42.66519331932068
+  }
+]
