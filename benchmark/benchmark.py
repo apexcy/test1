@@ -5,6 +5,7 @@ import logging
 import os
 import re
 import time
+from benchmark.benchmark_utils import print_info
 from rouge_score import rouge_scorer
 from typeguard import typechecked
 from typing import Any, Dict, List, Tuple, Optional
@@ -56,8 +57,8 @@ class Executor:
         }
         """
         if self.verbose:
-            print(f"task_id: {task['id']}")
-            print(f"query: {task['query']}")
+            print_info(f"task_id: {task['id']}")
+            print_info(f"query: {task['query']}\n\n")
         if parent_task_query is not None:
             query = f"Your end goal is to answer this overall question: {parent_task_query}, please answer the following question:\n {task['query']} \n\n"
         else:
