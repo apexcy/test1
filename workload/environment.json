@@ -281,7 +281,7 @@
     {
         "id": "environment-easy-3",
         "query": "How many beaches had a higher bacterial exceedance rate for water samples collected in 2013 compared to 2012, excluding those with no samples in 2012?",
-        "answer": 255,
+        "answer": 267,
         "answer_type": "numeric_exact",
         "runtime": 1,
         "data_sources": [
@@ -10835,7 +10835,7 @@
     },
     {
         "id": "environment-hard-17",
-        "query": "What is the seasonal exceedance rate (in percentage, to 2 decimal places) of Chatham's Bucks Creek Beach in the summer (June, July, August) with the most rainfall in its area? Impute missing values with median of the month in non-missing years.",
+        "query": "What is the seasonal exceedance rate (in percentage, to 2 decimal places) of Chatham's Bucks Creek Beach in the summer (June, July, August) of the year with the most rainfall in its area? Impute missing values with median of the month in non-missing years.",
         "answer": 47.37,
         "answer_type": "numeric_exact",
         "runtime": 0.5,
