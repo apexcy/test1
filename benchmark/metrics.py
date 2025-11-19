@@ -120,6 +120,8 @@ class F1Approximate(Metric):
 
     def __call__(self, predicted: List[str | float | int], target: List[str | float| int] | str):
         total_token_usage = 0
+        token_usage_input = 0
+        token_usage_output = 0
         try: 
             if isinstance(predicted, list) and isinstance(target, str):
                 target = json.loads(target)
@@ -131,7 +133,6 @@ class F1Approximate(Metric):
             llm_interface = GPTInterface(model="gpt-4o-mini")
             # Calculate the recall
             recall_cnt = 0
-            total_token_usage = 0
             if isinstance(target, str):
                 target = json.loads(target)
             if isinstance(predicted, str):
