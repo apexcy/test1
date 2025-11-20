@@ -18,12 +18,14 @@ import time
 
 from dotenv import load_dotenv
 from text_inspector_tool import TextInspectorTool
-from tools import list_filepaths, list_input_filepaths, CRITIQUE_AGENT_PROMPT_TEMPLATE
+from answer_inspector_tool import AnswerInspectorTool
+from tools import list_input_filepaths, get_csv_metadata, summarize_dataframe, CRITIQUE_AGENT_PROMPT_TEMPLATE
 
 from smolagents import (
     CodeAgent,
     LiteLLMModel,
-    AgentLogger
+    AgentLogger,
+    ToolCallingAgent,
 )
 load_dotenv()
 
@@ -140,7 +142,7 @@ class SmolagentsReflexion(System):
         
         critique_agent = ToolCallingAgent(
             model=self.llm_reason,
-            tools=[TextInspectorTool(self.llm_reason, self.text_limit), AnswerInspectorTool(self.llm_reason), list_filepaths],
+            tools=[TextInspectorTool(self.llm_reason, self.text_limit), AnswerInspectorTool(self.llm_reason), list_input_filepaths, get_csv_metadata, summarize_dataframe],
             max_steps=1,
             verbosity_level=self.verbosity_level,
             logger=logger,

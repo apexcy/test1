@@ -228,7 +228,7 @@ def main():
     ]
 
     # Process each question
-    out_dir = os.path.join(current_dir, "../../testresults/run2")
+    out_dir = os.path.join(current_dir, "../../testresults/deepresearch")
     smolagents_dr = SmolagentsDeepResearch(
         model="claude-3-7-sonnet-latest", output_dir=out_dir, verbose=True
     )
