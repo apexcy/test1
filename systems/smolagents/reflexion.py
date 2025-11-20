@@ -7,6 +7,7 @@ from benchmark.benchmark_utils import print_error, print_warning
 
 import json
 import pandas as pd
+import ast
 import subprocess
 from typeguard import typechecked
 from typing import Dict, List
@@ -17,9 +18,9 @@ import threading
 import time
 
 from dotenv import load_dotenv
-from text_inspector_tool import TextInspectorTool
-from answer_inspector_tool import AnswerInspectorTool
-from tools import list_input_filepaths, get_csv_metadata, summarize_dataframe, CRITIQUE_AGENT_PROMPT_TEMPLATE
+from .text_inspector_tool import TextInspectorTool
+from .answer_inspector_tool import AnswerInspectorTool
+from .tools import list_input_filepaths, get_csv_metadata, summarize_dataframe, CRITIQUE_AGENT_PROMPT_TEMPLATE
 
 from smolagents import (
     CodeAgent,
@@ -208,6 +209,7 @@ class SmolagentsReflexion(System):
             Answer the question: {query}; Use the {dataset_name} dataset. 
             
             If you see unusual or unexpected intermediate results, use the critique agent to evaluate the step and provide feedback.
+            IMPORTANT: Pass along the dataset path to the critique agent so it can access the data files if needed.
             DO NOT assume the correctness of the intermediate results and final results. Be skeptical and ensure they are correct by cross-checking with the dataset.
             Especially, if you see missing or incomplete intermediate results (e.g., nan or 0.0), question yourself if it's a coding issue, a logic design issue, or an actual data issue.
             After every step, ask yourself if every step is necessary and if the final answer is correct.
@@ -225,7 +227,7 @@ class SmolagentsReflexion(System):
         results = {
             "id": query_id,
             "runtime": runtime,
-            "explannation": answer,
+            "explanation": answer,
             "pipeline_code": pipeline_code,
         }
         print(results)

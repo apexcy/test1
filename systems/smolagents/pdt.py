@@ -18,8 +18,8 @@ import ast
 import time
 
 from dotenv import load_dotenv
-from text_inspector_tool import TextInspectorTool
-from tools import list_input_filepaths
+from .text_inspector_tool import TextInspectorTool
+from .tools import list_input_filepaths
 
 from smolagents import (
     CodeAgent,
