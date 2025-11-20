@@ -5,7 +5,18 @@ import pandas as pd
 from typing import List, Optional, Union, Dict
 import fnmatch
 
-CRITIQUE_AGENT_SYSTEM_PROMPT = """You are a critical reviewer who helps evaluate each step taken by a data science agent. You will see the agent's last output and tool observation, and provide constructive feedback and suggestions for next steps if needed."""
+CRITIQUE_AGENT_SYSTEM_PROMPT = """
+                An independent agent that acts as a critical reviewer for each step in a multi-step agent workflow.
+
+                The critique_agent evaluates the most recent plan and corresponding tool output (observation) 
+                produced by a primary agent, such as a CodeAgent. It provides constructive feedback, flags 
+                issues, and suggests improvements or next actions without directly modifying the environment.
+
+                This agent is intended to serve as a lightweight oversight mechanism in agentic systems, helping 
+                to improve reliability, reduce errors, and promote clearer reasoning in autonomous workflows.
+
+                Invoke this agent after each step of the primary agent to ensure that the actions taken are appropriate and well-reasoned.
+            """
 
 CRITIQUE_AGENT_PROMPT_TEMPLATE = """The agent has completed the following step:
 

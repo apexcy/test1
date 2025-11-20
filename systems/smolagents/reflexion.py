@@ -20,7 +20,7 @@ import time
 from dotenv import load_dotenv
 from .text_inspector_tool import TextInspectorTool
 from .answer_inspector_tool import AnswerInspectorTool
-from .tools import write_file, list_input_filepaths, get_csv_metadata, summarize_dataframe, CRITIQUE_AGENT_PROMPT_TEMPLATE
+from .tools import write_file, list_input_filepaths, get_csv_metadata, summarize_dataframe, CRITIQUE_AGENT_PROMPT_TEMPLATE, CRITIQUE_AGENT_SYSTEM_PROMPT
 from .smolagents_utils import parse_token_counts
 
 from smolagents import (
@@ -185,18 +185,7 @@ class SmolagentsReflexion(System):
             logger=logger,
             planning_interval=self.planning_interval,
             name="critique_agent",
-            description="""
-                An independent agent that acts as a critical reviewer for each step in a multi-step agent workflow.
-
-                The critique_agent evaluates the most recent plan and corresponding tool output (observation) 
-                produced by a primary agent, such as a CodeAgent. It provides constructive feedback, flags 
-                issues, and suggests improvements or next actions without directly modifying the environment.
-
-                This agent is intended to serve as a lightweight oversight mechanism in agentic systems, helping 
-                to improve reliability, reduce errors, and promote clearer reasoning in autonomous workflows.
-
-                Invoke this agent after each step of the primary agent to ensure that the actions taken are appropriate and well-reasoned.
-            """,
+            description=CRITIQUE_AGENT_SYSTEM_PROMPT,
             provide_run_summary=True,
         )
         critique_agent.prompt_templates["managed_agent"]["task"] += CRITIQUE_AGENT_PROMPT_TEMPLATE

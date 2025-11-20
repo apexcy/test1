@@ -182,25 +182,6 @@ class SmolagentsPDT(System):
         logger_path = os.path.join(self.question_intermediate_dir, f"{task_id}.txt")
         logger = AgentLogger(level=self.verbosity_level, log_file=logger_path)
 
-        # === Planner Agent ===
-        planner_agent = ToolCallingAgent(
-            model=self.llm_reason,
-            tools=[list_input_filepaths],
-            max_steps=self.max_steps,
-            verbosity_level=self.verbosity_level,
-            logger=logger,
-            planning_interval=self.planning_interval,
-            name="planner_agent",
-            description=(
-                "A high-level planning agent that reads the user task and available data, "
-                "then proposes a step-by-step PLAN (3–5 steps) for how to solve the task. "
-                "The plan should be model-agnostic and expressed in natural language. "
-                "Do NOT execute code or tools directly; just plan. "
-                "Do NOT give any answer yet; just provide the PLAN."
-            ),
-            provide_run_summary=True,
-        )
-
         # === Subtask Decomposer Agent ===
         decomposer_agent = ToolCallingAgent(
             model=self.llm_reason,
@@ -253,37 +234,14 @@ class SmolagentsPDT(System):
             ),
         )
 
-        return planner_agent, decomposer_agent, executor_agent
+        return decomposer_agent, executor_agent
 
-    def run_pdt_pipeline(self,planner_agent, decomposer_agent, executor_agent, task_prompt, workload_name, task_id: str) -> Dict:
+    def run_pdt_pipeline(self,decomposer_agent, executor_agent, task_prompt, workload_name, task_id: str) -> Dict:
         """
         Orchestrates the Planner -> Decomposer -> Executor flow for a single question.
         Returns a dict with the plan, subtasks, subtask_outputs, and final_answer.
         """
-
-        # ---- 1) Planner: high-level plan ----
-        planner_prompt = f"""
-            You are the planner_agent in a multi-agent PDT architecture.
-
-            Workload name: {workload_name}
-            User task:
-            {task_prompt}
-
-            Your job:
-            1. Understand the task and the likely structure of the dataset(s).
-            2. Propose a concrete, numbered PLAN with 3-5 steps (5 is the MAX).
-            3. Focus on data discovery, cleaning, joining, aggregation, and analysis.
-            4. Do NOT write code. Do NOT execute tools. Only output a plan in natural language.
-
-            Output format:
-            - Start with a short 1–2 sentence summary of the task.
-            - Then list your steps as a numbered list, e.g.
-            1) ...
-            2) ...
-        """
-        #high_level_plan = planner_agent.run(planner_prompt)
-
-        # ---- 2) Decomposer: JSON subtasks ----
+        # ---- 1) Decomposer: JSON subtasks ----
         decomposer_prompt = f"""
             You are the decomposer_agent in a Planner → Subtask Decomposer → Tool/Code Executor architecture.
 
@@ -331,7 +289,7 @@ class SmolagentsPDT(System):
                     }
                 ]
 
-        # ---- 3) Executor: run each subtask sequentially ----
+        # ---- 2) Executor: run each subtask sequentially ----
         answer_path = os.path.join(self.question_intermediate_dir, f"answer.txt")
         pipeline_code_path = os.path.join(self.question_intermediate_dir, f"pipeline_code.py")
         subtask_outputs = {}
@@ -432,7 +390,7 @@ class SmolagentsPDT(System):
 
         def worker():
             try:
-                planner_agent, decomposer_agent, executor_agent = self.create_pdt_agents(query_id)
+                decomposer_agent, executor_agent = self.create_pdt_agents(query_id)
 
                 task_prompt = f"""
                 Workload name: {dataset_name}
@@ -440,11 +398,10 @@ class SmolagentsPDT(System):
                 Answer the question: {query}; Use the {dataset_name} dataset.
 
                 You are part of a Planner → Subtask Decomposer → Tool/Code Executor (PDT) architecture.
-                Your role will be determined by the orchestrator calling you (planner_agent, decomposer_agent, executor_agent).
+                Your role will be determined by the orchestrator calling you (decomposer_agent, executor_agent).
                 """
 
                 pdt_result = self.run_pdt_pipeline(
-                    planner_agent,
                     decomposer_agent,
                     executor_agent,
                     task_prompt,
