@@ -42,14 +42,21 @@ class SmolagentsPDT(System):
             "max_completion_tokens": 8192,
         }
         self.llm_code = LiteLLMModel(**model_params)
-        self.llm_reason = LiteLLMModel(**model_params) # Reasoning model can be set to a different one
+        if "claude" in model:
+            reason_model_params = {
+                "model_id": "o3", #"claude-3-7-sonnet-latest",
+                "custom_role_conversions": custom_role_conversions,
+                "max_completion_tokens": 8192,
+            }
+            self.llm_reason = LiteLLMModel(**reason_model_params) # Reasoning model can be set to a different one
+        else: self.llm_reason = LiteLLMModel(**model_params) # same as code model
         self.verbose = kwargs.get("verbose", False)
        
         self.debug = False
         self.output_dir = kwargs.get("output_dir", os.path.join(os.getcwd(), "testresults"))
         # Ablation studies: add additional parameters
         self.number_sampled_rows = kwargs.get("number_sampled_rows", 100)
-        self.max_steps = kwargs.get("max_steps", 20)
+        self.max_steps = kwargs.get("max_steps", 10)
         self.text_limit = kwargs.get("text_limit", 100000)
         self.verbosity_level = kwargs.get("verbosity_level", 2)
         self.planning_interval = kwargs.get("planning_interval", 4)
@@ -170,18 +177,15 @@ class SmolagentsPDT(System):
 
         return answer, pipeline_code
 
-    def create_pdt_agents(self, task_id:str):
+    def create_pdt_agents(self, task_id: str):
 
         logger_path = os.path.join(self.question_intermediate_dir, f"{task_id}.txt")
         logger = AgentLogger(level=self.verbosity_level, log_file=logger_path)
-        #############################################
-        
+
         # === Planner Agent ===
         planner_agent = ToolCallingAgent(
             model=self.llm_reason,
-            tools=[
-                list_input_filepaths
-            ],
+            tools=[list_input_filepaths],
             max_steps=self.max_steps,
             verbosity_level=self.verbosity_level,
             logger=logger,
@@ -189,9 +193,10 @@ class SmolagentsPDT(System):
             name="planner_agent",
             description=(
                 "A high-level planning agent that reads the user task and available data, "
-                "then proposes a step-by-step PLAN (3–10 steps) for how to solve the task. "
+                "then proposes a step-by-step PLAN (3–5 steps) for how to solve the task. "
                 "The plan should be model-agnostic and expressed in natural language. "
-                "Do NOT execute code or tools directly; just plan."
+                "Do NOT execute code or tools directly; just plan. "
+                "Do NOT give any answer yet; just provide the PLAN."
             ),
             provide_run_summary=True,
         )
@@ -216,7 +221,9 @@ class SmolagentsPDT(System):
                 "  ...\n"
                 "]\n\n"
                 "Each description should be concrete enough to be implemented in Python "
-                "with access to the workload dataset."
+                "with access to the workload dataset.\n\n"
+                "The list MUST contain between 1 and 5 subtasks (inclusive). "
+                "If more than 5 steps seem necessary, merge related steps."
             ),
             provide_run_summary=True,
         )
@@ -246,7 +253,7 @@ class SmolagentsPDT(System):
 
         return planner_agent, decomposer_agent, executor_agent
 
-    def run_pdt_pipeline(self,planner_agent, decomposer_agent, executor_agent, task_prompt, workload_name):
+    def run_pdt_pipeline(self,planner_agent, decomposer_agent, executor_agent, task_prompt, workload_name, task_id: str) -> Dict:
         """
         Orchestrates the Planner -> Decomposer -> Executor flow for a single question.
         Returns a dict with the plan, subtasks, subtask_outputs, and final_answer.
@@ -262,7 +269,7 @@ class SmolagentsPDT(System):
 
             Your job:
             1. Understand the task and the likely structure of the dataset(s).
-            2. Propose a concrete, numbered PLAN with 3–10 steps.
+            2. Propose a concrete, numbered PLAN with 3-5 steps (5 is the MAX).
             3. Focus on data discovery, cleaning, joining, aggregation, and analysis.
             4. Do NOT write code. Do NOT execute tools. Only output a plan in natural language.
 
@@ -272,7 +279,7 @@ class SmolagentsPDT(System):
             1) ...
             2) ...
         """
-        high_level_plan = planner_agent.run(planner_prompt)
+        #high_level_plan = planner_agent.run(planner_prompt)
 
         # ---- 2) Decomposer: JSON subtasks ----
         decomposer_prompt = f"""
@@ -282,9 +289,6 @@ class SmolagentsPDT(System):
 
             User task:
             {task_prompt}
-
-            High-level PLAN from the planner_agent:
-            \"\"\"{high_level_plan}\"\"\"
 
             Decompose this into a sequence of atomic subtasks that a code agent can execute.
             Each subtask should:
@@ -325,7 +329,10 @@ class SmolagentsPDT(System):
                 ]
 
         # ---- 3) Executor: run each subtask sequentially ----
+        answer_path = os.path.join(self.question_intermediate_dir, f"answer.txt")
+        pipeline_code_path = os.path.join(self.question_intermediate_dir, f"pipeline_code.py")
         subtask_outputs = {}
+        last_id = sorted(subtask_outputs.keys())[-1] if subtask_outputs else 1
         for subtask in subtasks:
             sid = subtask.get("id")
             desc = subtask.get("description", "")
@@ -364,13 +371,20 @@ class SmolagentsPDT(System):
             - Key intermediate results
             - Any important caveats or assumptions
 
-            Return only the summary in natural language (the code will be logged separately).
+            Return only the answer (no explanation).
             """
+
+            if sid == last_id:
+                executor_prompt += f"""
+                IMPORTANT: This is the FINAL subtask. After completing it, you MUST write the final answer and complete code pipeline to files using the write_file tool.
+                - Write your final answer to {answer_path}
+                - Write your complete code pipeline to {pipeline_code_path}
+                You can end the task after writing the files.
+                """
             subtask_output = executor_agent.run(executor_prompt)
             subtask_outputs[sid] = subtask_output
 
         # Define final answer as the output of the last subtask (by id order)
-        last_id = sorted(subtask_outputs.keys())[-1]
         final_answer = subtask_outputs[last_id]
 
         return {
@@ -392,42 +406,110 @@ class SmolagentsPDT(System):
                 self.dataset[file] = pd.read_csv(os.path.join(dataset_directory, file))
 
     @typechecked
-    def serve_query(self, query: str, query_id: str = "default_name-0", subset_files:List[str]=[]) -> Dict:
+    def serve_query(self, query: str, query_id: str = "default_name-0", subset_files: List[str] = []) -> Dict:
         """
-        Serve a query using the LLM.
-        The query should be in natural language, and the response can be in either natural language or JSON format.
-        :param query: str
-        :param query_id: str
-        :param subset_files: list of strings with filenames to include in the experiments
-        :return: output_dict {"explanation": answer, "pipeline_code": pipeline_code}
+        Serve a query using the LLM with a hard 15-minute timeout.
+
+        If the PDT pipeline exceeds 15 minutes (900 seconds),
+        the process is terminated and a timeout response is returned.
         """
-        # TODO: 
+        TIME_LIMIT = 1200  # 20 minutes
+
+        # Prepare output directory
         self._init_output_dir(query_id)
         dataset_name = query_id.split("-")[0]
-        
+        dataset_directory = os.path.join(os.getcwd(), "data", dataset_name, "input")
+
+        # -------------------------------------------------------
+        # Worker function that runs the PDT pipeline
+        # -------------------------------------------------------
+        result_container = {"result": None, "error": None}
+
+        def worker():
+            try:
+                planner_agent, decomposer_agent, executor_agent = self.create_pdt_agents(query_id)
+
+                task_prompt = f"""
+                Workload name: {dataset_name}
+                dataset_directory = {dataset_directory}
+                Answer the question: {query}; Use the {dataset_name} dataset.
+
+                You are part of a Planner → Subtask Decomposer → Tool/Code Executor (PDT) architecture.
+                Your role will be determined by the orchestrator calling you (planner_agent, decomposer_agent, executor_agent).
+                """
+
+                pdt_result = self.run_pdt_pipeline(
+                    planner_agent,
+                    decomposer_agent,
+                    executor_agent,
+                    task_prompt,
+                    dataset_name,
+                    query_id
+                )
+
+                result_container["result"] = pdt_result
+
+            except Exception as e:
+                result_container["error"] = str(e)
+
+        # -------------------------------------------------------
+        # Run the worker thread with a hard timeout
+        # -------------------------------------------------------
         start_time = time.time()
-        planner_agent, decomposer_agent, executor_agent = self.create_pdt_agents(query_id)
-
-        task_prompt = f"""
-            Workload name: {dataset_name}
-            dataset_directory = {os.path.join(os.getcwd(), 'data', dataset_name, 'input')}
-            Answer the question: {query}; Use the {dataset_name} dataset.
-
-            You are part of a Planner → Subtask Decomposer → Tool/Code Executor (PDT) architecture.
-            Your role will be determined by the orchestrator calling you (planner_agent, decomposer_agent, executor_agent).
-        """
-        pdt_result = self.run_pdt_pipeline(
-            planner_agent,
-            decomposer_agent,
-            executor_agent,
-            task_prompt=task_prompt,
-            workload_name=dataset_name,
-        )
+        thread = threading.Thread(target=worker)
+        thread.start()
+        thread.join(timeout=TIME_LIMIT)
         runtime = time.time() - start_time
+
+        # -------------------------------------------------------
+        # Check for timeout
+        # -------------------------------------------------------
+        if thread.is_alive():
+            # Thread timed out
+            return {
+                "id": query_id,
+                "runtime": runtime,
+                "timeout": True,
+                "message": f"Query exceeded the 15-minute time limit (900 seconds).",
+                "high_level_plan": None,
+                "subtasks": None,
+                "subtask_outputs": None,
+                "explanation": {"id": "main-task", "answer": None},
+                "token_usage": 0,
+                "token_usage_input": 0,
+                "token_usage_output": 0,
+                "pipeline_code": "N/A",
+            }
+
+        # -------------------------------------------------------
+        # Pipeline finished normally
+        # -------------------------------------------------------
+        if result_container["error"] is not None:
+            return {
+                "id": query_id,
+                "runtime": runtime,
+                "timeout": False,
+                "error": result_container["error"],
+                "high_level_plan": None,
+                "subtasks": None,
+                "subtask_outputs": None,
+                "explanation": {"id": "main-task", "answer": None},
+                "token_usage": 0,
+                "token_usage_input": 0,
+                "token_usage_output": 0,
+                "pipeline_code": "N/A",
+            }
+
+        pdt_result = result_container["result"]
+        answer_path = os.path.join(self.question_intermediate_dir, f"answer.txt")
+        pipeline_code_path = os.path.join(self.question_intermediate_dir, f"pipeline_code.py")
+        answer, pipeline_code = self._get_output(answer_path, pipeline_code_path)
         token_counts = self._get_token_counts(query_id)
+
         results = {
             "id": query_id,
             "runtime": runtime,
+            "timeout": False,
             "high_level_plan": pdt_result["high_level_plan"],
             "subtasks": pdt_result["subtasks"],
             "subtask_outputs": pdt_result["subtask_outputs"],
@@ -435,8 +517,10 @@ class SmolagentsPDT(System):
             "token_usage": token_counts["input_tokens"] + token_counts["output_tokens"],
             "token_usage_input": token_counts["input_tokens"],
             "token_usage_output": token_counts["output_tokens"],
+            "pipeline_code": pipeline_code,
         }
-        print(results)
+
+        #print(results)
         return results
 
 
