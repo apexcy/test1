@@ -295,10 +295,10 @@ class SmolagentsPDT(System):
         )
         try:
             print_error(
-                f"[PDT] {err_msg} Last error for task_id={task_id}: {last_error}"
+                f"[{self.name}] {err_msg} Last error for task_id={task_id}: {last_error}"
             )
         except NameError:
-            print(f"[PDT] {err_msg} Last error for task_id={task_id}: {last_error}")
+            print(f"[{self.name}] {err_msg} Last error for task_id={task_id}: {last_error}")
 
         return {
             "subtasks": [],
@@ -355,12 +355,13 @@ class SmolagentsPDT(System):
                     subset_files=subset_files,
                 )
 
-                pdt_result = self.run_pdt_pipeline(
+                pdt_result = self.robust_pdt_pipeline(
                     decomposer_agent,
                     executor_agent,
                     task_prompt,
                     dataset_name,
-                    query_id
+                    query_id,
+                    max_retry=5,
                 )
 
                 result_container["result"] = pdt_result
