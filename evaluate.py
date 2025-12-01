@@ -75,7 +75,6 @@ def main():
     parser.add_argument("--use_truth_subset", action="store_true", default=False, help="Whether to use the subset of files from truth data. Default: False")
     parser.add_argument("--verbose", action="store_true", default=False, help="Verbose logging. Default: False")
     parser.add_argument("--run_subtasks", action="store_true", default=False, help="Run subtasks if set. Default: False")
-    parser.add_argument("--use_truth_subset", action="store_true", default=False, help="Whether to use the subset of files from truth data. Default: False")
     parser.add_argument("--no_pipeline_eval", action="store_true", default=False, help="Skip pipeline design and implementation evaluation (which uses API calls). Default: False")
     args = parser.parse_args()
 
