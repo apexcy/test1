@@ -150,7 +150,7 @@ class AgentLogger:
             level = LogLevel[level.upper()]
         if level <= self.level:
             # Console output
-            self.console.print(*args, **kwargs)
+            # self.console.print(*args, **kwargs)
             # File output
             if self.log_file:
                 self.file_console.print(*args, **kwargs)

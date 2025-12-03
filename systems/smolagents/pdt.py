@@ -54,10 +54,7 @@ class SmolagentsPDT(System):
             self.llm_reason = LiteLLMModel(**reason_model_params) # Reasoning model can be set to a different one
         else: self.llm_reason = LiteLLMModel(**model_params) # same as code model
         self.verbose = kwargs.get("verbose", False)
-        if self.verbose:
-            self.verbosity_level = 2
-        else:
-            self.verbosity_level = -1
+        self.verbosity_level = 2
        
         self.debug = False
         self.output_dir = kwargs.get("output_dir", os.path.join(os.getcwd(), "testresults"))

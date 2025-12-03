@@ -47,10 +47,7 @@ class SmolagentsDeepResearch(System):
         self.llm_code = LiteLLMModel(**model_params)
         self.llm_reason = LiteLLMModel(**model_params) # Reasoning model can be set to a different one
         self.verbose = kwargs.get("verbose", False)
-        if self.verbose:
-            self.verbosity_level = 2
-        else:
-            self.verbosity_level = -1
+        self.verbosity_level = 2
 
         self.debug = False
         self.output_dir = kwargs.get("output_dir", os.path.join(os.getcwd(), "testresults"))
