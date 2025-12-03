@@ -172,7 +172,7 @@ class F1(Metric):
             f1 = 2 * precision * recall / (precision + recall)
             return (f1, 0, 0, 0)
         except Exception as e:
-            logging.error(f"F1 Metric: {e}")
+            logging.error(f"F1 Metric defaults to 0 because of following error: {e}")
             return (0.0, 0, 0, 0)
 
 
@@ -238,7 +238,7 @@ class F1Approximate(Metric):
             f1 = 2 * precision * recall / (precision + recall)
             return (f1, total_token_usage, token_usage_input, token_usage_output)
         except Exception as e:
-            logging.error(f"F1Approximate Metric: {e}")
+            logging.error(f"F1Approximate Metric defaults to 0 because of following error: {e}")
             return (0.0, total_token_usage, token_usage_input, token_usage_output)
 
 class MeanSquaredError(Metric):
