@@ -17,6 +17,9 @@ def aggregate_results(system_name, results_df):
         if metric in ['code', 'model_output']:
             continue
         group_dropped_na = group.dropna()
+        if metric == "success":
+            group_dropped_na["value"] = group_dropped_na["value"].astype(bool).astype(int)
+
         if metric != "llm_code_eval":
             mean = group_dropped_na["value"].mean()
             std = group_dropped_na["value"].std() if len(group_dropped_na) > 1 else 0
