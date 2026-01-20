@@ -392,42 +392,42 @@ class Benchmark:
         self.num_workers = max(1, int(num_workers))
     
     def _merge_worker_caches(self, workload_path: str | os.PathLike, results_directory: str | os.PathLike, results_by_id: Dict[str, Dict[str, Any]]) -> None:
-            basename = os.path.splitext(os.path.basename(workload_path))[0]
-            cache_dir = os.path.join(results_directory, "response_cache")
-            
-            central_cache_by_id: Dict[str, Dict[str, Any]] = {}
-            cache_path = get_most_recent_cache(cache_dir, basename)
-            if cache_path:
+        basename = os.path.splitext(os.path.basename(workload_path))[0]
+        cache_dir = os.path.join(results_directory, "response_cache")
+        
+        central_cache_by_id: Dict[str, Dict[str, Any]] = {}
+        cache_path = get_most_recent_cache(cache_dir, basename)
+        if cache_path:
+            try:
+                with open(cache_path, 'r') as f:
+                    cached_results = json.load(f)
+                central_cache_by_id = {r.get("task_id"): r for r in cached_results}
+            except Exception as e:
+                logging.warning(f"Failed to load central cache: {e}")
+        
+        # Merge with new results
+        central_cache_by_id.update(results_by_id)
+        
+        # Write merged results to new central cache
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        central_cache_path = os.path.join(cache_dir, f"{basename}_{timestamp}.json")
+        
+        all_results = list(central_cache_by_id.values())
+        with open(central_cache_path, 'w') as f:
+            if self.verbose:
+                print(f"Merged {len(all_results)} results into central cache: {central_cache_path}")
+            json.dump(all_results, f, indent=2)
+        
+        # Clean up worker cache files
+        for fname in os.listdir(cache_dir):
+            if fname.startswith(basename) and "_worker" in fname:
+                worker_cache_path = os.path.join(cache_dir, fname)
                 try:
-                    with open(cache_path, 'r') as f:
-                        cached_results = json.load(f)
-                    central_cache_by_id = {r.get("task_id"): r for r in cached_results}
+                    os.remove(worker_cache_path)
+                    if self.verbose:
+                        print(f"Cleaned up worker cache: {fname}")
                 except Exception as e:
-                    logging.warning(f"Failed to load central cache: {e}")
-            
-            # Merge with new results
-            central_cache_by_id.update(results_by_id)
-            
-            # Write merged results to new central cache
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            central_cache_path = os.path.join(cache_dir, f"{basename}_{timestamp}.json")
-            
-            all_results = list(central_cache_by_id.values())
-            with open(central_cache_path, 'w') as f:
-                if self.verbose:
-                    print(f"Merged {len(all_results)} results into central cache: {central_cache_path}")
-                json.dump(all_results, f, indent=2)
-            
-            # Clean up worker cache files
-            for fname in os.listdir(cache_dir):
-                if fname.startswith(basename) and "_worker" in fname:
-                    worker_cache_path = os.path.join(cache_dir, fname)
-                    try:
-                        os.remove(worker_cache_path)
-                        if self.verbose:
-                            print(f"Cleaned up worker cache: {fname}")
-                    except Exception as e:
-                        logging.warning(f"Failed to remove worker cache {fname}: {e}")        
+                    logging.warning(f"Failed to remove worker cache {fname}: {e}")        
 
     def run_benchmark(
             self,
