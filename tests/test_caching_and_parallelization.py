@@ -13,7 +13,6 @@ import json
 import os
 import pytest
 import shutil
-import tempfile
 from pathlib import Path
 
 from benchmark.benchmark import Benchmark, Executor
