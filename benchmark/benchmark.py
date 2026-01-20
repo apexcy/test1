@@ -20,7 +20,17 @@ logging.basicConfig(level=logging.WARNING)
 
 def extract_timestamp(file_path, basename):
     filename = os.path.basename(file_path)
-    timestamp_str = filename.replace(f"{basename}_", "").replace(".json", "")
+    # Remove the file extension (e.g., ".json") if present
+    if filename.lower().endswith(".json"):
+        filename = filename[:-5]
+    # Expect filenames like:
+    #   "{basename}_YYYYMMDD_HHMMSS"
+    #   "{basename}_worker{id}_YYYYMMDD_HHMMSS"
+    # In both cases, the last two underscore-separated parts are the timestamp.
+    parts = filename.split("_")
+    if len(parts) < 3:
+        raise ValueError(f"Unexpected cache filename format: {filename}")
+    timestamp_str = "_".join(parts[-2:])
     return datetime.datetime.strptime(timestamp_str, "%Y%m%d_%H%M%S")
 
 def get_most_recent_cache(cache_dir: str | os.PathLike, basename: str) -> Optional[str | os.PathLike]:
