@@ -5,7 +5,6 @@ This system does not perform any real processing and returns placeholder results
 import random
 import os
 import time
-from tracemalloc import start
 from benchmark.benchmark_api import System
 from typing import List, Dict, Any
 
