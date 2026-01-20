@@ -9,7 +9,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from benchmark.benchmark_utils import print_info
 from typeguard import typechecked
-from typing import Any, Dict, List, Tuple, Optional, cast
+from typing import Any, Dict, List, Tuple, Optional
 
 
 from benchmark.benchmark_api import System
