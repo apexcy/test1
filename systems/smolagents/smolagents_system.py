@@ -1,9 +1,8 @@
-# type: ignore
 import os
 import sys
-import re
-import fnmatch
 from benchmark.benchmark_utils import print_error, print_warning
+from typing import List
+from smolagents.models import LiteLLMModel
 
 sys.path.append("./")
 
@@ -16,13 +15,14 @@ class Smolagents(System):
 
     def __init__(self, model: str, name="baseline", *args, **kwargs):
         super().__init__(name, *args, **kwargs)
+        self.model = model
         print_warning("This system is a placeholder! Only use it with pre-computed cache results.")
 
     def process_dataset(self, dataset_directory: str | os.PathLike) -> None:
         print_warning("This system is a placeholder! Only use it with pre-computed cache results.")
         self.dataset_directory = dataset_directory
 
-    def serve_query(self, query: str, query_id: str, subset_files: list|None) -> dict:
+    def serve_query(self, query: str, query_id: str, subset_files: List[str]) -> dict:
         print_warning("This system is a placeholder! Only use it with pre-computed cache results.")
         return { "answer": "This is a placeholder answer."}
 
@@ -36,7 +36,7 @@ class Smolagents(System):
         state.pop('llm_code', None)
         state.pop('llm_reason', None)
         return state
-    
+
     def __setstate__(self, state):
         """
         Custom deserialization to recreate the LiteLLMModel objects.
@@ -44,8 +44,8 @@ class Smolagents(System):
         self.__dict__.update(state)
         # Recreate the LLM models using the stored model name
         custom_role_conversions = {"tool-call": "assistant", "tool-response": "user"}
-        if "claude" in model and "PDT" in self.name::
-            #TODO double check
+        if "claude" in self.model and "PDT" in self.name:
+            # TODO double check
             model_id = "o3"  #"claude-3-7-sonnet-latest" 
         else:
             model_id = self.model

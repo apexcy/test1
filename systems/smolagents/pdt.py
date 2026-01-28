@@ -1,4 +1,3 @@
-# type: ignore
 import os
 import sys
 import re
@@ -9,7 +8,7 @@ import json
 import pandas as pd
 import subprocess
 from typeguard import typechecked
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from benchmark.benchmark_api import System
 import argparse
@@ -22,6 +21,7 @@ from dotenv import load_dotenv
 from .text_inspector_tool import TextInspectorTool
 from .tools import list_input_filepaths, write_file, get_csv_metadata, summarize_dataframe
 from .smolagents_prompts import PDT_TASK_PROMPT_TEMPLATE, DECOMPOSER_PROMPT_TEMPLATE, DECOMPOSER_DESCRIPTION, EXECUTOR_DESCRIPTION, EXECUTOR_PROMPT_TEMPLATE, EXECUTOR_PROMPT_TEMPLATE_LAST_STEP
+from .smolagents_system import Smolagents
 from .smolagents_utils import parse_token_counts
 
 from smolagents import (
@@ -30,6 +30,7 @@ from smolagents import (
     ToolCallingAgent,
     AgentLogger
 )
+from smolagents.monitoring import LogLevel
 load_dotenv()
 
 class SmolagentsPDT(Smolagents):
@@ -53,10 +54,11 @@ class SmolagentsPDT(Smolagents):
                 "max_completion_tokens": 8192,
             }
             self.llm_reason = LiteLLMModel(**reason_model_params) # Reasoning model can be set to a different one
-        else: self.llm_reason = LiteLLMModel(**model_params) # same as code model
+        else:
+            self.llm_reason = LiteLLMModel(**model_params)  # same as code model
         self.verbose = kwargs.get("verbose", False)
         self.verbosity_level = 2
-       
+
         self.debug = False
         self.output_dir = kwargs.get("output_dir", os.path.join(os.getcwd(), "testresults"))
         # Ablation studies: add additional parameters
@@ -65,9 +67,9 @@ class SmolagentsPDT(Smolagents):
         self.text_limit = kwargs.get("text_limit", 100000)
         self.planning_interval = kwargs.get("planning_interval", 4)
 
-        self.question_output_dir = None  # to be set in run()
-        self.question_intermediate_dir = None  # to be set in run()
-    
+        self.question_output_dir = ""  # to be set in run()
+        self.question_intermediate_dir = ""  # to be set in run()
+
     def _init_output_dir(self, query_id: str) -> None:
         """
         Initialize the output directory for the question.
@@ -82,8 +84,8 @@ class SmolagentsPDT(Smolagents):
         )
         if not os.path.exists(self.question_intermediate_dir):
             os.makedirs(self.question_intermediate_dir)
-    
-    def _get_output(self, answer_path: str, pipeline_code_path: str) -> (str, str):
+
+    def _get_output(self, answer_path: str, pipeline_code_path: str) -> Tuple[str, str]:
         """
         Get the output from the answer and pipeline code files.
         :param answer_path: str
@@ -105,7 +107,7 @@ class SmolagentsPDT(Smolagents):
             pipeline_code = "Failed to read pipeline code."
 
         return answer, pipeline_code
-    
+
     def _get_token_counts(self, query_id: str) -> Dict[str, int]:
         """
         Get the token counts from the log file.
@@ -121,7 +123,7 @@ class SmolagentsPDT(Smolagents):
     def create_pdt_agents(self, task_id: str):
 
         logger_path = os.path.join(self.question_intermediate_dir, f"{task_id}.txt")
-        logger = AgentLogger(level=self.verbosity_level, log_file=logger_path)
+        logger = AgentLogger(level=LogLevel(self.verbosity_level), log_file=logger_path)
 
         # === Subtask Decomposer Agent ===
         decomposer_agent = ToolCallingAgent(
@@ -344,7 +346,7 @@ class SmolagentsPDT(Smolagents):
         # -------------------------------------------------------
         # Worker function that runs the PDT pipeline
         # -------------------------------------------------------
-        result_container = {"result": None, "error": None}
+        result_container: Dict = {"result": None, "error": None}
 
         def worker():
             try:
@@ -421,7 +423,6 @@ class SmolagentsPDT(Smolagents):
         answer_path = os.path.join(self.question_intermediate_dir, f"answer.txt")
         pipeline_code_path = os.path.join(self.question_intermediate_dir, f"pipeline_code.py")
         answer, pipeline_code = self._get_output(answer_path, pipeline_code_path)
-        
 
         results = {
             "id": query_id,
@@ -436,7 +437,7 @@ class SmolagentsPDT(Smolagents):
             "pipeline_code": pipeline_code,
         }
 
-        #print(results)
+        # print(results)
         return results
 
 

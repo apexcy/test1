@@ -1,7 +1,8 @@
-# type: ignore
 import os
 import sys
 import re
+
+from smolagents.monitoring import LogLevel
 sys.path.append("./")
 from benchmark.benchmark_utils import print_error, print_warning
 
@@ -9,7 +10,7 @@ import json
 import pandas as pd
 import subprocess
 from typeguard import typechecked
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from benchmark.benchmark_api import System
 import argparse
@@ -17,12 +18,12 @@ import threading
 import ast
 import time
 import random
-import litellm
 
 from dotenv import load_dotenv
 from .text_inspector_tool import TextInspectorTool
 from .tools import list_input_filepaths, write_file
 from .smolagents_utils import parse_token_counts
+from .smolagents_system import Smolagents
 from .smolagents_prompts import SINGLE_AGENT_TASK_PROMPT_TEMPLATE
 
 from smolagents import (
@@ -57,8 +58,8 @@ class SmolagentsDeepResearch(Smolagents):
         self.text_limit = kwargs.get("text_limit", 100000)
         self.planning_interval = kwargs.get("planning_interval", 4)
 
-        self.question_output_dir = None  # to be set in run()
-        self.question_intermediate_dir = None  # to be set in run()
+        self.question_output_dir = ""  # to be set in run()
+        self.question_intermediate_dir = ""  # to be set in run()
     
     def _init_output_dir(self, query_id: str) -> None:
         """
@@ -75,7 +76,7 @@ class SmolagentsDeepResearch(Smolagents):
         if not os.path.exists(self.question_intermediate_dir):
             os.makedirs(self.question_intermediate_dir)
     
-    def _get_output(self, answer_path: str, pipeline_code_path: str) -> (str, str):
+    def _get_output(self, answer_path: str, pipeline_code_path: str) -> Tuple[str, str]:
         """
         Get the output from the answer and pipeline code files.
         :param answer_path: str
@@ -110,7 +111,7 @@ class SmolagentsDeepResearch(Smolagents):
         inp, out = parse_token_counts(trace)
         return {"input_tokens": inp, "output_tokens": out}
     
-    def _parse_output(self, output: str, query_id: str) -> (str, str):
+    def _parse_output(self, output: str, query_id: str) -> Tuple[str, str]:
         """
         Parse the output from the agent to extract the answer and pipeline code.
         Write intermediate logs to file.
@@ -176,7 +177,7 @@ class SmolagentsDeepResearch(Smolagents):
     def create_agent(self, task_id:str) -> CodeAgent:
 
         logger_path = os.path.join(self.question_intermediate_dir, f"{task_id}.txt")
-        logger = AgentLogger(level=self.verbosity_level, log_file=logger_path)
+        logger = AgentLogger(level=LogLevel(self.verbosity_level), log_file=logger_path)
         #############################################
         
         manager_agent = CodeAgent(
